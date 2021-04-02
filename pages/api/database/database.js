@@ -1,5 +1,7 @@
-const mysql = require("mysql");
-const mysqlInitializer = require("./initializer");
+import mysql from "mysql";
+import MySQLInitializer from "./initializer";
+
+const mySQLInitializer = new MySQLInitializer();
 
 const options = {
   env: process.env.ENV,
@@ -24,8 +26,8 @@ DB.connect(async (err) => {
   if (err) throw err;
   console.log("MySQL connected with the app!");
 
-  await mysqlInitializer.createDatabaseIfNotExists(DB, options.database);
-  await mysqlInitializer.createTablesIfNotExists(DB);
+  await mySQLInitializer.createDatabaseIfNotExists(DB, options.database);
+  await mySQLInitializer.createTablesIfNotExists(DB);
 });
 
 module.exports = DB;
