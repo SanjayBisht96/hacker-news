@@ -1,4 +1,3 @@
-import DB from "../../database/database";
 import AppErrors from "../../api-utils/errors";
 
 const errorMessage = new AppErrors();
