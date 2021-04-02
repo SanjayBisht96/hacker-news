@@ -1,8 +1,6 @@
-const config = require("../config");
-
 class AppErrors {
   constructor() {
-    this.envStatus = config.ENV;
+    this.envStatus = process.env.ENV;
   }
 
   // Create user errors
