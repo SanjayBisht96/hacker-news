@@ -1,8 +1,8 @@
 import nc from "next-connect";
 const { v4: uuidv4 } = require("uuid");
 const bcrypt = require("bcrypt");
-import UserDatabseModule from "../../../models/database-modules/user";
-import SendResponse from "../../../api-utils/SendResponse";
+import UserDatabseModule from "../../../../models/database-modules/user";
+import SendResponse from "../../../../api-utils/SendResponse";
 
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
