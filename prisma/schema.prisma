@@ -1,9 +1,13 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// 1. npx prisma init
+// 2. npx prisma migrate save --experimental
+
+
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:@127.0.0.1:3306/hacker_news"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
