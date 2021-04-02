@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:@127.0.0.1:3306/hacker_news"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id   Int     @id @default(autoincrement())
+  name String?
+  Post Post[]
+}
+
+model Post {
+  id     Int     @id @default(autoincrement())
+  userID Int?
+  user   User?   @relation(fields: [userID], references: [id])
+  name   String?
+  Tag    Tag[]
+}
+
+model TagList {
+  id   Int     @id @default(autoincrement())
+  name String?
+  Tag  Tag[]
+}
+
+model Tag {
+  id     Int      @id @default(autoincrement())
+  postID Int?
+  tagID  Int?
+  post   Post?    @relation(fields: [postID], references: [id])
+  tag    TagList? @relation(fields: [tagID], references: [id])
+  name   String?
+}
