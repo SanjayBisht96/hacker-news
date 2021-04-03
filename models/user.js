@@ -1,9 +1,14 @@
-exports.createUserTabelQuery = `CREATE TABLE IF NOT EXISTS users (
-                                                        userId VARCHAR(255)  NOT NULL, 
-                                                        userName VARCHAR(255), 
-                                                        password VARCHAR(255), 
-                                                        accessToken VARCHAR(255),
-                                                        refreshToken VARCHAR(255),
-                                                        joinedAt TIMESTAMP,
-                                                        PRIMARY KEY (userId)
-                                                    )`;
+const { v4: uuidv4 } = require("uuid");
+
+class UserProfileModel {
+  constructor(userName, password, accessToken, refreshToken) {
+    this.id = uuidv4();
+    this.userName = userName;
+    this.password = password;
+    this.accessToken = accessToken;
+    this.refreshToken = refreshToken;
+    this.joinedOn = new Date(Date.now());
+  }
+}
+
+module.exports = UserProfileModel;

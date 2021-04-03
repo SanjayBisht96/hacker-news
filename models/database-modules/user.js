@@ -1,64 +1,42 @@
+import { PrismaClient } from "@prisma/client";
 import AppErrors from "../../api-utils/errors";
 
+const prisma = new PrismaClient();
 const errorMessage = new AppErrors();
 
 class UserDatabseModule {
   // Check if username already exists
   userDataIfExists = async (userName) => {
-    return new Promise((resolve, reject) => {
-      DB.query(
-        "SELECT * FROM `users` WHERE `userName` = ?",
-        [userName],
-        (error, rowsOfUsersWithSameUserName) => {
-          if (error) {
-            reject(new Error(errorMessage.createUserErorrMessage(error)));
-          }
+    return await prisma.user
+      .findFirst({
+        where: {
+          userName,
+        },
+      })
+      .then((userData) => {
+        return userData;
+      });
+  };
 
-          console.log(rowsOfUsersWithSameUserName)
+  // Add user to the tabel
+  addUserToUserTable = async (userData) => {
+    return await prisma.user
+      .create({
+        data: {
+          ...userData,
+        },
+      })
+      .then((userData) => {
+        
+        delete userData.password;
+        delete userData.joinedOn;
 
-          // resolve(rowsOfUsersWithSameUserName[0]);
-        }
-      );
-    });
+        return userData;
+      });
   };
 }
 
 export default UserDatabseModule;
-
-// // Check if username already exists
-// export const userDataIfExists = async (userName) => {
-//   return new Promise((resolve, reject) => {
-//     DB.query(
-//       "SELECT * FROM `users` WHERE `userName` = ?",
-//       [userName],
-//       (error, rowsOfUsersWithSameUserName) => {
-//         if (error) {
-//           reject(new Error(errorMessage.createUserErorrMessage(error)));
-//         }
-
-//         resolve(rowsOfUsersWithSameUserName[0]);
-//       }
-//     );
-//   });
-// };
-
-// // Add user to the tabel
-// export const addUserToUserTable = async ({ ...user }) => {
-//   return new Promise((resolve, reject) => {
-//     DB.query("INSERT INTO users SET ?", user, (error) => {
-//       if (error) {
-//         reject(new Error(errorMessage.createUserErorrMessage(error)));
-//       }
-
-//       resolve({
-//         userId: user.userId,
-//         userName: user.userName,
-//         accessToken: user.accessToken,
-//         refreshToken: user.refreshToken,
-//       });
-//     });
-//   });
-// };
 
 // // Update user token when sign in
 // export const updateUserTokensWhenSignIn = async ({
