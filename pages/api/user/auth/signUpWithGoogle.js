@@ -11,49 +11,25 @@ import {
 const sendAPIResponse = new SendResponse();
 const userDatabseModule = new UserDatabseModule();
 
-const signup = async (req, res) => {
-  const { userName, password } = req.body;
+const signUpWithGoogle = async (req, res) => {
+  const { id, name, email, imageUrl, accessToken, signUpWith } = req.body;
 
   // 0. Check if user has submitted correct data
-  if (!userName) {
+  if (!id || !name || !email || !imageUrl || !accessToken || !signUpWith) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Please enter your userName",
+      message: "Please provide correct details",
     });
     return;
   }
-
-  if (!password) {
-    sendAPIResponse.sendErrorResponse({
-      res,
-      message: "Please enter your password",
-    });
-    return;
-  }
-
-  // Check if username already exists
-  const userDataIfExists = await userDatabseModule.userDataIfExists(userName);
-
-  // If username already exists
-  if (userDataIfExists) {
-    sendAPIResponse.sendErrorResponse({
-      res,
-      message: "Username already exists. Please choose another.",
-    });
-    return;
-  }
-
-  const payload = { userName };
-
-  const [accessToken, refreshToken] = getAuthTokens(payload);
-
-  const hashedPassword = await createBycryptHashForPassword(password);
 
   const userProfileModel = new UserProfileModel(
-    userName,
-    hashedPassword,
+    id,
+    name,
+    email,
+    imageUrl,
     accessToken,
-    refreshToken
+    signUpWith,
   );
 
   await userDatabseModule
@@ -70,6 +46,6 @@ const signup = async (req, res) => {
     });
 };
 
-const signUpUserHandler = nc().post(signup);
+const signUpUserWithGoogleHandler = nc().post(signUpWithGoogle);
 
-export default signUpUserHandler;
+export default signUpUserWithGoogleHandler;

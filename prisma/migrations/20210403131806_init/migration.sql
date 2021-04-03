@@ -1,10 +1,11 @@
 -- CreateTable
 CREATE TABLE `User` (
     `id` VARCHAR(191) NOT NULL,
-    `userName` VARCHAR(191),
-    `password` VARCHAR(191),
+    `name` VARCHAR(191),
+    `email` VARCHAR(191),
+    `imageUrl` VARCHAR(191),
     `accessToken` VARCHAR(191),
-    `refreshToken` VARCHAR(191),
+    `signUpWith` VARCHAR(191),
     `joinedOn` DATETIME(3),
 UNIQUE INDEX `User.id_unique`(`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
