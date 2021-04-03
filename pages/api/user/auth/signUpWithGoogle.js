@@ -2,10 +2,6 @@ import nc from "next-connect";
 import UserDatabseModule from "../../../../models/database-modules/user";
 import UserProfileModel from "../../../../models/user";
 import SendResponse from "../../../../api-utils/SendResponse";
-import {
-  getAuthTokens,
-  createBycryptHashForPassword,
-} from "../../../../api-utils/auth";
 
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
