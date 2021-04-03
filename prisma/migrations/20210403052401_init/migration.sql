@@ -1,15 +1,18 @@
 -- CreateTable
 CREATE TABLE `User` (
-    `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(191),
-
-    PRIMARY KEY (`id`)
+    `id` VARCHAR(191) NOT NULL,
+    `userName` VARCHAR(191),
+    `password` VARCHAR(191),
+    `accessToken` VARCHAR(191),
+    `refreshToken` VARCHAR(191),
+    `joinedOn` DATETIME(3),
+UNIQUE INDEX `User.id_unique`(`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
 CREATE TABLE `Post` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
-    `userID` INTEGER,
+    `userID` VARCHAR(191),
     `name` VARCHAR(191),
 
     PRIMARY KEY (`id`)
