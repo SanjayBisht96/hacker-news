@@ -27,36 +27,14 @@ class UserDatabseModule {
         },
       })
       .then((userData) => {
-        return userData.accessToken;
+        return {
+          name: userData.name,
+          email: userData.email,
+          imageUrl: userData.imageUrl,
+          accessToken: userData.accessToken,
+        };
       });
   };
 }
 
 export default UserDatabseModule;
-
-// // Update user token when sign in
-// export const updateUserTokensWhenSignIn = async ({
-//   accessToken,
-//   refreshToken,
-//   userId,
-//   userName,
-// }) => {
-//   return new Promise((resolve, reject) => {
-//     DB.query(
-//       `UPDATE users SET accessToken = ?, refreshToken = ? WHERE userID = ?`,
-//       [accessToken, refreshToken, userId],
-//       (error) => {
-//         if (error) {
-//           reject(new Error(errorMessage.createUserErorrMessage(error)));
-//         }
-
-//         resolve({
-//           userId: userId,
-//           userName: userName,
-//           accessToken: accessToken,
-//           refreshToken: refreshToken,
-//         });
-//       }
-//     );
-//   });
-// };
