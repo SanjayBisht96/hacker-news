@@ -1,12 +1,11 @@
-const { v4: uuidv4 } = require("uuid");
-
 class UserProfileModel {
-  constructor(userName, password, accessToken, refreshToken) {
-    this.id = uuidv4();
-    this.userName = userName;
-    this.password = password;
+  constructor(id, name, email, imageUrl, accessToken, signUpWith) {
+    this.id = id;
+    this.name = name;
+    this.email = email;
+    this.imageUrl = imageUrl;
     this.accessToken = accessToken;
-    this.refreshToken = refreshToken;
+    this.signUpWith = signUpWith;
     this.joinedOn = new Date(Date.now());
   }
 }

@@ -27,11 +27,7 @@ class UserDatabseModule {
         },
       })
       .then((userData) => {
-        
-        delete userData.password;
-        delete userData.joinedOn;
-
-        return userData;
+        return userData.accessToken;
       });
   };
 }
