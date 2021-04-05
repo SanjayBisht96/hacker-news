@@ -35,6 +35,24 @@ class UserDatabseModule {
         };
       });
   };
+
+  // Post a job for review
+  postAJobForReview = async (jobData) => {
+    return await prisma.job
+      .create({
+        data: {
+          ...jobData,
+        },
+      })
+      .then((jobData) => {
+        return {
+          mainText: jobData.mainText,
+          hyperLink: jobData.hyperLink,
+          isActive: jobData.isActive,
+          postedOn: jobData.postedOn,
+        };
+      });
+  };
 }
 
 export default UserDatabseModule;

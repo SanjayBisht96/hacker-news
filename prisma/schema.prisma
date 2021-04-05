@@ -26,10 +26,10 @@ model User {
 }
 
 model Admin {
-  id       String    @unique
+  id        String    @unique
   adminName String?
-  password String?
-  joinedOn DateTime?
+  password  String?
+  joinedOn  DateTime?
 }
 
 model Post {
@@ -53,4 +53,12 @@ model Tag {
   post   Post?    @relation(fields: [postID], references: [id])
   tag    TagList? @relation(fields: [tagID], references: [id])
   name   String?
+}
+
+model Job {
+  id        String   @unique
+  mainText  String?
+  hyperLink String?
+  isActive  Boolean
+  postedOn  DateTime
 }
