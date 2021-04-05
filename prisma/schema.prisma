@@ -3,7 +3,7 @@
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:@127.0.0.1:3306/hacker_news"
+  url      = env("DATABASE_URL")
 }
 
 generator client {
@@ -21,6 +21,8 @@ model Post {
   userID Int?
   user   User?   @relation(fields: [userID], references: [id])
   name   String?
+  url    String?
+  text   String?
   Tag    Tag[]
 }
 

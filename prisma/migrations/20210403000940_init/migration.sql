@@ -11,6 +11,8 @@ CREATE TABLE `Post` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `userID` INTEGER,
     `name` VARCHAR(191),
+    `url` VARCHAR(191),
+    `text` VARCHAR(191),
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
