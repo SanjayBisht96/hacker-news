@@ -25,6 +25,13 @@ model User {
   Post        Post[]
 }
 
+model Admin {
+  id       String    @unique
+  adminName String?
+  password String?
+  joinedOn DateTime?
+}
+
 model Post {
   id     Int     @id @default(autoincrement())
   userID String?

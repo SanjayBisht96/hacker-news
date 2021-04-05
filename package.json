@@ -11,7 +11,9 @@
   "dependencies": {
     "@prisma/client": "^2.20.1",
     "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
     "env-cmd": "^10.1.0",
+    "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "next": "10.0.9",
     "next-connect": "^0.10.1",
@@ -19,7 +21,8 @@
     "query-string": "^7.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-google-login": "^5.2.2"
+    "react-google-login": "^5.2.2",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
     "prisma": "^2.20.1"
