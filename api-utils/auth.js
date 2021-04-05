@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
-exports.getAuthTokens = (payload) => {
+export const getAuthTokens = (payload) => {
   // Generate Access Token
   let accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
     algorithm: "HS256",
@@ -14,4 +15,14 @@ exports.getAuthTokens = (payload) => {
   });
 
   return [accessToken, refreshToken];
+};
+
+export const createBycryptHashForPassword = async (password) => {
+  return bcrypt.hash(password, 10).then((value) => value);
+};
+
+export const comparePasswordForHashing = async (password, hashedPassword) => {
+  return bcrypt
+    .compare(password, hashedPassword)
+    .then((isPasswordMatched) => isPasswordMatched);
 };

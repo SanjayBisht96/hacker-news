@@ -1,0 +1,13 @@
+module.exports = {
+  env: {
+    DATABASE_URL: process.env.DATABASE_URL,
+    ENV: process.env.ENV,
+    PORT: process.env.PORT,
+    ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
+    ACCESS_TOKEN_LIFE: process.env.ACCESS_TOKEN_LIFE,
+    REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
+    REFRESH_TOKEN_LIFE: process.env.REFRESH_TOKEN_LIFE,
+    GOOGLE_AUTH_CLIENT_ID: process.env.GOOGLE_AUTH_CLIENT_ID,
+    GOOGLE_AUTH_CLIENT_SECRET: process.env.GOOGLE_AUTH_CLIENT_SECRET,
+  },
+};
