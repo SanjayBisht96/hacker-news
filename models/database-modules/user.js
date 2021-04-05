@@ -46,11 +46,25 @@ class UserDatabseModule {
       })
       .then((jobData) => {
         return {
+          id: jobData.id,
           mainText: jobData.mainText,
           hyperLink: jobData.hyperLink,
           isActive: jobData.isActive,
           postedOn: jobData.postedOn,
         };
+      });
+  };
+
+  // Get a job by ID
+  getAJobByID = async (jobId) => {
+    return await prisma.job
+      .findUnique({
+        where: {
+          id: jobId,
+        },
+      })
+      .then((jobData) => {
+        return jobData;
       });
   };
 }
