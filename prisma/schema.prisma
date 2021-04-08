@@ -13,6 +13,11 @@ generator client {
 model User {
   id   Int     @id @default(autoincrement())
   name String?
+  email       String?
+  imageUrl    String?
+  accessToken String?
+  signUpWith  String?
+  joinedOn    DateTime?  
   Post Post[]
 }
 
@@ -21,8 +26,8 @@ model Post {
   userID Int?
   user   User?   @relation(fields: [userID], references: [id])
   name   String?
-  url    String?
-  text   String?
+  url    String?  @db.VarChar(512)
+  text   String?  @db.VarChar(512)
   Tag    Tag[]
 }
 
