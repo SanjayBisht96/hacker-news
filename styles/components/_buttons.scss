@@ -6,7 +6,7 @@
   cursor: pointer;
   font-family: "Inter", sans-serif;
   font-weight: 600;
-  transition: 0.1s all;
+  transition: 0.3s all;
 
   &-lg {
     padding: 1.6rem 4rem;
@@ -29,7 +29,6 @@
   &-md {
     padding: 1rem 2.5rem;
     font-size: 1.8rem;
-    border-radius: 0.3rem;
   }
 
   &-sm {
@@ -39,7 +38,7 @@
   }
 
   &:hover {
-    transform: translateY(-0.2rem);
+    transform: scale(0.95);
   }
 
   &:disabled {

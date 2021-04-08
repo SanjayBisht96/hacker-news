@@ -10,7 +10,7 @@ const Navbar = () => {
         <a href="#" className="navbar__links__item">
           Create Post
         </a>
-        <a href="#" className="navbar__links__item">
+        <a href="/job" className="navbar__links__item">
           Create Job Posting
         </a>
         <a href="#" className="navbar__links__item">
