@@ -33,7 +33,7 @@ const PublishAPost = () => {
               <p className="paragraph--sub">*To add tags, start tags by ‘#’ and end with a single space.</p>
             </div>
             <button className="btn btn-md form__submit posting__container__content__form__submit">
-              Send for approval
+              Publish A Post
             </button>
           </form>
         </div>

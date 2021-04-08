@@ -17,7 +17,7 @@ const Navbar = () => {
           Ask HN
         </a>
         <a href="/auth">
-          <button className="btn btn-md" className="navbar__links__button">Login</button>
+          <button className="btn btn-sm navbar__links__button">Login</button>
         </a>
       </div>
     </nav>
