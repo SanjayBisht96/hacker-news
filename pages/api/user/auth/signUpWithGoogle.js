@@ -10,11 +10,23 @@ const userDatabseModule = new UserDatabseModule();
 const signUpWithGoogle = async (req, res) => {
   const { id, name, email, imageUrl, accessToken, signUpWith } = req.body;
 
+  console.log(id, name, email, imageUrl, accessToken, signUpWith)
+
   // 0. Check if user has submitted correct data
   if (!id || !name || !email || !imageUrl || !accessToken || !signUpWith) {
     sendAPIResponse.sendErrorResponse({
       res,
       message: "Please provide correct details",
+    });
+    return;
+  }
+
+  const userData = await userDatabseModule.userDataIfExists(email);
+
+  if (userData) {
+    sendAPIResponse.sendErrorResponse({
+      res,
+      error: "Email already exists. Try logging in",
     });
     return;
   }
@@ -25,7 +37,7 @@ const signUpWithGoogle = async (req, res) => {
     email,
     imageUrl,
     accessToken,
-    signUpWith,
+    signUpWith
   );
 
   await userDatabseModule

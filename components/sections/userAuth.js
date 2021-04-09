@@ -1,5 +1,6 @@
 import React from "react";
 import GoogleLogin from "react-google-login";
+import { signUpUser } from "../../client-utils/functions/handling.functions";
 
 export const LoginButtons = (props) => {
   const { handleLoginWithGithub, handleAuthFailure } = props;
@@ -48,8 +49,19 @@ export const LoginButtons = (props) => {
 export const SignUpButtons = (props) => {
   const { handleSignupWithGithub } = props;
 
-  const responseGoogle = (payload) => {
-    console.log(payload);
+  const onGoogleSignUpSuccess = (payload) => {
+    const { name, email, imageUrl, googleId } = payload.profileObj;
+
+    const userSignUpPayload = {
+      id: googleId,
+      name,
+      email,
+      imageUrl,
+      accessToken: payload.accessToken,
+      signUpWith: "GOOGLE_OAUTH",
+    };
+
+    signUpUser(userSignUpPayload);
   };
 
   return (
@@ -60,7 +72,7 @@ export const SignUpButtons = (props) => {
         approvalPrompt="force"
         prompt="consent"
         accessType="offline"
-        onSuccess={responseGoogle}
+        onSuccess={onGoogleSignUpSuccess}
         onFailure={(payload) => console.log(payload)}
         cookiePolicy={"single_host_origin"}
         render={(renderProps) => (

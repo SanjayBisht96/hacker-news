@@ -1,8 +1,9 @@
 module.exports = {
   env: {
-    DATABASE_URL: process.env.DATABASE_URL,
     ENV: process.env.ENV,
     PORT: process.env.PORT,
+    API_ROOT: process.env.API_ROOT,
+    DATABASE_URL: process.env.DATABASE_URL,
     ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
     ACCESS_TOKEN_LIFE: process.env.ACCESS_TOKEN_LIFE,
     REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
