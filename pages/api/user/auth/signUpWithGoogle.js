@@ -10,8 +10,6 @@ const userDatabseModule = new UserDatabseModule();
 const signUpWithGoogle = async (req, res) => {
   const { id, name, email, imageUrl, accessToken, signUpWith } = req.body;
 
-  console.log(id, name, email, imageUrl, accessToken, signUpWith)
-
   // 0. Check if user has submitted correct data
   if (!id || !name || !email || !imageUrl || !accessToken || !signUpWith) {
     sendAPIResponse.sendErrorResponse({

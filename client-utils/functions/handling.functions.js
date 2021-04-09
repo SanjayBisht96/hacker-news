@@ -7,7 +7,7 @@ export const signUpUser = (payload) => {
     method: "post",
     url: `${process.env.API_ROOT}/user/auth/signUpWithGoogle`,
     data: {
-      payload,
+      ...payload,
     },
   })
     .then((res) => {
