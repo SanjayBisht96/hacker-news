@@ -6,11 +6,11 @@ const errorMessage = new AppErrors();
 
 class UserDatabseModule {
   // Check if username already exists
-  userDataIfExists = async (userName) => {
+  userDataIfExists = async (email) => {
     return await prisma.user
       .findFirst({
         where: {
-          userName,
+          email,
         },
       })
       .then((userData) => {
