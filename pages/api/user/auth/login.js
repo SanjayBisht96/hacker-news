@@ -24,7 +24,9 @@ const logInWithGoogle = async (req, res) => {
     sendAPIResponse.sendSuccessResponse({
       res,
       message: "User logged in successfully.",
-      payload: userData,
+      payload: {
+        id: userData.id,
+      },
     });
     return;
   }

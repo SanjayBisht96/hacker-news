@@ -1,12 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import GoogleLogin from "react-google-login";
-import { signUpUser } from "../../client-utils/functions/handling.functions";
+import Router from "next/router";
+import {
+  handleSignUpUser,
+  handleLogInUser,
+} from "../../client-utils/functions/handling.functions";
 
 export const LoginButtons = (props) => {
-  const { handleLoginWithGithub, handleAuthFailure } = props;
+  const { handleLoginWithGithub } = props;
 
-  const responseGoogle = (payload) => {
-    console.log(payload);
+  const [authError, setAuthError] = useState(null);
+
+  const onGoogleLogInSuccess = async (payload) => {
+    setAuthError(null);
+
+    const { email } = payload.profileObj;
+
+    const userLogInPayload = {
+      email,
+    };
+
+    const response = await handleLogInUser(userLogInPayload);
+
+    if (response.status === "Failed") setAuthError(response.error);
+    else Router.push("/");
+  };
+
+  const handleAuthFailure = ({ error }) => {
+    setAuthError(error);
   };
 
   return (
@@ -17,7 +38,7 @@ export const LoginButtons = (props) => {
         approvalPrompt="force"
         prompt="consent"
         accessType="offline"
-        onSuccess={responseGoogle}
+        onSuccess={onGoogleLogInSuccess}
         onFailure={handleAuthFailure}
         cookiePolicy={"single_host_origin"}
         render={(renderProps) => (
@@ -42,6 +63,8 @@ export const LoginButtons = (props) => {
           Login with Github
         </p>
       </button>
+
+      {authError && <p className="form__error">{authError}</p>}
     </>
   );
 };
@@ -49,7 +72,11 @@ export const LoginButtons = (props) => {
 export const SignUpButtons = (props) => {
   const { handleSignupWithGithub } = props;
 
-  const onGoogleSignUpSuccess = (payload) => {
+  const [authError, setAuthError] = useState(null);
+
+  const onGoogleSignUpSuccess = async (payload) => {
+    setAuthError(null);
+
     const { name, email, imageUrl, googleId } = payload.profileObj;
 
     const userSignUpPayload = {
@@ -61,7 +88,14 @@ export const SignUpButtons = (props) => {
       signUpWith: "GOOGLE_OAUTH",
     };
 
-    signUpUser(userSignUpPayload);
+    const response = await handleSignUpUser(userSignUpPayload);
+
+    if (response.status === "Failed") setAuthError(response.error);
+    else Router.push("/");
+  };
+
+  const handleAuthFailure = ({ error }) => {
+    setAuthError(error);
   };
 
   return (
@@ -73,7 +107,7 @@ export const SignUpButtons = (props) => {
         prompt="consent"
         accessType="offline"
         onSuccess={onGoogleSignUpSuccess}
-        onFailure={(payload) => console.log(payload)}
+        onFailure={handleAuthFailure}
         cookiePolicy={"single_host_origin"}
         render={(renderProps) => (
           <button
@@ -97,6 +131,8 @@ export const SignUpButtons = (props) => {
           Signup with Github
         </p>
       </button>
+
+      {authError && <p className="form__error">{authError}</p>}
     </>
   );
 };

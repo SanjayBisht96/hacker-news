@@ -8,26 +8,34 @@ const sendAPIResponse = new SendResponse();
 const userDatabseModule = new UserDatabseModule();
 
 const publishJob = async (req, res) => {
-  const { mainText, hyperLink } = req.body;
+  const { jobTitle, jobDescription, jobURL } = req.body;
 
   // 0. Check if user has submitted correct data
-  if (!mainText) {
+  if (!jobTitle) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Please enter your job text",
+      error: "Please enter your job text",
     });
     return;
   }
 
-  if (!hyperLink) {
+  if (!jobDescription) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Please enter your hyperLink",
+      error: "Please enter your job description",
     });
     return;
   }
 
-  const userJobModel = new UserJobModel(mainText, hyperLink);
+  if (!jobURL) {
+    sendAPIResponse.sendErrorResponse({
+      res,
+      error: "Please enter your job URL",
+    });
+    return;
+  }
+
+  const userJobModel = new UserJobModel(jobTitle, jobDescription, jobURL);
 
   await userDatabseModule
     .postAJobForReview(userJobModel)
@@ -39,7 +47,10 @@ const publishJob = async (req, res) => {
       });
     })
     .catch((error) => {
-      console.log(error);
+      sendAPIResponse.sendErrorResponse({
+        res,
+        error,
+      });
     });
 };
 

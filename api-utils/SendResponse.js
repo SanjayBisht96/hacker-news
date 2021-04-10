@@ -23,12 +23,10 @@ class SendResponse {
     res,
     status = "Failed",
     statusCode = 400,
-    message,
     error,
   }) {
     res.status(statusCode).json({
       status,
-      message,
       error,
     });
   }

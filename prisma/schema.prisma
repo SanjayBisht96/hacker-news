@@ -56,9 +56,10 @@ model Tag {
 }
 
 model Job {
-  id        String   @unique
-  mainText  String?
-  hyperLink String?
-  isActive  Boolean
-  postedOn  DateTime
+  id             String   @unique
+  jobTitle       String?
+  jobDescription String?
+  jobURL         String?
+  isActive       Boolean
+  postedOn       DateTime
 }

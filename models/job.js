@@ -1,10 +1,11 @@
 const { v4: uuidv4 } = require("uuid");
 
 class UserJobModel {
-  constructor(mainText, hyperLink) {
+  constructor(jobTitle, jobDescription, jobURL) {
     this.id = uuidv4();
-    this.mainText = mainText;
-    this.hyperLink = hyperLink;
+    this.jobTitle = jobTitle;
+    this.jobDescription = jobDescription;
+    this.jobURL = jobURL;
     this.isActive = false;
     this.postedOn = new Date(Date.now());
   }

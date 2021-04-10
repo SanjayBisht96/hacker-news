@@ -28,10 +28,7 @@ class UserDatabseModule {
       })
       .then((userData) => {
         return {
-          name: userData.name,
-          email: userData.email,
-          imageUrl: userData.imageUrl,
-          accessToken: userData.accessToken,
+          id: userData.id,
         };
       });
   };
@@ -45,13 +42,7 @@ class UserDatabseModule {
         },
       })
       .then((jobData) => {
-        return {
-          id: jobData.id,
-          mainText: jobData.mainText,
-          hyperLink: jobData.hyperLink,
-          isActive: jobData.isActive,
-          postedOn: jobData.postedOn,
-        };
+        return jobData;
       });
   };
 

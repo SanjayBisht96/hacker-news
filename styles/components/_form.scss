@@ -67,6 +67,13 @@
       }
     }
   }
+
+  &__error {
+    margin: 1rem 0;
+    color: $color-danger;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
 }
 
 input[type=number]::-webkit-inner-spin-button, 
