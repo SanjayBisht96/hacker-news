@@ -14,7 +14,7 @@ const publishJob = async (req, res) => {
   if (!jobTitle) {
     sendAPIResponse.sendErrorResponse({
       res,
-      error: "Please enter your job text",
+      error: "Please enter your job title",
     });
     return;
   }

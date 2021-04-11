@@ -23,6 +23,7 @@ model User {
   signUpWith  String?
   joinedOn    DateTime?
   Post        Post[]
+  Job         Job[]
 }
 
 model Admin {
@@ -57,6 +58,8 @@ model Tag {
 
 model Job {
   id             String   @unique
+  userId         String?
+  user           User?    @relation(fields: [userId], references: [id])
   jobTitle       String?
   jobDescription String?
   jobURL         String?

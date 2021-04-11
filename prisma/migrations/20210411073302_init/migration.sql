@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE `Job` ADD COLUMN     `userId` VARCHAR(191);
+
+-- AddForeignKey
+ALTER TABLE `Job` ADD FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE SET NULL ON UPDATE CASCADE;

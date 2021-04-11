@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../components/layouts/Navbar";
-import { LoginButtons, SignUpButtons } from "../components/sections/userAuth";
+import { LoginButtons, SignUpButtons } from "../components/sections/UserAuth";
 
 const UserAuth = () => {
   const [loginButtonVisible, setLoginButtonVisible] = useState(true);
