@@ -2,13 +2,14 @@ import nc from "next-connect";
 import UserDatabseModule from "../../../../models/database-modules/user";
 import UserJobModel from "../../../../models/job";
 import SendResponse from "../../../../api-utils/SendResponse";
+import { decryptData } from "../../../../api-utils/auth";
 
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
 const userDatabseModule = new UserDatabseModule();
 
 const publishJob = async (req, res) => {
-  const { jobTitle, jobDescription, jobURL } = req.body;
+  const { userId, jobTitle, jobDescription, jobURL } = req.body;
 
   // 0. Check if user has submitted correct data
   if (!jobTitle) {
@@ -35,7 +36,14 @@ const publishJob = async (req, res) => {
     return;
   }
 
-  const userJobModel = new UserJobModel(jobTitle, jobDescription, jobURL);
+  const decryptedUserId = decryptData(userId);
+
+  const userJobModel = new UserJobModel(
+    decryptedUserId,
+    jobTitle,
+    jobDescription,
+    jobURL
+  );
 
   await userDatabseModule
     .postAJobForReview(userJobModel)
