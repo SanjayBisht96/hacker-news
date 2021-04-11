@@ -1,6 +1,8 @@
-import Head from 'next/head'
 import { useState } from 'react';
-import styles from '../styles/Home.module.css'
+import dynamic from 'next/dynamic';
+
+const Navbar = dynamic(() => import('../../components/Navbar'));
+const AskForm = dynamic(() => import('../../components/AskForm'));
 
 export default function CreatePost(){
     const [formData, updateFormData] = useState({});
@@ -17,15 +19,13 @@ export default function CreatePost(){
   
     const handleSubmit = async (e) => {
       e.preventDefault()
-      console.log(formData);
       // ... submit to API or something
       
         const res = await fetch(
-          '/api/submit',
+          '/api/submit/ask',
           {
             body: JSON.stringify({
-              formData,
-              userID:1,
+              formData
             }),
             headers: {
               'Content-Type': 'application/json'
@@ -41,29 +41,11 @@ export default function CreatePost(){
   
     return (
       <>
-      <input name="userID" hidden onChange={handleChange} value="1"/>
-        <label>
-          Title
-          <input name="name" onChange={handleChange} />
-        </label>
-        <br />
-        <label>
-          URL
-          <input name="url" onChange={handleChange} />
-        </label>
-        <br />
-        <span>Or</span>
-        <br/>
-        <label>
-          Text
-          <textarea name="text" onChange={handleChange} />
-        </label>
-        <br/>
-        <label>
-          Tags
-          
-        </label>        
-        <button onClick={handleSubmit}>Submit</button>
+        <Navbar/>
+        <AskForm 
+          handleChange={handleChange} 
+          handleSubmit={handleSubmit}
+        />
       </>
     );
-  };
+  }

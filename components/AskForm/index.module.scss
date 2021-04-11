@@ -1,0 +1,32 @@
+.inputBox {
+    display: block;
+}
+
+.submit{
+    margin-top: 10px;
+}
+
+.formContainer{
+    padding: 10px;
+    margin-top: 5%;
+    height: 400px;
+    width: 600px;
+    margin-left: 36%;
+    border: solid black;
+    border-radius: 10px;
+
+    .postTitle{
+        font-weight: bold;
+        text-align: center;
+    }
+
+    input{
+        border: solid black;
+        background-color: gray;
+    }
+
+    textarea{
+        border: solid black;
+        background-color: gray;
+    }
+}

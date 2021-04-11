@@ -11,37 +11,60 @@ generator client {
 }
 
 model User {
-  id   Int     @id @default(autoincrement())
-  name String?
-  email       String?
+  id          Int        @id @default(autoincrement())
+  name        String?    @unique
+  email       String?    @unique
   imageUrl    String?
   accessToken String?
   signUpWith  String?
-  joinedOn    DateTime?  
-  Post Post[]
+  joinedOn    DateTime?
+  LinkPost    LinkPost[]
+  Ask         Ask[]
 }
 
-model Post {
-  id     Int     @id @default(autoincrement())
-  userID Int?
-  user   User?   @relation(fields: [userID], references: [id])
-  name   String?
-  url    String?  @db.VarChar(512)
-  text   String?  @db.VarChar(512)
-  Tag    Tag[]
+model LinkPost {
+  id           Int            @id @default(autoincrement())
+  userID       Int?
+  user         User?          @relation(fields: [userID], references: [id])
+  name         String?
+  url          String?        @db.VarChar(512)
+  tags         String?        @db.VarChar(512)
+  LinkPostTags LinkPostTags[]
 }
 
-model TagList {
-  id   Int     @id @default(autoincrement())
-  name String?
-  Tag  Tag[]
+model LinkPostTags {
+  id     Int      @id @default(autoincrement())
+  postID Int
+  post   LinkPost @relation(fields: [postID], references: [id])
+  tagID  Int
+  tag    Tag      @relation(fields: [tagID], references: [id])
+
+  @@unique([postID, tagID])
+}
+
+model Ask {
+  id      Int       @id @default(autoincrement())
+  userID  Int?
+  user    User?     @relation(fields: [userID], references: [id])
+  name    String?
+  text    String?   @db.VarChar(512)
+  tags    String?   @db.VarChar(512)
+  AskTags AskTags[]
+}
+
+model AskTags {
+  id    Int @id @default(autoincrement())
+  askID Int
+  ask   Ask @relation(fields: [askID], references: [id])
+  tagID Int
+  tag   Tag @relation(fields: [tagID], references: [id])
+
+  @@unique([askID, tagID])
 }
 
 model Tag {
-  id     Int      @id @default(autoincrement())
-  postID Int?
-  tagID  Int?
-  post   Post?    @relation(fields: [postID], references: [id])
-  tag    TagList? @relation(fields: [tagID], references: [id])
-  name   String?
+  id           Int            @id @default(autoincrement())
+  name         String?        @unique
+  LinkPostTags LinkPostTags[]
+  AskTags      AskTags[]
 }
