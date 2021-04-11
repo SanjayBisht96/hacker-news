@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const Cryptr = require("cryptr");
 
 export const getAuthTokens = (payload) => {
   // Generate Access Token
@@ -17,8 +18,14 @@ export const getAuthTokens = (payload) => {
   return [accessToken, refreshToken];
 };
 
-export const createBycryptHashForPassword = async (password) => {
-  return bcrypt.hash(password, 10).then((value) => value);
+export const encryptData = (data) => {
+  const cryptr = new Cryptr(process.env.CRYPTR_SECRET_KEY);
+  return cryptr.encrypt(data);
+};
+
+export const decryptData = (hash) => {
+  const cryptr = new Cryptr(process.env.CRYPTR_SECRET_KEY);
+  return cryptr.decrypt(hash);
 };
 
 export const comparePasswordForHashing = async (password, hashedPassword) => {

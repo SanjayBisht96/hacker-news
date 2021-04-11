@@ -1,6 +1,7 @@
 import nc from "next-connect";
 import UserDatabseModule from "../../../../models/database-modules/user";
 import SendResponse from "../../../../api-utils/SendResponse";
+import { encryptData } from "../../../../api-utils/auth";
 
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
@@ -25,7 +26,7 @@ const logInWithGoogle = async (req, res) => {
       res,
       message: "User logged in successfully.",
       payload: {
-        id: userData.id,
+        id: encryptData(userData.id),
       },
     });
     return;

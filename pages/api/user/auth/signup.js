@@ -8,10 +8,10 @@ const sendAPIResponse = new SendResponse();
 const userDatabseModule = new UserDatabseModule();
 
 const signUpWithGoogle = async (req, res) => {
-  const { id, name, email, imageUrl, accessToken, signUpWith } = req.body;
+  const { name, email, imageUrl, accessToken, signUpWith } = req.body;
 
   // 0. Check if user has submitted correct data
-  if (!id || !name || !email || !imageUrl || !accessToken || !signUpWith) {
+  if (!name || !email || !imageUrl || !accessToken || !signUpWith) {
     sendAPIResponse.sendErrorResponse({
       res,
       message: "Please provide correct details",
@@ -30,7 +30,7 @@ const signUpWithGoogle = async (req, res) => {
   }
 
   const userProfileModel = new UserProfileModel(
-    id,
+  
     name,
     email,
     imageUrl,

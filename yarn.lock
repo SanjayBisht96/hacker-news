@@ -736,6 +736,11 @@
     "randombytes" "^2.0.0"
     "randomfill" "^1.0.3"
 
+"cryptr@^6.0.2":
+  "integrity" "sha512-1TRHI4bmuLIB8WgkH9eeYXzhEg1T4tonO4vVaMBKKde8Dre51J68nAgTVXTwMYXAf7+mV2gBCkm/9wksjSb2sA=="
+  "resolved" "https://registry.npmjs.org/cryptr/-/cryptr-6.0.2.tgz"
+  "version" "6.0.2"
+
 "css.escape@1.5.1":
   "integrity" "sha1-QuJ9T6BK4y+TGktNQZH6nN3ul8s="
   "resolved" "https://registry.npmjs.org/css.escape/-/css.escape-1.5.1.tgz"

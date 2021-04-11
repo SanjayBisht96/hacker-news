@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import AppErrors from "../../api-utils/errors";
+import { encryptData } from "../../api-utils/auth";
 
 const prisma = new PrismaClient();
 const errorMessage = new AppErrors();
@@ -27,8 +28,10 @@ class UserDatabseModule {
         },
       })
       .then((userData) => {
+        const hasedId = encryptData(userData.id);
+
         return {
-          id: userData.id,
+          id: hasedId,
         };
       });
   };
