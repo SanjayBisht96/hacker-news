@@ -19,7 +19,6 @@ model User {
   name        String?
   email       String?
   imageUrl    String?
-  accessToken String?
   signUpWith  String?
   joinedOn    DateTime?
   Post        Post[]
