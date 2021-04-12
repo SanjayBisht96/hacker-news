@@ -15,21 +15,21 @@ generator client {
 }
 
 model User {
-  id          String    @unique
-  name        String?
-  email       String?
-  imageUrl    String?
-  signUpWith  String?
-  joinedOn    DateTime?
-  Post        Post[]
-  Job         Job[]
+  id         String    @unique
+  name       String?
+  email      String?
+  imageUrl   String?
+  signUpWith String?
+  joinedOn   DateTime?
+  Post       Post[]
+  Job        Job[]
 }
 
 model Admin {
-  id        String    @unique
-  adminName String?
-  password  String?
-  joinedOn  DateTime?
+  id       String    @unique
+  email    String?
+  password String?
+  joinedOn DateTime?
 }
 
 model Post {
