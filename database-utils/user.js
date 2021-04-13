@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
-import AppErrors from "../../api-utils/errors";
-import { encryptData } from "../../api-utils/auth";
+import AppErrors from "api-utils/errors";
+import { encryptData } from "api-utils/auth";
 
 const prisma = new PrismaClient();
 const errorMessage = new AppErrors();
@@ -60,5 +60,3 @@ export const getAJobByID = async (jobId) => {
       return jobData;
     });
 };
-
-export default UserDatabseModule;

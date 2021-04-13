@@ -1,5 +1,5 @@
 import nc from "next-connect";
-import UserProfileModel from "models/user";
+import { userProfileModel } from "models/user";
 import SendResponse from "api-utils/SendResponse";
 import { userDataIfExists, addUserToUserTable } from "database-utils/user";
 
@@ -13,7 +13,7 @@ const signUpWithGoogle = async (req, res) => {
   if (!name || !email || !imageUrl || !signUpWith) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Please provide correct details",
+      error: "Please provide correct details",
     });
     return;
   }

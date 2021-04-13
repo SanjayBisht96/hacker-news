@@ -1,11 +1,10 @@
 import nc from "next-connect";
-import UserDatabseModule from "../../../../models/database-modules/user";
-import SendResponse from "../../../../api-utils/SendResponse";
-import { encryptData } from "../../../../api-utils/auth";
+import SendResponse from "api-utils/SendResponse";
+import { encryptData } from "api-utils/auth";
+import { userDataIfExists } from 'database-utils/user';
 
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
-const userDatabseModule = new UserDatabseModule();
 
 const logInWithGoogle = async (req, res) => {
   const { email } = req.body;
@@ -14,12 +13,12 @@ const logInWithGoogle = async (req, res) => {
   if (!email) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Please provide correct details",
+      error: "Please provide your email",
     });
     return;
   }
 
-  const userData = await userDatabseModule.userDataIfExists(email);
+  const userData = await userDataIfExists(email);
 
   if (userData) {
     sendAPIResponse.sendSuccessResponse({
