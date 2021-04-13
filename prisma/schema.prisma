@@ -34,11 +34,9 @@ model Admin {
 
 model Post {
   id     Int     @id @default(autoincrement())
-  userID Int?
+  userID String?
   user   User?   @relation(fields: [userID], references: [id])
   name   String?
-  url    String?  @db.VarChar(512)
-  text   String?  @db.VarChar(512)
   Tag    Tag[]
 }
 
