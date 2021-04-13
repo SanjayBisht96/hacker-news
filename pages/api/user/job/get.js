@@ -1,14 +1,12 @@
 import nc from "next-connect";
-import UserDatabseModule from "../../../../models/database-modules/user";
-import SendResponse from "../../../../api-utils/SendResponse";
+import { getAJobByID } from "database-utils/user";
+import SendResponse from "api-utils/SendResponse";
 
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
-const userDatabseModule = new UserDatabseModule();
 
 const getJob = async (req, res) => {
   const { jobId } = req.query;
-  console.log(jobId)
 
   // 0. Check if user has submitted correct data
   if (!jobId) {
@@ -19,8 +17,7 @@ const getJob = async (req, res) => {
     return;
   }
 
-  await userDatabseModule
-    .getAJobByID(jobId)
+  await getAJobByID(jobId)
     .then((jobData) => {
       sendAPIResponse.sendSuccessResponse({
         res,
