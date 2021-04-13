@@ -1,12 +1,11 @@
 import nc from "next-connect";
-import UserDatabseModule from "../../../../models/database-modules/user";
-import UserJobModel from "../../../../models/job";
-import SendResponse from "../../../../api-utils/SendResponse";
-import { decryptData } from "../../../../api-utils/auth";
+import { userJobModel } from "models/user";
+import SendResponse from "api-utils/SendResponse";
+import { decryptData } from "api-utils/auth";
+import { postAJobForReview } from "database-utils/user";
 
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
-const userDatabseModule = new UserDatabseModule();
 
 const publishJob = async (req, res) => {
   const { userId, jobTitle, jobDescription, jobURL } = req.body;
@@ -38,15 +37,14 @@ const publishJob = async (req, res) => {
 
   const decryptedUserId = decryptData(userId);
 
-  const userJobModel = new UserJobModel(
+  const userJobModelData = userJobModel(
     decryptedUserId,
     jobTitle,
     jobDescription,
     jobURL
   );
 
-  await userDatabseModule
-    .postAJobForReview(userJobModel)
+  await postAJobForReview(userJobModelData)
     .then((jobData) => {
       sendAPIResponse.sendSuccessResponse({
         res,
