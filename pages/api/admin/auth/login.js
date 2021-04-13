@@ -1,14 +1,10 @@
 import nc from "next-connect";
-import AdminDatabseModule from "../../../../models/database-modules/admin";
-import SendResponse from "../../../../api-utils/SendResponse";
-import {
-  comparePasswordForHashing,
-  encryptData,
-} from "../../../../api-utils/auth";
+import { adminDataIfExists } from "database-utils/admin";
+import SendResponse from "api-utils/SendResponse";
+import { comparePasswordForHashing, encryptData } from "api-utils/auth";
 
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
-const adminDatabseModule = new AdminDatabseModule();
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -33,10 +29,10 @@ const login = async (req, res) => {
   }
 
   // Check if admin already exists
-  const adminDataIfExists = await adminDatabseModule.adminDataIfExists(email);
+  const adminDataIfExistsData = await adminDataIfExists(email);
 
   // If adminname does not already exists
-  if (!adminDataIfExists) {
+  if (!adminDataIfExistsData) {
     sendAPIResponse.sendErrorResponse({
       res,
       error: "No admin found. Please check again.",
@@ -46,11 +42,11 @@ const login = async (req, res) => {
 
   const isAdminPasswordCorrect = await comparePasswordForHashing(
     password,
-    adminDataIfExists.password
+    adminDataIfExistsData.password
   );
 
   if (isAdminPasswordCorrect) {
-    const adminId = encryptData(adminDataIfExists.id);
+    const adminId = encryptData(adminDataIfExistsData.id);
 
     sendAPIResponse.sendSuccessResponse({
       res,

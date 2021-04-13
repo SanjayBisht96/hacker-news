@@ -1,12 +1,11 @@
 import nc from "next-connect";
-import AdminDatabseModule from "../../../../models/database-modules/admin";
-import AdminProfileModel from "../../../../models/admin";
-import SendResponse from "../../../../api-utils/SendResponse";
-import { createBycryptHashForPassword } from "../../../../api-utils/auth";
+import { adminDataIfExists, addAdminToAdminTable } from "database-utils/admin";
+import { adminProfileModel } from "models/admin";
+import SendResponse from "api-utils/SendResponse";
+import { createBycryptHashForPassword } from "api-utils/auth";
 
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
-const adminDatabseModule = new AdminDatabseModule();
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
@@ -15,7 +14,7 @@ const signup = async (req, res) => {
   if (!email) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Please enter your email",
+      error: "Please enter your email",
     });
     return;
   }
@@ -23,18 +22,16 @@ const signup = async (req, res) => {
   if (!password) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Please enter your password",
+      error: "Please enter your password",
     });
     return;
   }
 
   // Check if adminname already exists
-  const adminDataIfExists = await adminDatabseModule.adminDataIfExists(
-    email
-  );
-  
+  const adminDataIfExistsData = await adminDataIfExists(email);
+
   // If adminname already exists
-  if (adminDataIfExists) {
+  if (adminDataIfExistsData) {
     sendAPIResponse.sendErrorResponse({
       res,
       error: "Admin already exists with same name. Please choose another.",
@@ -44,10 +41,9 @@ const signup = async (req, res) => {
 
   const hashedPassword = await createBycryptHashForPassword(password);
 
-  const adminProfileModel = new AdminProfileModel(email, hashedPassword);
+  const adminProfileModelData = adminProfileModel(email, hashedPassword);
 
-  await adminDatabseModule
-    .addAdminToAdminTable(adminProfileModel)
+  await addAdminToAdminTable(adminProfileModelData)
     .then((adminData) => {
       sendAPIResponse.sendSuccessResponse({
         res,
