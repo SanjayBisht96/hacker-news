@@ -48,14 +48,32 @@ export const handleLogInUser = async (payload) => {
     });
 };
 
-export const handleJobPosting = async (
-  event,
-  jobTitle,
-  jobDescription,
-  jobURL
-) => {
-  event.preventDefault();
+export const handleLogInAdmin = async (email, password) => {
+  return axios({
+    method: "post",
+    url: `${process.env.API_ROOT}/admin/auth/login`,
+    data: {
+      email,
+      password,
+    },
+  })
+    .then((res) => {
+      const { payload } = res.data;
 
+      const localAdminData = {
+        adminId: payload.adminId,
+      };
+
+      localStorage.setItem("adminData", JSON.stringify(localAdminData));
+
+      return res.data;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+};
+
+export const handleJobPosting = async (jobTitle, jobDescription, jobURL) => {
   return axios({
     method: "post",
     url: `${process.env.API_ROOT}/user/job/post`,

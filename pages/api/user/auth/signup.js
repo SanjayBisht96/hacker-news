@@ -1,11 +1,10 @@
 import nc from "next-connect";
-import UserDatabseModule from "../../../../models/database-modules/user";
-import UserProfileModel from "../../../../models/user";
-import SendResponse from "../../../../api-utils/SendResponse";
+import { userProfileModel } from "models/user";
+import SendResponse from "api-utils/SendResponse";
+import { userDataIfExists, addUserToUserTable } from "database-utils/user";
 
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
-const userDatabseModule = new UserDatabseModule();
 
 const signUpWithGoogle = async (req, res) => {
   const { name, email, imageUrl, signUpWith } = req.body;
@@ -14,12 +13,12 @@ const signUpWithGoogle = async (req, res) => {
   if (!name || !email || !imageUrl || !signUpWith) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Please provide correct details",
+      error: "Please provide correct details",
     });
     return;
   }
 
-  const userData = await userDatabseModule.userDataIfExists(email);
+  const userData = await userDataIfExists(email);
 
   if (userData) {
     sendAPIResponse.sendErrorResponse({
@@ -29,15 +28,14 @@ const signUpWithGoogle = async (req, res) => {
     return;
   }
 
-  const userProfileModel = new UserProfileModel(
+  const userProfileModelData = userProfileModel(
     name,
     email,
     imageUrl,
     signUpWith
   );
 
-  await userDatabseModule
-    .addUserToUserTable(userProfileModel)
+  await addUserToUserTable(userProfileModelData)
     .then((userData) => {
       sendAPIResponse.sendSuccessResponse({
         res,
@@ -46,7 +44,10 @@ const signUpWithGoogle = async (req, res) => {
       });
     })
     .catch((error) => {
-      console.log(error);
+      sendAPIResponse.sendErrorResponse({
+        res,
+        error,
+      });
     });
 };
 

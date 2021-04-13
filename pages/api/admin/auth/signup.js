@@ -9,13 +9,13 @@ const sendAPIResponse = new SendResponse();
 const adminDatabseModule = new AdminDatabseModule();
 
 const signup = async (req, res) => {
-  const { adminName, password } = req.body;
+  const { email, password } = req.body;
 
   // 0. Check if admin has submitted correct data
-  if (!adminName) {
+  if (!email) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Please enter your adminName",
+      message: "Please enter your email",
     });
     return;
   }
@@ -30,21 +30,21 @@ const signup = async (req, res) => {
 
   // Check if adminname already exists
   const adminDataIfExists = await adminDatabseModule.adminDataIfExists(
-    adminName
+    email
   );
-
+  
   // If adminname already exists
   if (adminDataIfExists) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Admin already exists with same name. Please choose another.",
+      error: "Admin already exists with same name. Please choose another.",
     });
     return;
   }
 
   const hashedPassword = await createBycryptHashForPassword(password);
 
-  const adminProfileModel = new AdminProfileModel(adminName, hashedPassword);
+  const adminProfileModel = new AdminProfileModel(email, hashedPassword);
 
   await adminDatabseModule
     .addAdminToAdminTable(adminProfileModel)

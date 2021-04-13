@@ -20,12 +20,10 @@ const JobPosting = () => {
     setFormError("");
 
     const jobPostingResponse = await handleJobPosting(
-      event,
       jobTitle,
       jobDescription,
       jobURL
     );
-    console.log(jobPostingResponse);
 
     if (jobPostingResponse.status === "Failed") {
       setFormError(jobPostingResponse.error);

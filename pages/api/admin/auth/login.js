@@ -1,20 +1,25 @@
 import nc from "next-connect";
 import AdminDatabseModule from "../../../../models/database-modules/admin";
 import SendResponse from "../../../../api-utils/SendResponse";
-import { comparePasswordForHashing } from "../../../../api-utils/auth";
+import {
+  comparePasswordForHashing,
+  encryptData,
+} from "../../../../api-utils/auth";
 
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
 const adminDatabseModule = new AdminDatabseModule();
 
 const login = async (req, res) => {
-  const { adminName, password } = req.body;
+  const { email, password } = req.body;
+
+  console.log(req.body);
 
   // 0. Check if admin has submitted correct data
-  if (!adminName) {
+  if (!email) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Please enter your adminName",
+      error: "Please enter your email",
     });
     return;
   }
@@ -22,19 +27,19 @@ const login = async (req, res) => {
   if (!password) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "Please enter your password",
+      error: "Please enter your password",
     });
     return;
   }
 
   // Check if admin already exists
-  const adminDataIfExists = await adminDatabseModule.adminDataIfExists(adminName);
+  const adminDataIfExists = await adminDatabseModule.adminDataIfExists(email);
 
   // If adminname does not already exists
   if (!adminDataIfExists) {
     sendAPIResponse.sendErrorResponse({
       res,
-      message: "No admin found. Please check again.",
+      error: "No admin found. Please check again.",
     });
     return;
   }
@@ -45,21 +50,19 @@ const login = async (req, res) => {
   );
 
   if (isAdminPasswordCorrect) {
-    delete adminDataIfExists.password;
-    delete adminDataIfExists.joinedOn;
+    const adminId = encryptData(adminDataIfExists.id);
 
     sendAPIResponse.sendSuccessResponse({
       res,
-      message: "Admin logged in successfully.",
-      payload: adminDataIfExists,
+      error: "Admin logged in successfully.",
+      payload: { adminId },
     });
-
     return;
   }
 
   sendAPIResponse.sendErrorResponse({
     res,
-    message: "Your admin name or password is wrong. Please check again.",
+    error: "Your admin name or password is wrong. Please check again.",
   });
 };
 

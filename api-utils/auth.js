@@ -31,6 +31,11 @@ export const decryptData = (hash) => {
   return cryptr.decrypt(hash);
 };
 
+// Create a hash for password
+export const createBycryptHashForPassword = async (password) => {
+  return bcrypt.hash(password, 10).then((value) => value);
+};
+
 // Compare password for hashing
 export const comparePasswordForHashing = async (password, hashedPassword) => {
   return bcrypt

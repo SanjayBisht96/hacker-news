@@ -16,26 +16,17 @@ body {
 
 .heading-sub {
   color: $color-black;
+  display: block;
+  font-size: 2.5rem;
+  font-weight: 600;
 
-  &--main {
-    display: block;
+  @include respond(phone) {
     font-size: 2.5rem;
-    font-weight: 600;
-
-    @include respond(phone) {
-      font-size: 2.5rem;
-    }
-  }
-
-  &--sub {
-    display: block;
-    font-size: 1.8rem;
-    font-weight: 600;
   }
 }
 
 .paragraph {
-  &--main {
+  &-main {
     display: block;
     font-size: 2rem;
     font-weight: 600;
@@ -50,7 +41,7 @@ body {
     }
   }
 
-  &--sub {
+  &-sub {
     display: block;
     font-size: 1.4rem;
     font-weight: 400;

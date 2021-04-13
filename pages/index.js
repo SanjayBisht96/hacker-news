@@ -10,10 +10,6 @@ const HomePage = () => {
     console.log(process.env.GOOGLE_AUTH_CLIENT_ID);
   }, []);
 
-  const responseGoogle = (payload) => {
-    console.log(payload);
-  };
-
   return (
     <main className="homepage">
       <Navbar />

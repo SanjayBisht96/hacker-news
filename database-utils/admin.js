@@ -1,16 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import AppErrors from "../../api-utils/errors";
+import { encryptData } from '../../api-utils/auth';
 
 const prisma = new PrismaClient();
 const errorMessage = new AppErrors();
 
 class AdminDatabseModule {
   // Check if adminname already exists
-  adminDataIfExists = async (adminName) => {
+  adminDataIfExists = async (email) => {
     return await prisma.admin
       .findFirst({
         where: {
-          adminName,
+          email,
         },
       })
       .then((adminData) => {
@@ -27,9 +28,10 @@ class AdminDatabseModule {
         },
       })
       .then((adminData) => {
+        const hasedId = encryptData(adminData.id);
+
         return {
-          id: adminData.id,
-          adminName: adminData.adminName,
+          id: hasedId,
         };
       });
   };
