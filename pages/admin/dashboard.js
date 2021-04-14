@@ -26,16 +26,10 @@ const AdminDashoard = () => {
                 link="/admin/approve-jobs"
               />
               <AdminDashboardActionCard
-                heading="View All Posts"
-                paragraph="Edit or delete any post"
-                ctaText="Manage users"
+                heading="Manage all posts"
+                paragraph="View, edit or delete any post"
+                ctaText="Manage posts"
                 link="/admin/manage-posts"
-              />
-              <AdminDashboardActionCard
-                heading="View all users"
-                paragraph="List of all users on the platform"
-                ctaText="All users"
-                link="/admin/all-users"
               />
             </div>
           </div>
