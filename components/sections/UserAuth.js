@@ -90,6 +90,8 @@ export const SignUpButtons = (props) => {
 
     const response = await handleSignUpUser(userSignUpPayload);
 
+    console.log(response)
+
     if (response.status === "Failed") setAuthError(response.error);
     else Router.push("/");
   };

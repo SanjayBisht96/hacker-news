@@ -18,6 +18,7 @@ export const userDataIfExists = async (email) => {
 
 // Add user to the tabel
 export const addUserToUserTable = async (userData) => {
+
   return await prisma.user
     .create({
       data: {

@@ -19,11 +19,11 @@ model User {
   name        String     @unique
   email       String     @unique
   imageUrl    String?
-  accessToken String
+  accessToken String?
   signUpWith  String?
   joinedOn    DateTime?
-  updatedAt   DateTime   @default(now())
-  createdAt   DateTime   @default(now())
+  updatedAt   DateTime?   @default(now())
+  createdAt   DateTime?   @default(now())
   LinkPost    LinkPost[]
   Ask         Ask[]
   Job         Job[]

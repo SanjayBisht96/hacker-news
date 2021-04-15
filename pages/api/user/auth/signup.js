@@ -35,7 +35,7 @@ const signUpWithGoogle = async (req, res) => {
     signUpWith
   );
 
-  await addUserToUserTable(userProfileModelData)
+  addUserToUserTable(userProfileModelData)
     .then((userData) => {
       sendAPIResponse.sendSuccessResponse({
         res,
