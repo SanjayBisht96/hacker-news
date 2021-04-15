@@ -11,60 +11,70 @@ generator client {
 }
 
 model User {
-  id          Int        @id @default(autoincrement())
-  name        String?    @unique
-  email       String?    @unique
+  id          String        @id @default(uuid())
+  name        String    @unique
+  email       String    @unique
   imageUrl    String?
-  accessToken String?
+  accessToken String
   signUpWith  String?
   joinedOn    DateTime?
+  updatedAt  DateTime   @default(now())
+  createdAt  DateTime   @default(now())
   LinkPost    LinkPost[]
   Ask         Ask[]
 }
 
 model LinkPost {
-  id           Int            @id @default(autoincrement())
-  userID       Int?
-  user         User?          @relation(fields: [userID], references: [id])
-  name         String?
-  url          String?        @db.VarChar(512)
-  tags         String?        @db.VarChar(512)
+  id           String        @id @default(uuid())
+  userID       String
+  user         User          @relation(fields: [userID], references: [id])
+  name         String
+  url          String?       @db.VarChar(512)
+  tags         String?       @db.VarChar(512)
+  updatedAt    DateTime      @default(now())
+  createdAt    DateTime      @default(now())
   LinkPostTags LinkPostTags[]
 }
 
 model LinkPostTags {
-  id     Int      @id @default(autoincrement())
-  postID Int
-  post   LinkPost @relation(fields: [postID], references: [id])
-  tagID  Int
-  tag    Tag      @relation(fields: [tagID], references: [id])
-
+  id         String     @id @default(uuid())
+  postID     String
+  post       LinkPost   @relation(fields: [postID], references: [id])
+  tagID      String
+  tag        Tag        @relation(fields: [tagID], references: [id])
+  updatedAt  DateTime   @default(now())
+  createdAt  DateTime   @default(now())
   @@unique([postID, tagID])
 }
 
 model Ask {
-  id      Int       @id @default(autoincrement())
-  userID  Int?
-  user    User?     @relation(fields: [userID], references: [id])
-  name    String?
-  text    String?   @db.VarChar(512)
-  tags    String?   @db.VarChar(512)
-  AskTags AskTags[]
+  id        String    @id @default(uuid())
+  userID    String
+  user      User      @relation(fields: [userID], references: [id])
+  name      String
+  text      String?   @db.VarChar(512)
+  tags      String?   @db.VarChar(512)
+  updatedAt DateTime  @default(now())
+  createdAt DateTime  @default(now())
+  AskTags   AskTags[]
 }
 
 model AskTags {
-  id    Int @id @default(autoincrement())
-  askID Int
-  ask   Ask @relation(fields: [askID], references: [id])
-  tagID Int
-  tag   Tag @relation(fields: [tagID], references: [id])
-
+  id        String        @id @default(uuid())
+  askID     String
+  ask       Ask           @relation(fields: [askID], references: [id])
+  tagID     String
+  tag       Tag           @relation(fields: [tagID], references: [id])
+  updatedAt DateTime      @default(now())
+  createdAt DateTime      @default(now())
   @@unique([askID, tagID])
 }
 
 model Tag {
-  id           Int            @id @default(autoincrement())
-  name         String?        @unique
+  id           String        @id @default(uuid())
+  name         String        @unique
+  updatedAt    DateTime      @default(now())
+  createdAt    DateTime      @default(now())
   LinkPostTags LinkPostTags[]
   AskTags      AskTags[]
 }

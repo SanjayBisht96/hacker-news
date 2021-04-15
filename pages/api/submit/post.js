@@ -31,7 +31,7 @@ export default async function postSubmit(req,res){
     const {formData} = req.body;
     const user = await prisma.user.findUnique({
         where: {
-          id:1,
+          id:"1",
         },
       });
     
@@ -39,9 +39,7 @@ export default async function postSubmit(req,res){
       return res.status(500).json({message: "failed to save post"});
     }
     formData["userID"] = user.id;
-    console.log("bc");    
     const CreatePost = await prisma.linkPost.create({ data: formData });
-    console.log("As")    
     if(formData["tags"]){
       await handleTags(formData,CreatePost.id);
     }
