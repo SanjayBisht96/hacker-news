@@ -1,0 +1,50 @@
+.btn {
+  color: $color-white;
+  text-decoration: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  transition: 0.3s all;
+
+  &-lg {
+    padding: 1.6rem 4rem;
+    font-size: 2.4rem;
+
+    @include respond(tab-port) {
+      padding: 1.4rem 3rem;
+      font-size: 2rem;
+      font-weight: 500;
+    }
+
+    @include respond(small-phone) {
+      padding: 1.5rem 2.5rem;
+      font-size: 2rem;
+      font-weight: 500;
+    }
+  }
+
+  &-md {
+    padding: 1rem 2.5rem;
+    font-size: 1.8rem;
+  }
+
+  &-sm {
+    padding: 1rem 2rem;
+    font-size: 1.4rem;
+  }
+
+  &:hover {
+    transform: scale(0.95);
+  }
+
+  &:disabled {
+    background-color: rgba($color: $color-grey, $alpha: 0.8);
+    color: rgba($color: $color-white, $alpha: 0.5);
+    
+    &:hover {
+      transform: none;
+    }
+  }
+}

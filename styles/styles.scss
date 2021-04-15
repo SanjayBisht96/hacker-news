@@ -5,3 +5,16 @@
 @import 'base/typography';
 
 @import 'pages/homepage';
+@import 'layouts/navbar.scss';
+
+@import 'components/buttons';
+@import 'components/form';
+
+@import 'sections/task-success.scss';
+
+@import 'pages/homepage';
+@import 'pages/posting';
+@import 'pages/auth';
+@import 'pages/admin/dashboard.scss';
+@import 'pages/admin/approve-jobs';
+@import 'pages/admin/manage-posts';

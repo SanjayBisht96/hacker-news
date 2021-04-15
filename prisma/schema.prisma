@@ -1,6 +1,10 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// 1. npx prisma init
+// 2. npx prisma migrate save --experimental
+// 3. npx prisma migrate dev --name init
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -11,39 +15,48 @@ generator client {
 }
 
 model User {
-  id          String        @id @default(uuid())
-  name        String    @unique
-  email       String    @unique
+  id          String     @id @default(uuid())
+  name        String     @unique
+  email       String     @unique
   imageUrl    String?
   accessToken String
   signUpWith  String?
   joinedOn    DateTime?
-  updatedAt  DateTime   @default(now())
-  createdAt  DateTime   @default(now())
+  updatedAt   DateTime   @default(now())
+  createdAt   DateTime   @default(now())
   LinkPost    LinkPost[]
   Ask         Ask[]
+  Job         Job[]
 }
 
 model LinkPost {
-  id           String        @id @default(uuid())
+  id           String         @id @default(uuid())
   userID       String
-  user         User          @relation(fields: [userID], references: [id])
+  user         User           @relation(fields: [userID], references: [id])
   name         String
-  url          String?       @db.VarChar(512)
-  tags         String?       @db.VarChar(512)
-  updatedAt    DateTime      @default(now())
-  createdAt    DateTime      @default(now())
+  url          String?        @db.VarChar(512)
+  tags         String?        @db.VarChar(512)
+  updatedAt    DateTime       @default(now())
+  createdAt    DateTime       @default(now())
   LinkPostTags LinkPostTags[]
 }
 
+model Admin {
+  id       String    @id @default(uuid())
+  email    String?
+  password String?
+  joinedOn DateTime?
+}
+
 model LinkPostTags {
-  id         String     @id @default(uuid())
-  postID     String
-  post       LinkPost   @relation(fields: [postID], references: [id])
-  tagID      String
-  tag        Tag        @relation(fields: [tagID], references: [id])
-  updatedAt  DateTime   @default(now())
-  createdAt  DateTime   @default(now())
+  id        String   @id @default(uuid())
+  postID    String
+  post      LinkPost @relation(fields: [postID], references: [id])
+  tagID     String
+  tag       Tag      @relation(fields: [tagID], references: [id])
+  updatedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+
   @@unique([postID, tagID])
 }
 
@@ -60,21 +73,33 @@ model Ask {
 }
 
 model AskTags {
-  id        String        @id @default(uuid())
+  id        String   @id @default(uuid())
   askID     String
-  ask       Ask           @relation(fields: [askID], references: [id])
+  ask       Ask      @relation(fields: [askID], references: [id])
   tagID     String
-  tag       Tag           @relation(fields: [tagID], references: [id])
-  updatedAt DateTime      @default(now())
-  createdAt DateTime      @default(now())
+  tag       Tag      @relation(fields: [tagID], references: [id])
+  updatedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+
   @@unique([askID, tagID])
 }
 
 model Tag {
-  id           String        @id @default(uuid())
-  name         String        @unique
-  updatedAt    DateTime      @default(now())
-  createdAt    DateTime      @default(now())
+  id           String         @id @default(uuid())
+  name         String         @unique
+  updatedAt    DateTime       @default(now())
+  createdAt    DateTime       @default(now())
   LinkPostTags LinkPostTags[]
   AskTags      AskTags[]
+}
+
+model Job {
+  id             String   @id @default(uuid())
+  userId         String
+  user           User     @relation(fields: [userId], references: [id])
+  jobTitle       String
+  jobDescription String?
+  jobURL         String
+  isActive       Boolean
+  postedOn       DateTime
 }

@@ -33,5 +33,7 @@ yarn-error.log*
 # vercel
 .vercel
 package-lock.json
-dev.env
-prod.env
+.env.production
+.env
+.env.development
+/prisma/migrations

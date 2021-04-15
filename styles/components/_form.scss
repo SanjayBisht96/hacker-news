@@ -1,0 +1,86 @@
+.form {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 2rem 0;
+
+  @include respond(tab-land) {
+    width: 55%;
+  }
+
+  @include respond(phone) {
+    width: 85%;
+  }
+  &__group {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  &__label {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $color-grey;
+
+    @include respond(small-phone) {
+      margin-left: 2rem;
+      font-size: 1.8rem;
+    }
+  }
+
+  &__input {
+    display: block;
+    width: 100%;
+    margin: 1rem 0;
+    padding: 2rem;
+    font-size: 2rem;
+    font-weight: 600;
+    background-color: $color-form-input-bg;
+    color: $color-black;
+    font-family: "Inter", sans-serif;
+    border: none;
+    outline: none;
+    transition: 0.5s all;
+  }
+
+  &__submit {
+    background-color: $color-primary;
+    padding: 1.5rem 3rem;
+    font-size: 1.5rem;
+
+    &__section {
+      height: 80vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__message {
+      font-size: 5rem;
+      font-weight: 500;
+      text-align: center;
+
+      @include respond(small-phone) {
+        font-size: 3rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+  &__error {
+    margin: 1rem 0;
+    color: $color-danger;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}

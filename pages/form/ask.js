@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
 
-const Navbar = dynamic(() => import('../../components/Navbar'));
+const Navbar = dynamic(() => import('../../components/layouts/Navbar'));
 const AskForm = dynamic(() => import('../../components/AskForm'));
 
 export default function CreatePost(){
