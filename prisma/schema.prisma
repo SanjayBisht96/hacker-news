@@ -16,14 +16,12 @@ generator client {
 
 model User {
   id          String     @id @default(uuid())
-  name        String     @unique
+  name        String
   email       String     @unique
   imageUrl    String?
   accessToken String?
   signUpWith  String?
   joinedOn    DateTime?
-  updatedAt   DateTime?   @default(now())
-  createdAt   DateTime?   @default(now())
   LinkPost    LinkPost[]
   Ask         Ask[]
   Job         Job[]

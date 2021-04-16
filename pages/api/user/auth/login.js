@@ -6,17 +6,8 @@ import { userDataIfExists } from 'database-utils/user';
 // Global class decalaration
 const sendAPIResponse = new SendResponse();
 
-const logInWithGoogle = async (req, res) => {
+const logInUser = async (req, res) => {
   const { email } = req.body;
-
-  // 0. Check if user has submitted correct data
-  if (!email) {
-    sendAPIResponse.sendErrorResponse({
-      res,
-      error: "Please provide your email",
-    });
-    return;
-  }
 
   const userData = await userDataIfExists(email);
 
@@ -37,6 +28,6 @@ const logInWithGoogle = async (req, res) => {
   });
 };
 
-const logInUserWithGoogleHandler = nc().post(logInWithGoogle);
+const logInUserHandler = nc().post(logInUser);
 
-export default logInUserWithGoogleHandler;
+export default logInUserHandler;

@@ -44,8 +44,6 @@ const publishJob = async (req, res) => {
     jobURL
   );
 
-  console.log(userJobModelData)
-
   await postAJobForReview(userJobModelData)
     .then((jobData) => {
       sendAPIResponse.sendSuccessResponse({
