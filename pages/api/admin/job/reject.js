@@ -1,14 +1,14 @@
 import nc from "next-connect";
 import { getUserDataById } from "database-utils/user";
-import { updateApprovalJobPost } from "database-utils/admin";
+import { updateRejectJobPost } from "database-utils/admin";
 import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 import { sendEmailToUsers } from "api-utils/functions";
 
-const approveJobByAdmin = async (req, res) => {
+const rejectJobByAdmin = async (req, res) => {
   const { jobId, userId } = req.body;
 
   // 1. Approve the job and update in the data base
-  updateApprovalJobPost(jobId).catch((error) => {
+  updateRejectJobPost(jobId).catch((error) => {
     sendErrorResponse({
       res,
       error,
@@ -29,10 +29,10 @@ const approveJobByAdmin = async (req, res) => {
     to: userEmail,
 
     // Subject of the message
-    subject: "Job posting approved",
+    subject: "Job posting rejected",
 
     // HTML body
-    html: `Your job post has been approved. Congratulations! You can login into your account to see your job postings`,
+    html: `Your job post has been rejected. There may be various reasons for that ie. Content quality`,
   };
 
   // 3. Send email to the user
@@ -41,7 +41,7 @@ const approveJobByAdmin = async (req, res) => {
       sendSuccessResponse({
         res,
         message:
-          "Job post has been approved & user has been notified via email",
+          "Job post has been rejected & user has been notified via email",
       });
     })
     .catch((error) => {
@@ -52,6 +52,6 @@ const approveJobByAdmin = async (req, res) => {
     });
 };
 
-const postApproveJobHandler = nc().post(approveJobByAdmin);
+const postRejectJobHandler = nc().post(rejectJobByAdmin);
 
-export default postApproveJobHandler;
+export default postRejectJobHandler;

@@ -7,7 +7,6 @@ const getJobDetails = async (req, res) => {
 
   getAJobByID(jobId)
     .then((jobData) => {
-      console.log(jobData);
       sendSuccessResponse({
         res,
         message: jobData.isActive

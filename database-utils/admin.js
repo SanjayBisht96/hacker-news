@@ -26,17 +26,25 @@ export const getAllJobPosts = async () => {
 };
 
 // Update approval status in job post
-export const updateApprovalJobPost = async (
-  jobId,
-  jobApprovalStatus = true
-) => {
-  console.log(jobId, jobApprovalStatus);
+export const updateApprovalJobPost = async (jobId) => {
   return await prisma.job.update({
     where: {
       id: jobId,
     },
     data: {
-      isActive: jobApprovalStatus,
+      isActive: true,
+    },
+  });
+};
+
+// Update rejecte status in job post
+export const updateRejectJobPost = async (jobId) => {
+  return await prisma.job.update({
+    where: {
+      id: jobId,
+    },
+    data: {
+      isRejected: true,
     },
   });
 };

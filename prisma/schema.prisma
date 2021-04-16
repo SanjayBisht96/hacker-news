@@ -15,16 +15,15 @@ generator client {
 }
 
 model User {
-  id          String     @id @default(uuid())
-  name        String
-  email       String     @unique
-  imageUrl    String?
-  accessToken String?
-  signUpWith  String?
-  joinedOn    DateTime?
-  LinkPost    LinkPost[]
-  Ask         Ask[]
-  Job         Job[]
+  id         String     @id @default(uuid())
+  name       String
+  email      String     @unique
+  imageUrl   String?
+  signUpWith String?
+  joinedOn   DateTime?
+  LinkPost   LinkPost[]
+  Ask        Ask[]
+  Job        Job[]
 }
 
 model LinkPost {
@@ -99,5 +98,6 @@ model Job {
   jobDescription String?
   jobURL         String
   isActive       Boolean
+  isRejected     Boolean?
   postedOn       DateTime
 }
