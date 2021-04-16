@@ -78,6 +78,9 @@ export const handleJobPosting = async (jobTitle, jobDescription, jobURL) => {
     method: "post",
     url: `${process.env.API_ROOT}/user/job/post`,
     data: {
+      // TODO: CHANGE USERID
+      userId:
+        "d182f0677b21e163464078041e1774a056eae3061cc6204d412d8f52fad4290eee0b20ab612d1e815f8b1c4f09ec0f4788cc4e086acdd73b13b2d5819af1c0056923b7fb63ed75f93f668dfcb77796cbbe21203c1ba8f7a07f89b89e8b96f45c672638e581eba30b67f0758b3521752c4e659046369d10ad00a78893e7c01c293a228b8a",
       jobTitle,
       jobDescription,
       jobURL,
