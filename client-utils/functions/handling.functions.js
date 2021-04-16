@@ -90,3 +90,16 @@ export const handleJobPosting = async (jobTitle, jobDescription, jobURL) => {
       return error.response.data;
     });
 };
+
+export const handleGetAllJobs = async () => {
+  return axios({
+    method: "get",
+    url: `${process.env.API_ROOT}/admin/job`,
+  })
+    .then((res) => {
+      return res.data.payload;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+};
