@@ -1,35 +1,36 @@
 import nc from "next-connect";
 import { getAJobByID } from "database-utils/user";
-import SendResponse from "api-utils/SendResponse";
+import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 
-// Global class decalaration
-const sendAPIResponse = new SendResponse();
+const getJobDetails = async (req, res) => {
+  const { jobId } = req.body;
 
-const getJob = async (req, res) => {
-  const { jobId } = req.query;
-
-  // 0. Check if user has submitted correct data
-  if (!jobId) {
-    sendAPIResponse.sendErrorResponse({
-      res,
-      message: "Please enter your job ID",
-    });
-    return;
-  }
-
-  await getAJobByID(jobId)
+  getAJobByID(jobId)
     .then((jobData) => {
-      sendAPIResponse.sendSuccessResponse({
+      console.log(jobData);
+      sendSuccessResponse({
         res,
-        message: "Your job post has been sent for review.",
-        payload: jobData,
+        message: jobData.isActive
+          ? "Your job post has been approved."
+          : "Your job post has been pending for review.",
+        payload: {
+          jobId: jobData.id,
+          jobTitle: jobData.jobTitle,
+          jobDescription: jobData.jobDescription,
+          jobURL: jobData.jobURL,
+          isActive: jobData.isActive,
+          postedOn: jobData.postedOn,
+        },
       });
     })
     .catch((error) => {
-      console.log(error);
+      sendErrorResponse({
+        res,
+        error,
+      });
     });
 };
 
-const getJobAdminHandler = nc().get(getJob);
+const getJobDetailsUserHandler = nc().post(getJobDetails);
 
-export default getJobAdminHandler;
+export default getJobDetailsUserHandler;
