@@ -19,3 +19,24 @@ export const addAdminToAdminTable = async (adminData) => {
     },
   });
 };
+
+// Update approval status in job post
+export const getAllJobPosts = async () => {
+  return await prisma.job.findMany();
+};
+
+// Update approval status in job post
+export const updateApprovalJobPost = async (
+  jobId,
+  jobApprovalStatus = true
+) => {
+  console.log(jobId, jobApprovalStatus);
+  return await prisma.job.update({
+    where: {
+      id: jobId,
+    },
+    data: {
+      isActive: jobApprovalStatus,
+    },
+  });
+};

@@ -11,6 +11,15 @@ export const userDataIfExists = async (email) => {
   });
 };
 
+// Check if username already exists
+export const getUserDataById = async (userId) => {
+  return await prisma.user.findFirst({
+    where: {
+      id: userId,
+    },
+  });
+};
+
 // Add user to the tabel
 export const addUserToUserTable = async (userData) => {
   return await prisma.user.create({

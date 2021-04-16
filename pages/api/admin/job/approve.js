@@ -1,35 +1,57 @@
 import nc from "next-connect";
-import { getAJobByID } from "database-utils/user";
-import SendResponse from "api-utils/SendResponse";
+import { getAJobByID, getUserDataById } from "database-utils/user";
+import { updateApprovalJobPost } from "database-utils/admin";
+import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
+import { sendEmailToUsers } from "api-utils/functions";
 
-// Global class decalaration
-const sendAPIResponse = new SendResponse();
+const approveJobByAdmin = async (req, res) => {
+  const { jobId, userId } = req.body;
 
-const approveJob = async (req, res) => {
-  const { jobId } = req.body;
-
-  // 0. Check if user has submitted correct data
-  if (!jobId) {
-    sendAPIResponse.sendErrorResponse({
+  // 1. Approve the job and update in the data base
+  updateApprovalJobPost(jobId).catch((error) => {
+    sendErrorResponse({
       res,
-      message: "Please enter your job ID",
+      error,
     });
     return;
-  }
+  });
 
-  getAJobByID(jobId)
-    .then((jobData) => {
-      sendAPIResponse.sendSuccessResponse({
+  // 3. Get user data by user ID
+  const userData = await getUserDataById(userId);
+
+  const userEmail = userData.email;
+
+  // Message object
+  let emailMessageBody = {
+    from: `Hacker News <${process.env.GMAIL_ACCOUNT_EMAIL_ADDRESS}>`,
+
+    // Comma separated list of recipients
+    to: userEmail,
+
+    // Subject of the message
+    subject: "Activate Your Account",
+
+    // HTML body
+    html: `Your job post has been approved. Congratulations! You can login into your account to see your job postings`,
+  };
+
+  // 3. Send email to the user
+  sendEmailToUsers(emailMessageBody)
+    .then(() => {
+      sendSuccessResponse({
         res,
-        message: "Your job post has been sent for review.",
-        payload: jobData,
+        message:
+          "Job post has been approved & user has been notified via email",
       });
     })
     .catch((error) => {
-      console.log(error);
+      sendErrorResponse({
+        res,
+        error,
+      });
     });
 };
 
-const postApproveJobHandler = nc().post(approveJob);
+const postApproveJobHandler = nc().post(approveJobByAdmin);
 
 export default postApproveJobHandler;
