@@ -1,20 +1,42 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "components/layouts/Navbar";
-import { handleGetAllJobs } from "client-utils/functions/handling.functions";
+import {
+  handleGetAllJobs,
+  handleJobApproval,
+  handleJobReject,
+} from "client-utils/functions/handling.functions";
 
 const AdminApproveJobs = () => {
   const [allJobsData, setAllJobsData] = useState([]);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
+  const [togglePageReRender, setTogglePageReRender] = useState(false);
 
   const onHandlingFetchAllJobs = async () => {
     const allJobsFetchingResponse = await handleGetAllJobs();
     setAllJobsData(allJobsFetchingResponse);
+    setIsPageLoaded(true);
   };
 
   useEffect(() => {
     onHandlingFetchAllJobs();
-  }, []);
+  }, [togglePageReRender]);
 
-  console.log(allJobsData);
+  const onApproveJobClicked = async (event, jobId, userId) => {
+    event.preventDefault();
+
+    const jobApprovalResponse = await handleJobApproval(jobId, userId);
+    console.log(jobApprovalResponse);
+
+    if (jobApprovalResponse.status === "Success") setTogglePageReRender(!togglePageReRender);
+  };
+
+  const onRejectJobClicked = async (event, jobId, userId) => {
+    event.preventDefault();
+
+    const jobRejectResponse = await handleJobReject(jobId, userId);
+
+    if (jobRejectResponse.status === "Success") setTogglePageReRender(!togglePageReRender);
+  };
 
   return (
     <main className="adminapprovejobs">
@@ -32,7 +54,7 @@ const AdminApproveJobs = () => {
           </div>
 
           <div className="adminapprovejobs__container__content__actions">
-            {allJobsData.length >= 0 ? (
+            {isPageLoaded ? (
               <div className="adminapprovejobs__container__content__actions__cards">
                 {allJobsData.map((jobData, key) => {
                   const {
@@ -46,7 +68,7 @@ const AdminApproveJobs = () => {
                     isActive,
                   } = jobData;
 
-                  return (
+                  return allJobsData.length >= 0 ? (
                     <AdminDashboardJobApproval
                       id={id}
                       jobTitle={jobTitle}
@@ -56,8 +78,12 @@ const AdminApproveJobs = () => {
                       userId={userId}
                       isRejected={isRejected}
                       isActive={isActive}
+                      onApproveJobClicked={onApproveJobClicked}
+                      onRejectJobClicked={onRejectJobClicked}
                       key={key}
                     />
+                  ) : (
+                    <h1>No jobs found</h1>
                   );
                 })}
               </div>
@@ -82,6 +108,8 @@ const AdminDashboardJobApproval = ({
   userId,
   isRejected,
   isActive,
+  onApproveJobClicked,
+  onRejectJobClicked,
 }) => {
   return (
     <div
@@ -100,16 +128,24 @@ const AdminDashboardJobApproval = ({
         </button>
       </a>
       <div className="adminapprovejobs__container__content__actions__cards__item__action">
-        <button
-          className={`btn btn-md adminapprovejobs__container__content__actions__cards__item__action__button__primary`}
-        >
-          {isActive ? "Approved" : "Approve"}
-        </button>
-        <button
-          className={`btn btn-md adminapprovejobs__container__content__actions__cards__item__action__button`}
-        >
-          {isRejected ? "Rejected" : "Remove"}
-        </button>
+        {!isRejected && (
+          <button
+            className={`btn btn-md adminapprovejobs__container__content__actions__cards__item__action__button__primary`}
+            onClick={(event) => onApproveJobClicked(event, id, userId)}
+            disabled={isActive}
+          >
+            {isActive ? "Approved" : "Approve"}
+          </button>
+        )}
+        {!isActive && (
+          <button
+            className={`btn btn-md adminapprovejobs__container__content__actions__cards__item__action__button`}
+            onClick={(event) => onRejectJobClicked(event, id, userId)}
+            disabled={isRejected}
+          >
+            {isRejected ? "Rejected" : "Remove"}
+          </button>
+        )}
       </div>
     </div>
   );

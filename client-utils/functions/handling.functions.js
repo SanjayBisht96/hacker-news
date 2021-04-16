@@ -106,3 +106,37 @@ export const handleGetAllJobs = async () => {
       return error.response.data;
     });
 };
+
+export const handleJobApproval = async (jobId, userId) => {
+  return axios({
+    method: "post",
+    url: `${process.env.API_ROOT}/admin/job/approve`,
+    data: {
+      userId,
+      jobId,
+    },
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+};
+
+export const handleJobReject = async (jobId, userId) => {
+  return axios({
+    method: "post",
+    url: `${process.env.API_ROOT}/admin/job/reject`,
+    data: {
+      userId,
+      jobId,
+    },
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+};

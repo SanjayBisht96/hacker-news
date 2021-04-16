@@ -61,12 +61,23 @@
                 background-color: transparent;
                 color: $color-danger;
                 border: 2px solid $color-danger;
-                margin: 0 0 0 2rem;
+                
 
                 &__primary {
                   background-color: $color-black;
                   color: $color-white;
                   border: 2px solid $color-black;
+                  margin: 0 2rem 0 0;
+                }
+
+                &:disabled {
+                  background-color: rgba($color: $color-white, $alpha: 0.8);
+                  color: rgba($color: $color-danger, $alpha: 1);
+                  cursor: not-allowed;
+                  
+                  &:hover {
+                    transform: none;
+                  }
                 }
               }
             }
