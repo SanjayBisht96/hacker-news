@@ -1,10 +1,7 @@
 import nc from "next-connect";
-import SendResponse from "api-utils/SendResponse";
 import { encryptData } from "api-utils/auth";
-import { userDataIfExists } from 'database-utils/user';
-
-// Global class decalaration
-const sendAPIResponse = new SendResponse();
+import { userDataIfExists } from "database-utils/user";
+import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 
 const logInUser = async (req, res) => {
   const { email } = req.body;
@@ -12,7 +9,7 @@ const logInUser = async (req, res) => {
   const userData = await userDataIfExists(email);
 
   if (userData) {
-    sendAPIResponse.sendSuccessResponse({
+    sendSuccessResponse({
       res,
       message: "User logged in successfully.",
       payload: {
@@ -22,7 +19,7 @@ const logInUser = async (req, res) => {
     return;
   }
 
-  sendAPIResponse.sendErrorResponse({
+  sendErrorResponse({
     res,
     error: "No user found with this email. Try signing up",
   });
