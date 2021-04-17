@@ -1,27 +1,15 @@
 import nc from "next-connect";
-import SendResponse from "api-utils/SendResponse";
 import { encryptData } from "api-utils/auth";
-import { userDataIfExists } from 'database-utils/user';
+import { userDataIfExists } from "database-utils/user";
+import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 
-// Global class decalaration
-const sendAPIResponse = new SendResponse();
-
-const logInWithGoogle = async (req, res) => {
+const logInUser = async (req, res) => {
   const { email } = req.body;
-
-  // 0. Check if user has submitted correct data
-  if (!email) {
-    sendAPIResponse.sendErrorResponse({
-      res,
-      error: "Please provide your email",
-    });
-    return;
-  }
 
   const userData = await userDataIfExists(email);
 
   if (userData) {
-    sendAPIResponse.sendSuccessResponse({
+    sendSuccessResponse({
       res,
       message: "User logged in successfully.",
       payload: {
@@ -31,12 +19,12 @@ const logInWithGoogle = async (req, res) => {
     return;
   }
 
-  sendAPIResponse.sendErrorResponse({
+  sendErrorResponse({
     res,
     error: "No user found with this email. Try signing up",
   });
 };
 
-const logInUserWithGoogleHandler = nc().post(logInWithGoogle);
+const logInUserHandler = nc().post(logInUser);
 
-export default logInUserWithGoogleHandler;
+export default logInUserHandler;

@@ -5,5 +5,6 @@ export const adminProfileModel = (email, password) => {
     id: uuidv4(),
     email: email,
     password: password,
+    joinedOn: new Date(Date.now()),
   };
 };

@@ -1,27 +1,16 @@
 import nc from "next-connect";
 import { userProfileModel } from "models/user";
-import SendResponse from "api-utils/SendResponse";
 import { userDataIfExists, addUserToUserTable } from "database-utils/user";
+import { encryptData } from "api-utils/auth";
+import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 
-// Global class decalaration
-const sendAPIResponse = new SendResponse();
-
-const signUpWithGoogle = async (req, res) => {
+const signUpUser = async (req, res) => {
   const { name, email, imageUrl, signUpWith } = req.body;
-
-  // 0. Check if user has submitted correct data
-  if (!name || !email || !imageUrl || !signUpWith) {
-    sendAPIResponse.sendErrorResponse({
-      res,
-      error: "Please provide correct details",
-    });
-    return;
-  }
 
   const userData = await userDataIfExists(email);
 
   if (userData) {
-    sendAPIResponse.sendErrorResponse({
+    sendErrorResponse({
       res,
       error: "Email already exists. Try logging in",
     });
@@ -37,20 +26,22 @@ const signUpWithGoogle = async (req, res) => {
 
   addUserToUserTable(userProfileModelData)
     .then((userData) => {
-      sendAPIResponse.sendSuccessResponse({
+      const hasedId = encryptData(userData.id);
+
+      sendSuccessResponse({
         res,
         message: "User signed up successfully.",
-        payload: userData,
+        payload: { id: hasedId },
       });
     })
     .catch((error) => {
-      sendAPIResponse.sendErrorResponse({
+      sendErrorResponse({
         res,
         error,
       });
     });
 };
 
-const signUpUserWithGoogleHandler = nc().post(signUpWithGoogle);
+const signUpUserHandler = nc().post(signUpUser);
 
-export default signUpUserWithGoogleHandler;
+export default signUpUserHandler;

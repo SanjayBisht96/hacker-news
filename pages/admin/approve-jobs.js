@@ -1,7 +1,43 @@
-import React from "react";
-import Navbar from "../../components/layouts/Navbar";
+import React, { useEffect, useState } from "react";
+import Navbar from "components/layouts/Navbar";
+import {
+  handleGetAllJobs,
+  handleJobApproval,
+  handleJobReject,
+} from "client-utils/functions/handling.functions";
 
 const AdminApproveJobs = () => {
+  const [allJobsData, setAllJobsData] = useState([]);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
+  const [togglePageReRender, setTogglePageReRender] = useState(false);
+
+  const onHandlingFetchAllJobs = async () => {
+    const allJobsFetchingResponse = await handleGetAllJobs();
+    setAllJobsData(allJobsFetchingResponse);
+    setIsPageLoaded(true);
+  };
+
+  useEffect(() => {
+    onHandlingFetchAllJobs();
+  }, [togglePageReRender]);
+
+  const onApproveJobClicked = async (event, jobId, userId) => {
+    event.preventDefault();
+
+    const jobApprovalResponse = await handleJobApproval(jobId, userId);
+    console.log(jobApprovalResponse);
+
+    if (jobApprovalResponse.status === "Success") setTogglePageReRender(!togglePageReRender);
+  };
+
+  const onRejectJobClicked = async (event, jobId, userId) => {
+    event.preventDefault();
+
+    const jobRejectResponse = await handleJobReject(jobId, userId);
+
+    if (jobRejectResponse.status === "Success") setTogglePageReRender(!togglePageReRender);
+  };
+
   return (
     <main className="adminapprovejobs">
       <Navbar />
@@ -18,31 +54,42 @@ const AdminApproveJobs = () => {
           </div>
 
           <div className="adminapprovejobs__container__content__actions">
-            <div className="adminapprovejobs__container__content__actions__cards">
-              <AdminDashboardJobApproval
-                jobTitle="BuildZoom (YC W13) is hiring a growth associate"
-                jobDescription="Control the jobs that will be posted on the platform"
-                jobURL="https://jobs.lever.co/buildzoom"
-              />
-              <AdminDashboardJobApproval
-                jobTitle="BuildZoom (YC W13) is hiring a growth associate"
-                jobDescription="Edit or delete any post"
-                ctaText="Manage users"
-                jobURL="https://jobs.lever.co/buildzoom"
-              />
-              <AdminDashboardJobApproval
-                jobTitle="BuildZoom (YC W13) is hiring a growth associate"
-                jobDescription="List of all users on the platform"
-                ctaText="All users"
-                jobURL="https://jobs.lever.co/buildzoom"
-              />
-              <AdminDashboardJobApproval
-                jobTitle="BuildZoom (YC W13) is hiring a growth associate"
-                jobDescription="List of all users on the platform"
-                ctaText="All users"
-                jobURL="https://jobs.lever.co/buildzoom"
-              />
-            </div>
+            {isPageLoaded ? (
+              <div className="adminapprovejobs__container__content__actions__cards">
+                {allJobsData.map((jobData, key) => {
+                  const {
+                    id,
+                    jobTitle,
+                    jobDescription,
+                    jobURL,
+                    postedOn,
+                    userId,
+                    isRejected,
+                    isActive,
+                  } = jobData;
+
+                  return allJobsData.length >= 0 ? (
+                    <AdminDashboardJobApproval
+                      id={id}
+                      jobTitle={jobTitle}
+                      jobDescription={jobDescription}
+                      jobURL={jobURL}
+                      postedOn={postedOn}
+                      userId={userId}
+                      isRejected={isRejected}
+                      isActive={isActive}
+                      onApproveJobClicked={onApproveJobClicked}
+                      onRejectJobClicked={onRejectJobClicked}
+                      key={key}
+                    />
+                  ) : (
+                    <h1>No jobs found</h1>
+                  );
+                })}
+              </div>
+            ) : (
+              <h1>Loading...</h1>
+            )}
           </div>
         </div>
       </section>
@@ -52,9 +99,23 @@ const AdminApproveJobs = () => {
 
 export default AdminApproveJobs;
 
-const AdminDashboardJobApproval = ({ jobTitle, jobDescription, jobURL }) => {
+const AdminDashboardJobApproval = ({
+  id,
+  jobTitle,
+  jobDescription,
+  jobURL,
+  postedOn,
+  userId,
+  isRejected,
+  isActive,
+  onApproveJobClicked,
+  onRejectJobClicked,
+}) => {
   return (
-    <div className="adminapprovejobs__container__content__actions__cards__item">
+    <div
+      className="adminapprovejobs__container__content__actions__cards__item"
+      key={id}
+    >
       <h3 className="heading-sub adminapprovejobs__container__content__actions__cards__item__heading">
         {jobTitle}
       </h3>
@@ -67,12 +128,24 @@ const AdminDashboardJobApproval = ({ jobTitle, jobDescription, jobURL }) => {
         </button>
       </a>
       <div className="adminapprovejobs__container__content__actions__cards__item__action">
-        <button className="btn btn-md adminapprovejobs__container__content__actions__cards__item__action__button__primary">
-          Approve
-        </button>
-        <button className="btn btn-md adminapprovejobs__container__content__actions__cards__item__action__button">
-          Remove
-        </button>
+        {!isRejected && (
+          <button
+            className={`btn btn-md adminapprovejobs__container__content__actions__cards__item__action__button__primary`}
+            onClick={(event) => onApproveJobClicked(event, id, userId)}
+            disabled={isActive}
+          >
+            {isActive ? "Approved" : "Approve"}
+          </button>
+        )}
+        {!isActive && (
+          <button
+            className={`btn btn-md adminapprovejobs__container__content__actions__cards__item__action__button`}
+            onClick={(event) => onRejectJobClicked(event, id, userId)}
+            disabled={isRejected}
+          >
+            {isRejected ? "Rejected" : "Remove"}
+          </button>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Navbar from "../components/layouts/Navbar";
-import { FormLabelInputGroup } from "../components/sections/FormElements";
+import { FormLabelInputGroup, FormLabelTextAreaGroup } from "../components/sections/FormElements";
 import { handleJobPosting } from "../client-utils/functions/handling.functions";
 import SuccessContainer from "../components/sections/SuccessContainer";
 // import SuccessIcon from '../assets/images/success-icon.png';
@@ -40,14 +40,14 @@ const JobPosting = () => {
       <section className="posting__container">
         {!isJobSendForApproval ? (
           <div className="posting__container__content">
-            <h3 className="heading-sub--sub">Submit A Job Posting</h3>
+            <h3 className="heading-sub">Submit A Job Posting</h3>
             <form className="form posting__container__content__form">
               <FormLabelInputGroup
                 label="Job Title *"
                 inputType="text"
                 handleInput={(event) => setJobTitle(event.target.value)}
               />
-              <FormLabelInputGroup
+              <FormLabelTextAreaGroup
                 label="Job Description *"
                 inputType="text"
                 handleInput={(event) => setJobDescription(event.target.value)}

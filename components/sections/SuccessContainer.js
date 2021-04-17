@@ -10,10 +10,10 @@ const SuccessContainer = (props) => {
           src="../assets/images/success-icon.png"
           className="tasksuccess__container__image"
         />
-        <h3 className="heading-sub--sub tasksuccess__container__heading">
+        <h3 className="heading-sub tasksuccess__container__heading">
           {heading}
         </h3>
-        <p className="paragraph--sub tasksuccess__container__paragraph">
+        <p className="paragraph-sub tasksuccess__container__paragraph">
           {paragraph}
         </p>
         <a href="/">

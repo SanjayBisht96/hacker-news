@@ -40,8 +40,9 @@
   }
 
   &:disabled {
-    background-color: rgba($color: $color-grey, $alpha: 0.8);
-    color: rgba($color: $color-white, $alpha: 0.5);
+    background-color: rgba($color: $color-white, $alpha: 0.8);
+    color: rgba($color: $color-black, $alpha: 1);
+    cursor: not-allowed;
     
     &:hover {
       transform: none;

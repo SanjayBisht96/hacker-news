@@ -22,7 +22,7 @@ const AdminDashoard = () => {
               <AdminDashboardActionCard
                 heading="Approve Job Postings"
                 paragraph=" Control the jobs that will be posted on the platform"
-                ctaText="Approve"
+                ctaText="View job posting"
                 link="/admin/approve-jobs"
               />
               <AdminDashboardActionCard
