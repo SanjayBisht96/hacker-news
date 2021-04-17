@@ -1,27 +1,41 @@
-import styles from './index.module.scss';
 import PropTypes from 'prop-types';
+import { FormLabelInputGroup } from "../../components/sections/FormElements";
 
 export default function PostForm({handleChange,handleSubmit}) {
     return(
     <>
-      <div className={styles.formContainer}>
-          <div className={styles.postTitle}>Submit a LinkPost</div>
-         <label>
-          Title
-          <input className={styles.inputBox} name="name" onChange={handleChange} autoComplete="off"/>
-          </label>
-          <br />
-         <label>
-          URL
-          <input type="url" className={styles.inputBox} name="url" onChange={handleChange} autoComplete="off"/>
-         </label>
-         <br/>
-         <label>
-          Tags
-          <textarea className={styles.inputBox} name="tags" onChange={handleChange} autoComplete="off"/>
-         </label>        
-         <button className={styles.submit + ' bg-blue-500 hover:bg-blue-700 text-white font-bold rounded'} onClick={handleSubmit}>Submit</button>    
-      </div>
+      <section className="posting__container">
+        <div className="posting__container__content">
+          <h3 className="heading-sub--sub">Submit A Post</h3>
+          <form className="form posting__container__content__form">
+            <FormLabelInputGroup
+              label="Post Title *"
+              name={"name"}
+              inputType="text"
+              handleInput={handleChange}
+            />
+            <FormLabelInputGroup
+              label="Post URL *"
+              name={"url"}
+              inputType="text"
+              handleInput={handleChange}
+            />
+            <FormLabelInputGroup
+              label="Post Tags"
+              name={"tags"}              
+              inputType="text"
+              handleInput={handleChange}
+            />
+            <p className="paragraph--sub">
+              *To add tags, start tags by ‘#’ and end with a single space.
+            </p>
+            <button className="btn btn-md form__submit posting__container__content__form__submit" onClick={handleSubmit}>
+              Publish A Post
+            </button>
+          </form>
+        </div>
+      </section>
+
     </>
     );
 }

@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import Router from 'next/router';
+import { HOME_URL } from '../../const'
 
 const Navbar = dynamic(() => import('../../components/layouts/Navbar'));
 const PostForm = dynamic(() => import('../../components/PostForm'));
@@ -36,16 +38,19 @@ export default function CreatePost(){
     
         if(res.status === 200){
           const {message} = await res.json();
+          Router.push(HOME_URL);
         }
     };
   
     return (
       <>
+      <main className="posting">
         <Navbar/>
         <PostForm 
           handleChange={handleChange} 
           handleSubmit={handleSubmit}
         />
+        </main>
       </>
     );
   }

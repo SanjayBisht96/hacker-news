@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import Router from 'next/router';
+import { ASK_LIST_URL } from '../../const'
 
 const Navbar = dynamic(() => import('../../components/layouts/Navbar'));
 const AskForm = dynamic(() => import('../../components/AskForm'));
@@ -36,6 +38,7 @@ export default function CreatePost(){
     
         if(res.status === 200){
           const {message} = await res.json();
+          Router.push(ASK_LIST_URL);
         }
     };
   
