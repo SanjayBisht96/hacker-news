@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import {EDIT_LINK_POST_URL} from '../../const';
 
 export default function Post({
     postTitle,
@@ -6,7 +7,8 @@ export default function Post({
     postedBefore,
     postComments,
     postUpvotes,
-    postUrl
+    postUrl,
+    postID
   }){
     return (
       <div className="homepage__container__content__main__posts__item">
@@ -54,6 +56,9 @@ export default function Post({
             <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
               {postComments}
             </p>
+            <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
+              <a href={EDIT_LINK_POST_URL + postID} >edit</a>
+            </p>            
           </div>
         </div>
       </div>
@@ -66,6 +71,7 @@ export default function Post({
     postedBefore: PropTypes.string,
     postComments: PropTypes.string,
     postUpvotes:PropTypes.number,
-    postUrl: PropTypes.string
+    postUrl: PropTypes.string,
+    postID: PropTypes.string
   };
   
