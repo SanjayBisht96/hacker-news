@@ -28,7 +28,8 @@ export default function Home({postList}) {
                   createdAt:postedBefore,
                   postComments=["comments"],
                   postUpvotes=["1xx"],
-                  url: postUrl
+                  url: postUrl,
+                  id:postID
                 } = postData;
 
                 return (
@@ -39,6 +40,7 @@ export default function Home({postList}) {
                     postComments={postComments}
                     postUpvotes={postUpvotes}
                     postUrl={postUrl}
+                    postID={postID}
                     key={key}
                   />
                 );
