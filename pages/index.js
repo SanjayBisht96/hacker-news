@@ -1,12 +1,18 @@
-import dynamic from 'next/dynamic';
-import superJson from 'superjson';
-import PropTypes from 'prop-types';
-import fetchPost from '../utils/fetchPost';
+import { useEffect } from "react";
+import dynamic from "next/dynamic";
+import superJson from "superjson";
+import PropTypes from "prop-types";
+import fetchPost from "../utils/fetchPost";
+import { useAuth } from "client-utils/hooks/auth";
 
-const Navbar = dynamic(() => import('../components/layouts/Navbar'));
-const Post = dynamic(() => import('../components/Post'));
+const Navbar = dynamic(() => import("../components/layouts/Navbar"));
+const Post = dynamic(() => import("../components/Post"));
 
-export default function Home({postList}) {
+const Home = ({ postList }) => {
+  useEffect(() => {
+    const user = useAuth();
+    console.log(user);
+  }, []);
 
   return (
     <main className="homepage">
@@ -23,12 +29,12 @@ export default function Home({postList}) {
             <div className="homepage__container__content__main__posts">
               {postList.map((postData, key) => {
                 const {
-                  name:postTitle,
-                  postedBy=['sanjay'],
-                  createdAt:postedBefore,
-                  postComments=["comments"],
-                  postUpvotes=["1xx"],
-                  url: postUrl
+                  name: postTitle,
+                  postedBy = ["sanjay"],
+                  createdAt: postedBefore,
+                  postComments = ["comments"],
+                  postUpvotes = ["1xx"],
+                  url: postUrl,
                 } = postData;
 
                 return (
@@ -49,21 +55,19 @@ export default function Home({postList}) {
       </section>
     </main>
   );
+};
 
-  
-  
-}
-
+export default Home;
 
 export const getServerSideProps = async function () {
-      let postList = await fetchPost();
-      let {json} =  superJson.serialize(postList);
-      postList = json;
+  let postList = await fetchPost();
+  let { json } = superJson.serialize(postList);
+  postList = json;
   return {
-    props: {postList },
-  }
-}
+    props: { postList },
+  };
+};
 
 Home.propTypes = {
-  postList: PropTypes.array
+  postList: PropTypes.array,
 };

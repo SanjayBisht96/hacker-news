@@ -12,10 +12,11 @@ export const handleSignUpUser = async (payload) => {
       const { payload } = res.data;
 
       const localUserData = {
-        userId: payload.id,
+        userType: "USER",
+        id: payload.id,
       };
 
-      localStorage.setItem("userData", JSON.stringify(localUserData));
+      localStorage.setItem("data", JSON.stringify(localUserData));
 
       return res.data;
     })
@@ -36,10 +37,11 @@ export const handleLogInUser = async (payload) => {
       const { payload } = res.data;
 
       const localUserData = {
-        userId: payload.id,
+        userType: "USER",
+        id: payload.id,
       };
 
-      localStorage.setItem("userData", JSON.stringify(localUserData));
+      localStorage.setItem("data", JSON.stringify(localUserData));
 
       return res.data;
     })
@@ -61,10 +63,11 @@ export const handleLogInAdmin = async (email, password) => {
       const { payload } = res.data;
 
       const localAdminData = {
-        adminId: payload.adminId,
+        userType: "ADMIN",
+        id: payload.adminId,
       };
 
-      localStorage.setItem("adminData", JSON.stringify(localAdminData));
+      localStorage.setItem("data", JSON.stringify(localAdminData));
 
       return res.data;
     })
