@@ -24,18 +24,20 @@ model User {
   LinkPost   LinkPost[]
   Ask        Ask[]
   Job        Job[]
+  Comment    Comment[]
 }
 
 model LinkPost {
-  id           String         @id @default(uuid())
-  userID       String
-  user         User           @relation(fields: [userID], references: [id])
-  name         String
-  url          String?        @db.VarChar(512)
-  tags         String?        @db.VarChar(512)
-  updatedAt    DateTime       @default(now())
-  createdAt    DateTime       @default(now())
-  LinkPostTags LinkPostTags[]
+  id              String            @id @default(uuid())
+  userID          String
+  user            User              @relation(fields: [userID], references: [id])
+  name            String
+  url             String?           @db.VarChar(512)
+  tags            String?           @db.VarChar(512)
+  updatedAt       DateTime          @default(now())
+  createdAt       DateTime          @default(now())
+  LinkPostTags    LinkPostTags[]
+  LinkPostComment LinkPostComment[]
 }
 
 model Admin {
@@ -100,4 +102,25 @@ model Job {
   isActive       Boolean
   isRejected     Boolean?
   postedOn       DateTime
+}
+
+model Comment {
+  id              String            @id @default(uuid())
+  comment         String
+  parentCommentID String
+  userID          String
+  user            User              @relation(fields: [userID], references: [id])
+  LinkPostComment LinkPostComment[]
+}
+
+model LinkPostComment {
+  id        String   @id @default(uuid())
+  postID    String
+  post      LinkPost @relation(fields: [postID], references: [id])
+  commentID String
+  comment   Comment  @relation(fields: [commentID], references: [id])
+  updatedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  @@unique([postID, commentID])
 }
