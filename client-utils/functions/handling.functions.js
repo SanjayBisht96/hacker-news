@@ -50,6 +50,13 @@ export const handleLogInUser = async (payload) => {
     });
 };
 
+export const handleSignoutUser = () => {
+  localStorage.clear();
+
+  window.location = "/";
+  return;
+};
+
 export const handleLogInAdmin = async (email, password) => {
   return axios({
     method: "post",
