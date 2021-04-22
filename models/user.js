@@ -10,6 +10,24 @@ export const userProfileModel = (name, email, imageUrl, signUpWith) => {
   };
 };
 
+export const userLinkPostModel = (userID, title, url, tags) => {
+  return {
+    id: uuidv4(),
+    userID: userID,
+    title: title,
+    url: url,
+    tags: tags,
+  };
+};
+
+export const userLinkPostTagModel = (postID, tag) => {
+  return {
+    id: uuidv4(),
+    postID,
+    tag,
+  };
+};
+
 export const userJobModel = (userId, jobTitle, jobDescription, jobURL) => {
   return {
     id: uuidv4(),

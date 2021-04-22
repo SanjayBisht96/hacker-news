@@ -22,7 +22,6 @@ model User {
   signUpWith String?
   joinedOn   DateTime?
   LinkPost   LinkPost[]
-  Ask        Ask[]
   Job        Job[]
 }
 
@@ -30,7 +29,7 @@ model LinkPost {
   id           String         @id @default(uuid())
   userID       String
   user         User           @relation(fields: [userID], references: [id])
-  name         String
+  title        String
   url          String?        @db.VarChar(512)
   tags         String?        @db.VarChar(512)
   updatedAt    DateTime       @default(now())
@@ -47,47 +46,11 @@ model Admin {
 
 model LinkPostTags {
   id        String   @id @default(uuid())
+  tag       String
   postID    String
   post      LinkPost @relation(fields: [postID], references: [id])
-  tagID     String
-  tag       Tag      @relation(fields: [tagID], references: [id])
   updatedAt DateTime @default(now())
   createdAt DateTime @default(now())
-
-  @@unique([postID, tagID])
-}
-
-model Ask {
-  id        String    @id @default(uuid())
-  userID    String
-  user      User      @relation(fields: [userID], references: [id])
-  name      String
-  text      String?   @db.VarChar(512)
-  tags      String?   @db.VarChar(512)
-  updatedAt DateTime  @default(now())
-  createdAt DateTime  @default(now())
-  AskTags   AskTags[]
-}
-
-model AskTags {
-  id        String   @id @default(uuid())
-  askID     String
-  ask       Ask      @relation(fields: [askID], references: [id])
-  tagID     String
-  tag       Tag      @relation(fields: [tagID], references: [id])
-  updatedAt DateTime @default(now())
-  createdAt DateTime @default(now())
-
-  @@unique([askID, tagID])
-}
-
-model Tag {
-  id           String         @id @default(uuid())
-  name         String         @unique
-  updatedAt    DateTime       @default(now())
-  createdAt    DateTime       @default(now())
-  LinkPostTags LinkPostTags[]
-  AskTags      AskTags[]
 }
 
 model Job {

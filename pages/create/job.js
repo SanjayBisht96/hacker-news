@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import Navbar from "../components/layouts/Navbar";
-import { FormLabelInputGroup, FormLabelTextAreaGroup } from "../components/sections/FormElements";
-import { handleJobPosting } from "../client-utils/functions/handling.functions";
-import SuccessContainer from "../components/sections/SuccessContainer";
-// import SuccessIcon from '../assets/images/success-icon.png';
+import Navbar from "components/layouts/Navbar";
+import {
+  FormLabelInputGroup,
+  FormLabelTextAreaGroup,
+} from "components/sections/FormElements";
+import { handleJobPosting } from "client-utils/functions/handling.functions";
+import SuccessContainer from "components/sections/SuccessContainer";
+import { useAuth, usePrivateRoutes } from "client-utils/hooks/auth";
 
 const JobPosting = () => {
+  usePrivateRoutes();
+
   const [jobTitle, setJobTitle] = useState("");
   const [jobDescription, setJobDescription] = useState("");
   const [jobURL, setJobURL] = useState("");
@@ -19,7 +24,27 @@ const JobPosting = () => {
     setIsSubmitClicked(true);
     setFormError("");
 
+    // Form validation
+    if (jobTitle == "") {
+      setFormError("Please input job title");
+      setIsSubmitClicked(false);
+      return;
+    } else if (jobDescription == "") {
+      setFormError("Please input job description");
+      setIsSubmitClicked(false);
+      return;
+    } else if (jobURL == "") {
+      setFormError("Please input job URL");
+      setIsSubmitClicked(false);
+      return;
+    }
+
+    const userData = useAuth();
+
+    const { id } = userData;
+
     const jobPostingResponse = await handleJobPosting(
+      id,
       jobTitle,
       jobDescription,
       jobURL

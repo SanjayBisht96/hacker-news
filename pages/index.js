@@ -1,19 +1,12 @@
-import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import superJson from "superjson";
 import PropTypes from "prop-types";
 import fetchPost from "../utils/fetchPost";
-import { useAuth } from "client-utils/hooks/auth";
 
 const Navbar = dynamic(() => import("../components/layouts/Navbar"));
 const Post = dynamic(() => import("../components/Post"));
 
 const Home = ({ postList }) => {
-  useEffect(() => {
-    const user = useAuth();
-    console.log(user);
-  }, []);
-
   return (
     <main className="homepage">
       <Navbar />
