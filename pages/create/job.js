@@ -6,7 +6,8 @@ import {
 } from "components/sections/FormElements";
 import { handleJobPosting } from "client-utils/functions/handling.functions";
 import SuccessContainer from "components/sections/SuccessContainer";
-import { useAuth, usePrivateRoutes } from "client-utils/hooks/auth";
+import useAuth from "hooks/useAuth";
+import usePrivateRoutes from "hooks/usePrivateRoutes";
 
 const JobPosting = () => {
   usePrivateRoutes();

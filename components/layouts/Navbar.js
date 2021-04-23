@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "client-utils/hooks/auth";
+import useAuth from "hooks/useAuth";
 import React from "react";
 import { handleSignoutUser } from "client-utils/functions/handling.functions";
 
@@ -31,7 +31,6 @@ const Navbar = () => {
 export default Navbar;
 
 const renderNavbar = (userType) => {
-  console.log(userType);
   if (userType === "ADMIN") return NavbarLinksForAdmin();
   else if (userType === "USER") return NavbarLinksForUser();
   else return NavbarLinksForNonUsers();
@@ -40,15 +39,6 @@ const renderNavbar = (userType) => {
 const NavbarLinksForNonUsers = () => {
   return (
     <div className="navbar__links">
-      <a href="/create/post" className="navbar__links__item">
-        Create Post
-      </a>
-      <a href="/create/job" className="navbar__links__item">
-        Create Job Posting
-      </a>
-      <a href="#" className="navbar__links__item">
-        Ask HN
-      </a>
       <a href="/auth" className="navbar__links__item">
         <button className="btn btn-sm navbar__links__button">Login</button>
       </a>
@@ -59,7 +49,7 @@ const NavbarLinksForNonUsers = () => {
 const NavbarLinksForAdmin = () => {
   return (
     <div className="navbar__links">
-      <a href="/admin/dashboard">
+      <a href="/admin/dashboard" className="navbar__links__item">
         <button className="btn btn-sm navbar__links__button">Profile</button>
       </a>
       <button
@@ -81,11 +71,8 @@ const NavbarLinksForUser = () => {
       <a href="/create/job" className="navbar__links__item">
         Create Job Posting
       </a>
-      <a href="#" className="navbar__links__item">
+      <a href="/create/ask" className="navbar__links__item">
         Ask HN
-      </a>
-      <a href="/user/dashboard" className="navbar__links__item">
-        <button className="btn btn-sm navbar__links__button">Profile</button>
       </a>
       <button
         className="btn btn-sm navbar__links__button"

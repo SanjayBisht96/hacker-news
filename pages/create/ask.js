@@ -64,7 +64,7 @@ const CreateLinkPost = () => {
       <section className="posting__container">
         {!isPostPublished ? (
           <div className="posting__container__content">
-            <h3 className="heading-sub">Publish A Post</h3>
+            <h3 className="heading-sub">Ask A Question</h3>
             <form className="form posting__container__content__form">
               <FormLabelInputGroup
                 label="Post Title *"
