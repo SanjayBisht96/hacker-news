@@ -81,9 +81,6 @@ const CreateLinkPost = () => {
                 inputType="text"
                 handleInput={(event) => setPostTags(event.target.value)}
               />
-              <p className="form__hint">
-                You can add tags by adding # before them.
-              </p>
               <button
                 className="btn btn-md form__submit"
                 onClick={onHandlingLinkPosting}
