@@ -9,6 +9,7 @@ const HomePage = () => {
   useEffect(() => {
     setAllPostsData([
       {
+        postId: "1",
         postTitle:
           "Booking.com fined €475,000 for reporting data breach too late.",
         postedBy: "Sachin",
@@ -17,6 +18,7 @@ const HomePage = () => {
         postUpvotes: "5",
       },
       {
+        postId: "1",
         postTitle:
           "Booking.com fined €475,000 for reporting data breach too late.",
         postedBy: "Sachin",
@@ -25,6 +27,7 @@ const HomePage = () => {
         postUpvotes: "5",
       },
       {
+        postId: "1",
         postTitle:
           "Booking.com fined €475,000 for reporting data breach too late.",
         postedBy: "Sachin",
@@ -33,6 +36,7 @@ const HomePage = () => {
         postUpvotes: "5",
       },
       {
+        postId: "1",
         postTitle:
           "Booking.com fined €475,000 for reporting data breach too late.",
         postedBy: "Sachin",
@@ -41,6 +45,7 @@ const HomePage = () => {
         postUpvotes: "5",
       },
       {
+        postId: "1",
         postTitle:
           "Booking.com fined €475,000 for reporting data breach too late.",
         postedBy: "Sachin",
@@ -49,6 +54,7 @@ const HomePage = () => {
         postUpvotes: "5",
       },
       {
+        postId: "1",
         postTitle:
           "Booking.com fined €475,000 for reporting data breach too late.",
         postedBy: "Sachin",
@@ -57,22 +63,7 @@ const HomePage = () => {
         postUpvotes: "5",
       },
       {
-        postTitle:
-          "Booking.com fined €475,000 for reporting data breach too late.",
-        postedBy: "Sachin",
-        postedBefore: "2h ago",
-        postComments: "12 comments",
-        postUpvotes: "5",
-      },
-      {
-        postTitle:
-          "Booking.com fined €475,000 for reporting data breach too late.",
-        postedBy: "Sachin",
-        postedBefore: "2h ago",
-        postComments: "12 comments",
-        postUpvotes: "5",
-      },
-      {
+        postId: "1",
         postTitle:
           "Booking.com fined €475,000 for reporting data breach too late.",
         postedBy: "Sachin",
@@ -98,6 +89,7 @@ const HomePage = () => {
             <div className="homepage__container__content__main__posts">
               {allPostsData.map((postData, key) => {
                 const {
+                  postId,
                   postTitle,
                   postedBy,
                   postedBefore,
@@ -107,6 +99,7 @@ const HomePage = () => {
 
                 return (
                   <Post
+                    postId={postId}
                     postTitle={postTitle}
                     postedBy={postedBy}
                     postedBefore={postedBefore}
@@ -127,6 +120,7 @@ const HomePage = () => {
 export default HomePage;
 
 const Post = ({
+  postId,
   postTitle,
   postedBy,
   postedBefore,
@@ -164,9 +158,11 @@ const Post = ({
       </div>
 
       <div className="homepage__container__content__main__posts__item__content">
+        <a href={`/post/${postId}`}>
         <h2 className="heading-sub homepage__container__content__main__posts__item__content__heading">
           {postTitle}
         </h2>
+        </a>
         <div className="homepage__container__content__main__posts__item__content__footer">
           <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
             Posted by {postedBy}
