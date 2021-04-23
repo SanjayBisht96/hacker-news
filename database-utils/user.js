@@ -64,3 +64,19 @@ export const getAJobByID = async (jobId) => {
     },
   });
 };
+
+// Get all user posts with pagination
+export const getAllPostsDataWithPagination = async () => {
+  return await prisma.linkPost.findMany({
+    take: 20,
+  });
+};
+
+// Get user data
+export const getUserData = async (userId) => {
+  return await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+};

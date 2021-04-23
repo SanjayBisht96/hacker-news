@@ -177,3 +177,16 @@ export const handleJobReject = async (jobId, userId) => {
       return error.response.data;
     });
 };
+
+export const handleGetAllPostsForHomepage = async () => {
+  return axios({
+    method: "get",
+    url: `${process.env.API_ROOT}/global/post/get`,
+  })
+    .then((res) => {
+      return res.data.payload;
+    })
+    .catch((error) => {
+      return error.response.data;
+    });
+};
