@@ -17,7 +17,7 @@ const HomePage = ({ allPostsData }) => {
           </div>
           <div className="homepage__container__content__main">
             <div className="homepage__container__content__main__posts">
-              {allPostsData.map((postData) => {
+              {allPostsData.length > 0 ? allPostsData.map((postData) => {
                 const { id, name, title, createdAtFromNow } = postData;
 
                 return (
@@ -31,7 +31,7 @@ const HomePage = ({ allPostsData }) => {
                     postUpvotes="5"
                   />
                 );
-              })}
+              }) : <h1>No posts available</h1>}
             </div>
           </div>
         </div>
