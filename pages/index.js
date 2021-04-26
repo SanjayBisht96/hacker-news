@@ -17,7 +17,7 @@ const HomePage = ({ allPostsData }) => {
           </div>
           <div className="homepage__container__content__main">
             <div className="homepage__container__content__main__posts">
-              {allPostsData.length > 0 ? allPostsData.map((postData) => {
+              { Array.isArray(allPostsData) && allPostsData.length > 0 ? allPostsData.map((postData) => {
                 const { id, name, title, createdAtFromNow } = postData;
 
                 return (

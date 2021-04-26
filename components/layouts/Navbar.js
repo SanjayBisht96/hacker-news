@@ -14,7 +14,7 @@ const Navbar = () => {
     }
   });
 
-  console.log(userType);
+  //console.log(userType);
 
   return (
     <nav className="navbar">
