@@ -1,7 +1,11 @@
+import PropTypes from "prop-types";
 import React from "react";
-import Navbar from "../../components/layouts/Navbar";
+import usePrivateRoutes from "hooks/usePrivateRoutes";
+import Navbar from "components/layouts/Navbar";
 
 const AdminDashoard = () => {
+  usePrivateRoutes();
+
   return (
     <main className="admindashboard">
       <Navbar />
@@ -57,4 +61,11 @@ const AdminDashboardActionCard = ({ heading, paragraph, ctaText, link }) => {
       </a>
     </div>
   );
+};
+
+AdminDashboardActionCard.propTypes = {
+  heading: PropTypes.string,
+  paragraph: PropTypes.string,
+  ctaText: PropTypes.string,
+  link: PropTypes.string,
 };

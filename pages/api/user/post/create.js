@@ -32,7 +32,7 @@ const publishLinkPost = async (req, res) => {
       });
     })
     .catch((error) => {
-      console.log(error);
+
       sendErrorResponse({
         res,
         error,

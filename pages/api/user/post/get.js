@@ -37,7 +37,7 @@ const getAllUsersPosts = async (req, res) => {
 //     });
 
     getAllPostsDataWithPagination().then((allPostsData) => {
-        console.log(allPostsData);
+
     }).catch((error) => {
         sendErrorResponse({
           res,
