@@ -31,7 +31,8 @@
     "react-google-login": "^5.2.2",
     "superjson": "^1.7.4",
     "tailwindcss": "^2.1.1",
-    "uuid": "^3.4.0"
+    "uuid": "^3.4.0",
+    "vercel": "^22.0.1"
   },
   "devDependencies": {
     "eslint": "^7.23.0",
