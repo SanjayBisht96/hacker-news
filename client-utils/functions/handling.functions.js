@@ -21,7 +21,18 @@ export const handleSignUpUser = async (payload) => {
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
@@ -46,7 +57,18 @@ export const handleLogInUser = async (payload) => {
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
@@ -79,7 +101,18 @@ export const handleLogInAdmin = async (email, password) => {
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
@@ -103,7 +136,18 @@ export const handleLinkPosting = async (
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
@@ -127,7 +171,18 @@ export const handleJobPosting = async (
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
@@ -140,7 +195,18 @@ export const handleGetAllJobs = async () => {
       return res.data.payload;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
@@ -157,7 +223,18 @@ export const handleJobApproval = async (jobId, userId) => {
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
@@ -174,7 +251,18 @@ export const handleJobReject = async (jobId, userId) => {
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
@@ -187,6 +275,17 @@ export const handleGetAllPostsForHomepage = async () => {
       return res.data.payload;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
