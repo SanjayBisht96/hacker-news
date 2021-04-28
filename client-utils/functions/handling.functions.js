@@ -3,7 +3,7 @@ import axios from "axios";
 export const handleSignUpUser = async (payload) => {
   return axios({
     method: "post",
-    url: `${process.env.VERCEL_URL}/api/user/auth/signup`,
+    url: '/api/user/auth/signup',
     data: {
       ...payload,
     },
@@ -39,7 +39,7 @@ export const handleSignUpUser = async (payload) => {
 export const handleLogInUser = async (payload) => {
   return axios({
     method: "post",
-    url: `${process.env.VERCEL_URL}/api/user/auth/login`,
+    url: '/api/user/auth/login',
     data: {
       ...payload,
     },
@@ -82,7 +82,7 @@ export const handleSignoutUser = () => {
 export const handleLogInAdmin = async (email, password) => {
   return axios({
     method: "post",
-    url: `${process.env.VERCEL_URL}/api/admin/auth/login`,
+    url: '/api/admin/auth/login',
     data: {
       email,
       password,
@@ -124,7 +124,7 @@ export const handleLinkPosting = async (
 ) => {
   return axios({
     method: "post",
-    url: `${process.env.VERCEL_URL}/api/user/post/create`,
+    url: '/api/user/post/create',
     data: {
       userId,
       postTitle,
@@ -159,7 +159,7 @@ export const handleJobPosting = async (
 ) => {
   return axios({
     method: "post",
-    url: `${process.env.VERCEL_URL}/api/user/job/post`,
+    url: '/api/user/job/post',
     data: {
       userId,
       jobTitle,
@@ -189,7 +189,7 @@ export const handleJobPosting = async (
 export const handleGetAllJobs = async () => {
   return axios({
     method: "get",
-    url: `${process.env.VERCEL_URL}/api/admin/job`,
+    url: '/api/admin/job',
   })
     .then((res) => {
       return res.data.payload;
@@ -213,7 +213,7 @@ export const handleGetAllJobs = async () => {
 export const handleJobApproval = async (jobId, userId) => {
   return axios({
     method: "post",
-    url: `${process.env.VERCEL_URL}/api/admin/job/approve`,
+    url: '/api/admin/job/approve',
     data: {
       userId,
       jobId,
@@ -241,7 +241,7 @@ export const handleJobApproval = async (jobId, userId) => {
 export const handleJobReject = async (jobId, userId) => {
   return axios({
     method: "post",
-    url: `${process.env.VERCEL_URL}/api/admin/job/reject`,
+    url: '/api/admin/job/reject',
     data: {
       userId,
       jobId,
@@ -269,7 +269,7 @@ export const handleJobReject = async (jobId, userId) => {
 export const handleGetAllPostsForHomepage = async () => {
   return axios({
     method: "get",
-    url: `${process.env.VERCEL_URL}/api/global/post/get`,
+    url: '/api/global/post/get',
   })
     .then((res) => {
       return res.data.payload;
