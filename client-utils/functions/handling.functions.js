@@ -269,7 +269,7 @@ export const handleJobReject = async (jobId, userId) => {
 export const handleGetAllPostsForHomepage = async () => {
   return axios({
     method: "get",
-    url: '/api/global/post/get',
+    url: `${process.env.API_ROOT}/global/post/get`,
   })
     .then((res) => {
       return res.data.payload;

@@ -28,8 +28,8 @@ model User {
 
 model LinkPost {
   id           String         @id @default(uuid())
-  userID       String
-  user         User           @relation(fields: [userID], references: [id])
+  userId       String
+  user         User           @relation(fields: [userId], references: [id])
   title        String
   url          String?        @db.VarChar(512)
   tags         String?        @db.VarChar(512)
@@ -49,12 +49,12 @@ model LinkPostTags {
   id        String   @id @default(uuid())
   postID    String
   post      LinkPost @relation(fields: [postID], references: [id])
-  tagID     String
-  tag       Tag      @relation(fields: [tagID], references: [id])
+  tagId     String?   @default(uuid())
+  tag       Tag?      @relation(fields: [tagId], references: [id])
   updatedAt DateTime @default(now())
   createdAt DateTime @default(now())
 
-  @@unique([postID, tagID])
+  @@unique([postID, tagId])
 }
 
 model Ask {
@@ -71,14 +71,14 @@ model Ask {
 
 model AskTags {
   id        String   @id @default(uuid())
-  askID     String
-  ask       Ask      @relation(fields: [askID], references: [id])
-  tagID     String
-  tag       Tag      @relation(fields: [tagID], references: [id])
+  askId     String
+  ask       Ask      @relation(fields: [askId], references: [id])
+  tagId     String
+  tag       Tag      @relation(fields: [tagId], references: [id])
   updatedAt DateTime @default(now())
   createdAt DateTime @default(now())
 
-  @@unique([askID, tagID])
+  @@unique([askId, tagId])
 }
 
 model Tag {

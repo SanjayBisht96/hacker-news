@@ -20,11 +20,16 @@ export const userLinkPostModel = (userID, title, url, tags) => {
   };
 };
 
-export const userLinkPostTagModel = (postID, tag) => {
+export const userLinkPostTagModel = (postID, tagId) => {
   return {
-    //id: uuidv4(),
     postID,
-    tag,
+    tagId,
+  };
+};
+
+export const userTagModel = (name) => {
+  return {
+    name,
   };
 };
 

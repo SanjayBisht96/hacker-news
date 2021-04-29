@@ -38,7 +38,7 @@ export const postAJobForReview = async (jobData) => {
   });
 };
 
-// Publish a post
+// Publish a linkpost
 export const publishAPost = async (linkPostData) => {
   return await prisma.linkPost.create({
     data: {
@@ -47,11 +47,20 @@ export const publishAPost = async (linkPostData) => {
   });
 };
 
-// Publish a post
+// Publish a tag
 export const publishATag = async (tagData) => {
-  return await prisma.linkPostTags.create({
+  return await prisma.tag.create({
     data: {
       ...tagData,
+    },
+  });
+};
+
+// Publish a linkpost tag
+export const publishALinkPostTag = async (linkPostTag) => {
+  return await prisma.linkPostTags.create({
+    data: {
+      ...linkPostTag,
     },
   });
 };
