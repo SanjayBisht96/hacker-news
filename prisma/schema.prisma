@@ -59,8 +59,8 @@ model LinkPostTags {
 
 model Ask {
   id        String    @id @default(uuid())
-  userID    String
-  user      User      @relation(fields: [userID], references: [id])
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
   title     String
   text      String?   @db.VarChar(512)
   tags      String?   @db.VarChar(512)

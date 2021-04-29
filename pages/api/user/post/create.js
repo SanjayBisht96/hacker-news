@@ -28,7 +28,6 @@ const publishLinkPost = async (req, res) => {
   publishAPost(userLinkPostModelData)
     .then(async (postData) => {
       const listOfTags = postTags.split("#").filter((item) => item !== "");
-      console.log(listOfTags);
 
       await Promise.all(
         listOfTags.map(async (tagName) => {
@@ -59,7 +58,10 @@ const publishLinkPost = async (req, res) => {
               await publishALinkPostTag(linkPostTagModel);
             }
           } catch (error) {
-            console.log(error);
+            sendErrorResponse({
+              res,
+              error,
+            });
           }
         })
       );
@@ -70,7 +72,7 @@ const publishLinkPost = async (req, res) => {
       });
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error)
       sendErrorResponse({
         res,
         error,

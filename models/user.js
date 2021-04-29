@@ -10,13 +10,12 @@ export const userProfileModel = (name, email, imageUrl, signUpWith) => {
   };
 };
 
-export const userLinkPostModel = (userID, title, url, tags) => {
+export const userLinkPostModel = (userId, title, url, tags) => {
   return {
-    //id: uuidv4(),
-    userID: userID,
-    title: title,
-    url: url,
-    tags: tags,
+    userId,
+    title,
+    url,
+    tags,
   };
 };
 

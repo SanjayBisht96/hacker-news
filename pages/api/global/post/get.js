@@ -12,10 +12,10 @@ const getPostsWithPagination = async (req, res) => {
       await Promise.all(
         allPostsData.map(async (postData) => {
           try {
-            const { id, userID, title, url, tags, createdAt } = postData;
+            const { id, userId, title, url, tags, createdAt } = postData;
 
             // Get user name from user ID
-            const { name } = await getUserData(userID);
+            const { name } = await getUserData(userId);
 
             // Get created at time from now
             const createdAtFromNow = moment(createdAt).fromNow();
@@ -29,6 +29,7 @@ const getPostsWithPagination = async (req, res) => {
               createdAtFromNow,
             });
           } catch (error) {
+            console.log(error)
             sendErrorResponse({
               res,
               error,
