@@ -1,4 +1,4 @@
-const { v4: uuidv4 } = require("uuid");
+//const { v4: uuidv4 } = require("uuid");
 
 export const userProfileModel = (name, email, imageUrl, signUpWith) => {
   return {
@@ -10,9 +10,31 @@ export const userProfileModel = (name, email, imageUrl, signUpWith) => {
   };
 };
 
+export const userLinkPostModel = (userId, title, url, tags) => {
+  return {
+    userId,
+    title,
+    url,
+    tags,
+  };
+};
+
+export const userLinkPostTagModel = (postID, tagId) => {
+  return {
+    postID,
+    tagId,
+  };
+};
+
+export const userTagModel = (name) => {
+  return {
+    name,
+  };
+};
+
 export const userJobModel = (userId, jobTitle, jobDescription, jobURL) => {
   return {
-    id: uuidv4(),
+    //id: uuidv4(),
     userId: userId,
     jobTitle: jobTitle,
     jobDescription: jobDescription,

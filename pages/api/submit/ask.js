@@ -2,7 +2,7 @@ import prisma from "../../../database-utils/prismaObj";
 
 async function handleTags(formData,askID){
     const tagList = formData["tags"].match(/[a-zA-Z]+/g);
-    console.log(tagList);
+
     tagList.forEach(async (tagName) => {
       let tag = await prisma.tag.findUnique({
         where: {

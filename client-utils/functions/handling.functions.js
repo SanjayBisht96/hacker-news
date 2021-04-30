@@ -3,7 +3,7 @@ import axios from "axios";
 export const handleSignUpUser = async (payload) => {
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/user/auth/signup`,
+    url: '/api/user/auth/signup',
     data: {
       ...payload,
     },
@@ -12,22 +12,34 @@ export const handleSignUpUser = async (payload) => {
       const { payload } = res.data;
 
       const localUserData = {
-        userId: payload.id,
+        userType: "USER",
+        id: payload.id,
       };
 
-      localStorage.setItem("userData", JSON.stringify(localUserData));
+      localStorage.setItem("data", JSON.stringify(localUserData));
 
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
 export const handleLogInUser = async (payload) => {
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/user/auth/login`,
+    url: '/api/user/auth/login',
     data: {
       ...payload,
     },
@@ -36,22 +48,41 @@ export const handleLogInUser = async (payload) => {
       const { payload } = res.data;
 
       const localUserData = {
-        userId: payload.id,
+        userType: "USER",
+        id: payload.id,
       };
 
-      localStorage.setItem("userData", JSON.stringify(localUserData));
+      localStorage.setItem("data", JSON.stringify(localUserData));
 
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
+};
+
+export const handleSignoutUser = () => {
+  localStorage.clear();
+
+  window.location = "/";
+  return;
 };
 
 export const handleLogInAdmin = async (email, password) => {
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/admin/auth/login`,
+    url: '/api/admin/auth/login',
     data: {
       email,
       password,
@@ -61,26 +92,76 @@ export const handleLogInAdmin = async (email, password) => {
       const { payload } = res.data;
 
       const localAdminData = {
-        adminId: payload.adminId,
+        userType: "ADMIN",
+        id: payload.adminId,
       };
 
-      localStorage.setItem("adminData", JSON.stringify(localAdminData));
+      localStorage.setItem("data", JSON.stringify(localAdminData));
 
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
-export const handleJobPosting = async (jobTitle, jobDescription, jobURL) => {
+export const handleLinkPosting = async (
+  userId,
+  postTitle,
+  postTags,
+  postURL
+) => {
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/user/job/post`,
+    url: '/api/user/post/create',
     data: {
-      // TODO: CHANGE USERID
-      userId:
-        "d182f0677b21e163464078041e1774a056eae3061cc6204d412d8f52fad4290eee0b20ab612d1e815f8b1c4f09ec0f4788cc4e086acdd73b13b2d5819af1c0056923b7fb63ed75f93f668dfcb77796cbbe21203c1ba8f7a07f89b89e8b96f45c672638e581eba30b67f0758b3521752c4e659046369d10ad00a78893e7c01c293a228b8a",
+      userId,
+      postTitle,
+      postTags,
+      postURL,
+    },
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};
+
+export const handleJobPosting = async (
+  userId,
+  jobTitle,
+  jobDescription,
+  jobURL
+) => {
+  return axios({
+    method: "post",
+    url: '/api/user/job/post',
+    data: {
+      userId,
       jobTitle,
       jobDescription,
       jobURL,
@@ -90,27 +171,49 @@ export const handleJobPosting = async (jobTitle, jobDescription, jobURL) => {
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
 export const handleGetAllJobs = async () => {
   return axios({
     method: "get",
-    url: `${process.env.API_ROOT}/admin/job`,
+    url: '/api/admin/job',
   })
     .then((res) => {
       return res.data.payload;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
 export const handleJobApproval = async (jobId, userId) => {
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/admin/job/approve`,
+    url: '/api/admin/job/approve',
     data: {
       userId,
       jobId,
@@ -120,14 +223,25 @@ export const handleJobApproval = async (jobId, userId) => {
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };
 
 export const handleJobReject = async (jobId, userId) => {
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/admin/job/reject`,
+    url: '/api/admin/job/reject',
     data: {
       userId,
       jobId,
@@ -137,6 +251,41 @@ export const handleJobReject = async (jobId, userId) => {
       return res.data;
     })
     .catch((error) => {
-      return error.response.data;
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};
+
+export const handleGetAllPostsForHomepage = async () => {
+  return axios({
+    method: "get",
+    url: `${process.env.API_ROOT}/global/post/get`,
+  })
+    .then((res) => {
+      return res.data.payload;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
     });
 };

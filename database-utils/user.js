@@ -38,11 +38,54 @@ export const postAJobForReview = async (jobData) => {
   });
 };
 
+// Publish a linkpost
+export const publishAPost = async (linkPostData) => {
+  return await prisma.linkPost.create({
+    data: {
+      ...linkPostData,
+    },
+  });
+};
+
+// Publish a tag
+export const publishATag = async (tagData) => {
+  return await prisma.tag.create({
+    data: {
+      ...tagData,
+    },
+  });
+};
+
+// Publish a linkpost tag
+export const publishALinkPostTag = async (linkPostTag) => {
+  return await prisma.linkPostTags.create({
+    data: {
+      ...linkPostTag,
+    },
+  });
+};
+
 // Get a job by ID
 export const getAJobByID = async (jobId) => {
   return await prisma.job.findUnique({
     where: {
       id: jobId,
+    },
+  });
+};
+
+// Get all user posts with pagination
+export const getAllPostsDataWithPagination = async () => {
+  return await prisma.linkPost.findMany({
+    take: 20,
+  });
+};
+
+// Get user data
+export const getUserData = async (userId) => {
+  return await prisma.user.findUnique({
+    where: {
+      id: userId,
     },
   });
 };

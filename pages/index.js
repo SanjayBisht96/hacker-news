@@ -1,13 +1,9 @@
-import dynamic from 'next/dynamic';
-import superJson from 'superjson';
-import PropTypes from 'prop-types';
-import fetchPost from '../utils/fetchPost';
+import PropTypes from "prop-types";
+import Navbar from "components/layouts/Navbar";
+import { handleGetAllPostsForHomepage } from "client-utils/functions/handling.functions";
+import { PostCard } from "components/sections/Cards";
 
-const Navbar = dynamic(() => import('../components/layouts/Navbar'));
-const Post = dynamic(() => import('../components/Post'));
-
-export default function Home({postList}) {
-
+const HomePage = ({ allPostsData }) => {
   return (
     <main className="homepage">
       <Navbar />
@@ -21,51 +17,39 @@ export default function Home({postList}) {
           </div>
           <div className="homepage__container__content__main">
             <div className="homepage__container__content__main__posts">
-              {postList.map((postData, key) => {
-                const {
-                  name:postTitle,
-                  postedBy=['sanjay'],
-                  createdAt:postedBefore,
-                  postComments=["comments"],
-                  postUpvotes=["1xx"],
-                  url: postUrl,
-                  id:postID
-                } = postData;
+              { Array.isArray(allPostsData) && allPostsData.length > 0 ? allPostsData.map((postData) => {
+                const { id, name, title, createdAtFromNow } = postData;
 
                 return (
-                  <Post
-                    postTitle={postTitle}
-                    postedBy={postedBy}
-                    postedBefore={postedBefore}
-                    postComments={postComments}
-                    postUpvotes={postUpvotes}
-                    postUrl={postUrl}
-                    postID={postID}
-                    key={key}
+                  <PostCard
+                    key={id}
+                    postId={id}
+                    postTitle={title}
+                    postedBy={name}
+                    postedBefore={createdAtFromNow}
+                    postComments="10 comments"
+                    postUpvotes="5"
                   />
                 );
-              })}
+              }) : <h1>No posts available</h1>}
             </div>
           </div>
         </div>
       </section>
     </main>
   );
+};
 
-  
-  
-}
+export default HomePage;
 
+export const getServerSideProps = async () => {
+  const allPostsDataResponse = await handleGetAllPostsForHomepage();
 
-export const getServerSideProps = async function () {
-      let postList = await fetchPost();
-      let {json} =  superJson.serialize(postList);
-      postList = json;
   return {
-    props: {postList },
-  }
-}
+    props: { allPostsData: allPostsDataResponse },
+  };
+};
 
-Home.propTypes = {
-  postList: PropTypes.array
+HomePage.propTypes = {
+  allPostsData: PropTypes.array,
 };

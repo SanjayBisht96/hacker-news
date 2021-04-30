@@ -1,6 +1,9 @@
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
-const Cryptr = require("cryptr");
+//const jwt = require("jsonwebtoken");
+//const bcrypt = require("bcrypt");
+//const Cryptr = require("cryptr");
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import Cryptr from 'cryptr';
 
 // Get auth token => accessToken & refreshToken
 export const getAuthTokens = (payload) => {

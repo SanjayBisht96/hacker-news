@@ -1,8 +1,8 @@
-const { v4: uuidv4 } = require("uuid");
+//const { v4: uuidv4 } = require("uuid");
 
 export const adminProfileModel = (email, password) => {
   return {
-    id: uuidv4(),
+    //id: uuidv4(),
     email: email,
     password: password,
     joinedOn: new Date(Date.now()),
