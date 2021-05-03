@@ -84,8 +84,9 @@ export const getAJobByID = async (jobId) => {
 };
 
 // Get all user posts with pagination
-export const getAllPostsDataWithPagination = async () => {
+export const getAllUserLinkPosts = async (userId) => {
   return await prisma.linkPost.findMany({
+    where: { userId },
     take: 20,
   });
 };

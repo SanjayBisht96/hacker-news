@@ -9,9 +9,14 @@ export const getAllPostsDataWithPagination = async () => {
   });
 };
 
-export const getAllUserLinkPosts = async (userId) => {
-  return await prisma.linkPost.findMany({
-    where: { userId },
-    take: 20,
+// Edit a link post
+export const editALinkPostData = async (linkPostId, linkPostData) => {
+  return await prisma.linkPost.update({
+    where: {
+      id: linkPostId,
+    },
+    data: {
+      ...linkPostData,
+    },
   });
 };

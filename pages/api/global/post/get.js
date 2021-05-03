@@ -18,7 +18,7 @@ const getPostsWithPagination = async (req, res) => {
             const { name } = await getUserData(userId);
 
             // Get created at time from now
-            const createdAtFromNow = moment(createdAt).fromNow();
+            const createdAtDate = moment(createdAt).toDate().toDateString();
 
             allPostsList.push({
               id,
@@ -26,7 +26,7 @@ const getPostsWithPagination = async (req, res) => {
               title,
               url,
               tags,
-              createdAtFromNow,
+              createdAtDate,
             });
           } catch (error) {
             console.log(error)

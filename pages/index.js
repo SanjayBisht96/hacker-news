@@ -18,7 +18,7 @@ const HomePage = ({ allPostsData }) => {
           <div className="homepage__container__content__main">
             <div className="homepage__container__content__main__posts">
               { Array.isArray(allPostsData) && allPostsData.length > 0 ? allPostsData.map((postData) => {
-                const { id, name, title, createdAtFromNow } = postData;
+                const { id, name, title, createdAtDate } = postData;
 
                 return (
                   <PostCard
@@ -26,7 +26,7 @@ const HomePage = ({ allPostsData }) => {
                     postId={id}
                     postTitle={title}
                     postedBy={name}
-                    postedBefore={createdAtFromNow}
+                    postedDate={createdAtDate}
                     postComments="10 comments"
                     postUpvotes="5"
                   />

@@ -4,7 +4,7 @@ export const PostCard = ({
   postId,
   postTitle,
   postedBy,
-  postedBefore,
+  postedDate,
   postComments,
   postUpvotes,
 }) => {
@@ -49,7 +49,7 @@ export const PostCard = ({
             Posted by {postedBy}
           </p>
           <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
-            {postedBefore}
+            {postedDate}
           </p>
           <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
             {postComments}
@@ -65,7 +65,7 @@ PostCard.propTypes = {
   postId: PropTypes.string,
   postTitle: PropTypes.string,
   postedBy: PropTypes.string,
-  postedBefore: PropTypes.string,
+  postedDate: PropTypes.string,
   postComments: PropTypes.string,
   postUpvotes: PropTypes.string,
 };

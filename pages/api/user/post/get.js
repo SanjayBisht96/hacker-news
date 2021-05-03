@@ -1,7 +1,7 @@
 import nc from "next-connect";
 import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 import { decryptData } from "api-utils/auth";
-import { getAllUserLinkPosts } from "database-utils/global";
+import { getAllUserLinkPosts } from "database-utils/user";
 
 const getAllUsersPosts = async (req, res) => {
   const { userId } = req.body;

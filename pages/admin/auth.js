@@ -3,11 +3,8 @@ import Router from "next/router";
 import Navbar from "../../components/layouts/Navbar";
 import { FormLabelInputGroup } from "../../components/sections/FormElements";
 import { handleLogInAdmin } from "../../client-utils/functions/handling.functions";
-import usePrivateRoutes from "hooks/usePrivateRoutes";
 
 const AdminAuth = () => {
-  usePrivateRoutes();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
