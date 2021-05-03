@@ -20,3 +20,18 @@ export const editALinkPostData = async (linkPostId, linkPostData) => {
     },
   });
 };
+
+// Delete a link post
+export const deleteALinkPostData = async (linkPostId) => {
+  await prisma.linkPost.delete({
+    where: {
+      id: linkPostId,
+    },
+  });
+
+  await prisma.linkPostTags.delete({
+    where: {
+      postID: linkPostId,
+    },
+  });
+};

@@ -2,9 +2,13 @@ import nc from "next-connect";
 import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 import { editALinkPostData } from "database-utils/global";
 import { addLinkPostTags } from "api-utils/functions";
+import { decryptData } from "api-utils/auth";
 
 const editALinkPost = async (req, res) => {
-  const { linkPostId, linkPostData } = req.body;
+  const { userId, linkPostId, linkPostData } = req.body;
+
+  // 1. Send response as server error if unauthenticated
+  decryptData(userId);
 
   editALinkPostData(linkPostId, linkPostData)
     .then(async (updatedLinkPostData) => {

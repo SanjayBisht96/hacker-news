@@ -32,7 +32,6 @@ export const addLinkPostTags = async (res, postData, listOfTags) => {
         let tagData = await getTagDataIfTagExists(tagName);
 
         if (tagData) {
-          console.log(tagData);
           // 1A. If tag exists by name => Get tag ID
           const { id } = tagData;
 
