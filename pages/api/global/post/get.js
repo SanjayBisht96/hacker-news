@@ -5,7 +5,9 @@ import moment from "moment";
 import { getUserData } from "database-utils/user";
 
 const getPostsWithPagination = async (req, res) => {
-  getAllPostsDataWithPagination()
+  const { sortBy, page } = req.query;
+
+  getAllPostsDataWithPagination(sortBy, page)
     .then(async (allPostsData) => {
       const allPostsList = [];
 

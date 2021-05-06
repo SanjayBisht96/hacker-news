@@ -1,11 +1,23 @@
 import { PrismaClient } from "@prisma/client";
+import { NO_OF_POSTS_PER_PAGE } from "const";
 
 const prisma = new PrismaClient();
 
 // Get all posts with pagination
-export const getAllPostsDataWithPagination = async () => {
+export const getAllPostsDataWithPagination = async (sortBy, page) => {
+  // Sorting by date
+  if (sortBy == "date") {
+    return await prisma.linkPost.findMany({
+      skip: NO_OF_POSTS_PER_PAGE * (page - 1),
+      take: NO_OF_POSTS_PER_PAGE,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
+
   return await prisma.linkPost.findMany({
-    take: 20,
+    take: NO_OF_POSTS_PER_PAGE * page,
   });
 };
 
