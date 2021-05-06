@@ -1,8 +1,17 @@
 import nc from "next-connect";
-import { userLinkPostModel, userLinkPostTagModel } from "models/user";
+import {
+  userLinkPostModel,
+  userLinkPostTagModel,
+  userTagModel,
+} from "models/user";
 import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 import { decryptData } from "api-utils/auth";
-import { publishAPost, publishANewTag, checkATagExist } from "database-utils/user";
+import {
+  publishAPost,
+  publishATag,
+  publishALinkPostTag,
+} from "database-utils/user";
+import { getTagDataIfTagExists } from "database-utils/global";
 
 const publishLinkPost = async (req, res) => {
   const { userId, postTitle, postTags, postURL } = req.body;
@@ -17,18 +26,45 @@ const publishLinkPost = async (req, res) => {
   );
 
   publishAPost(userLinkPostModelData)
-    .then((postData) => {
+    .then(async (postData) => {
       const listOfTags = postTags.split("#").filter((item) => item !== "");
 
-      listOfTags.forEach((tagName) => {
-        const tagData = userLinkPostTagModel(postData.id, tagName);
-        checkATagExist(tagName).then((tag) => {
-          
-        })
-        publishANewTag(tagData).then((tag) => {
+      await Promise.all(
+        listOfTags.map(async (tagName) => {
+          try {
+            // 0. Get Tag ID if tag exists
+            let tagData = await getTagDataIfTagExists(tagName);
 
-        });
-      });
+            if (tagData) {
+              // 1A. If tag exists by name => Get tag ID
+              const { id } = tagData;
+
+              // 1B. Create Link post tag with post ID
+              const linkPostTagModel = userLinkPostTagModel(postData.id, id);
+
+              publishALinkPostTag(linkPostTagModel);
+            } else {
+              // 2A. Else Create a new tag in tag
+              const tagModelData = userTagModel(tagName);
+
+              tagData = await publishATag(tagModelData);
+
+              // 2B. Create Link post tag with post ID
+              const linkPostTagModel = userLinkPostTagModel(
+                postData.id,
+                tagData.id
+              );
+
+              await publishALinkPostTag(linkPostTagModel);
+            }
+          } catch (error) {
+            sendErrorResponse({
+              res,
+              error,
+            });
+          }
+        })
+      );
 
       sendSuccessResponse({
         res,
@@ -36,7 +72,7 @@ const publishLinkPost = async (req, res) => {
       });
     })
     .catch((error) => {
-
+      console.log(error)
       sendErrorResponse({
         res,
         error,

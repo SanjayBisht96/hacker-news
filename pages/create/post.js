@@ -39,7 +39,7 @@ const CreateLinkPost = () => {
     }
 
     const userData = useAuth();
-console.log(userData);
+
     const { id } = userData;
 
     const linkPostingResponse = await handleLinkPosting(

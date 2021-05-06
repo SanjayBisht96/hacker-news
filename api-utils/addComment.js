@@ -1,8 +1,10 @@
 import prisma from "../database-utils/prismaObj";
 
 export default async function addComment(postID,userID,text) {
+    //console.log(postID);
+    let comment;
     if(postID&&userID){
-        const comment = await prisma.comment.create({
+        comment = await prisma.comment.create({
             comment : text,
             userID : userID
         })
@@ -11,7 +13,8 @@ export default async function addComment(postID,userID,text) {
                 postID:postID,
                 commentID: comment.id
             })
+        return comment;            
         }
     }
-    return [];
+    return comment;
 }

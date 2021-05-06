@@ -1,9 +1,10 @@
 import {FormLabelTextAreaGroup} from  '../sections/FormElements';
+import {Reply} from '../';
 
-export default function Comment({comment}){
+export default function Reply({comment}){
     return (
         <>
-        <div>{comment.text}</div>
+        <div>{comment}</div>
             <FormLabelTextAreaGroup
                 label={"Add Comment"}
                 inputType={"text"}

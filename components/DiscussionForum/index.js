@@ -3,9 +3,11 @@ import dynamic from 'next/dynamic';
 import {EDIT_LINK_POST_URL, DISCUSS_LINK_POST_URL} from '../../const';
 import {FormLabelTextAreaGroup} from  '../sections/FormElements';
 import useComments from '../../hooks/useComments';
-import addComment from '../../utils/addComments';
+import {  fetchComments } from '../../client-utils/functions/handling.functions';
+//import addComment from '../../utils/addComments';
+import useSWR,{ mutate,trigger }  from 'swr';
 
-const Comment = dynamic(() => import('../Comment'));
+const Comment = dynamic(() => import('../Comment/Reply'));
 
 export default function DiscussionForum({
     postTitle,
@@ -14,19 +16,20 @@ export default function DiscussionForum({
     postComments,
     postUpvotes,
     postUrl,
-    postID,
-    comments
+    postID
   }){
-    const { commentList, setCommentList } = useComments(comments);
 
+    const {  newComment, setNewComment } = useComments(postID);
+    const {data ,error} = useSWR( ['/api/comment/fetchcomments',postID],fetchComments);
+    //setCommentList(commentList => list);
     const handleSubmit = async (e) => {
       let text = document.getElementById("commentInput").value;
-      const myComment = await addComment(postID,userId,text);
-      setCommentList(commentList => ({
-          myComment, ...commentList
-        })
-      );
-      console.log(commentList);
+      if(text){
+        setNewComment( newComment => text);
+        setTimeout(()=>{
+            trigger(['/api/comment/fetchcomments',postID]);
+        },1500);
+      }
     }
     
     return (
@@ -89,11 +92,12 @@ export default function DiscussionForum({
               Add Comment
             </button>
         {
-          commentList.map((comment,index) =>{
+          data?.map((comment,index) =>{
             return (
               <Comment
                 key={index}
-                comment={comment}
+                comment={comment.comment}
+                parentID={comment.id}
               />
           )
           })

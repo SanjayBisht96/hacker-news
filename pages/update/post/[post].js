@@ -3,7 +3,7 @@ import superJson from 'superjson';
 import dynamic from 'next/dynamic';
 import Router from 'next/router';
 import { HOME_URL } from '../../../const';
-import fetchPost from '../../../utils/fetchPost';
+import fetchPost from '../../../api-utils/fetchPost';
 
 const Navbar = dynamic(() => import('../../../components/layouts/Navbar'));
 const PostForm = dynamic(() => import('../../../components/PostForm'));
