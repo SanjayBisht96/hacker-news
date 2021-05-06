@@ -5,7 +5,7 @@ import {
   FormLabelTextAreaGroup,
 } from "components/sections/FormElements";
 import SuccessContainer from "components/sections/SuccessContainer";
-import { handleLinkPosting } from "client-utils/functions/handling.functions";
+import { handleAskPosting } from "client-utils/functions/handling.functions";
 import useAuth from "hooks/useAuth";
 import usePrivateRoutes from "hooks/usePrivateRoutes";
 
@@ -42,7 +42,7 @@ const CreateLinkPost = () => {
 
     const { id } = userData;
 
-    const linkPostingResponse = await handleLinkPosting(
+    const linkPostingResponse = await handleAskPosting(
       id,
       postTitle,
       postTags,

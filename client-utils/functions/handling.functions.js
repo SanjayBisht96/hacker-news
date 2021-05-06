@@ -116,7 +116,44 @@ export const handleLogInAdmin = async (email, password) => {
     });
 };
 
+// Handle link posting
 export const handleLinkPosting = async (
+  userId,
+  postTitle,
+  postTags,
+  postURL
+) => {
+  return axios({
+    method: "post",
+    url: '/api/user/post/create',
+    data: {
+      userId,
+      postTitle,
+      postTags,
+      postURL,
+    },
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};
+
+// Handle ask posting
+export const handleAskPosting = async (
   userId,
   postTitle,
   postTags,

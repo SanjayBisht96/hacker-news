@@ -25,8 +25,8 @@
             max-width: 100%;
             min-height: 15rem;
             display: flex;
-            align-items: flex-start;
-            justify-content: center;
+            align-items: center;
+            justify-content: flex-start;
             padding: 3rem 5rem;
             box-shadow: 3px 3px 10px #e0e0e0;
             border: 1px solid $color-grey;
@@ -42,25 +42,27 @@
                 padding: 0 0 0 1rem;
 
                 &__button {
-                    background-color: transparent;
-                    padding: 1rem;
+                  background-color: transparent;
+                  padding: 1rem;
                 }
               }
             }
 
             &__content {
+              width: 100%;
+
               &__heading {
               }
 
               &__footer {
                 display: flex;
                 justify-content: space-between;
-                padding: 0.5rem 0;
-                width: 45%;
+                padding: 1rem 0;
+                width: 60%;
 
                 &__paragraph {
-                    font-size: 1.3rem;
-                    font-weight: 500;
+                  font-size: 1.3rem;
+                  font-weight: 500;
                 }
               }
             }

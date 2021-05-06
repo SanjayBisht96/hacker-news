@@ -1,8 +1,8 @@
 import nodemailer from "nodemailer";
 import { sendErrorResponse } from "api-utils/SendResponse";
-import { publishATag, publishALinkPostTag } from "database-utils/user";
+import { publishATag, publishAskPostTag, publishALinkPostTag } from "database-utils/user";
 import { getTagDataIfTagExists } from "database-utils/user";
-import { userLinkPostTagModel, userTagModel } from "models/user";
+import { userLinkPostTagModel, userAskPostTagModel, userTagModel } from "models/user";
 
 // Send email to the email address
 export const sendEmailToUsers = async (emailMessageBody) => {
@@ -23,6 +23,7 @@ export const sendEmailToUsers = async (emailMessageBody) => {
   });
 };
 
+// Add link post tags
 export const addLinkPostTags = async (res, postData, listOfTags) => {
   await Promise.all(
     listOfTags.map(async (tagName) => {
@@ -52,6 +53,47 @@ export const addLinkPostTags = async (res, postData, listOfTags) => {
           );
 
           await publishALinkPostTag(linkPostTagModel);
+        }
+      } catch (error) {
+        sendErrorResponse({
+          res,
+          error,
+        });
+      }
+    })
+  );
+};
+
+// Add ask post tags
+export const addAskPostTags = async (res, askData, listOfTags) => {
+  await Promise.all(
+    listOfTags.map(async (tagName) => {
+     
+      try {
+        // 0. Get Tag ID if tag exists
+        let tagData = await getTagDataIfTagExists(tagName);
+
+        if (tagData) {
+          // 1A. If tag exists by name => Get tag ID
+          const { id } = tagData;
+
+          // 1B. Create Ask ask tag with ask ID
+          const askPostTagModel = userAskPostTagModel(askData.id, id);
+
+          publishAskPostTag(askPostTagModel);
+        } else {
+          // 2A. Else Create a new tag in tag
+          const tagModelData = userTagModel(tagName);
+
+          tagData = await publishATag(tagModelData);
+
+          // 2B. Create Ask ask tag with ask ID
+          const askPostTagModel = userAskPostTagModel(
+            askData.id,
+            tagData.id
+          );
+
+          await publishAskPostTag(askPostTagModel);
         }
       } catch (error) {
         sendErrorResponse({

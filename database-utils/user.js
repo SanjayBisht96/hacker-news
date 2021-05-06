@@ -47,6 +47,15 @@ export const publishAPost = async (linkPostData) => {
   });
 };
 
+// Publish a ask post
+export const publishAskPostData = async (askPostData) => {
+  return await prisma.ask.create({
+    data: {
+      ...askPostData,
+    },
+  });
+};
+
 // Get tag data if tag name exists
 export const getTagDataIfTagExists = async (tagName) => {
   return await prisma.tag.findFirst({
@@ -70,6 +79,15 @@ export const publishALinkPostTag = async (linkPostTag) => {
   return await prisma.linkPostTags.create({
     data: {
       ...linkPostTag,
+    },
+  });
+};
+
+// Publish a ask post tag
+export const publishAskPostTag = async (askPostTag) => {
+  return await prisma.askTags.create({
+    data: {
+      ...askPostTag,
     },
   });
 };

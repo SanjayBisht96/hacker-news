@@ -19,9 +19,25 @@ export const userLinkPostModel = (userId, title, url, tags) => {
   };
 };
 
-export const userLinkPostTagModel = (postID, tagId) => {
+export const userAskPostModel = (userId, title, text, tags) => {
   return {
-    postID,
+    userId,
+    title,
+    text,
+    tags,
+  };
+};
+
+export const userLinkPostTagModel = (askId, tagId) => {
+  return {
+    askId,
+    tagId,
+  };
+};
+
+export const userAskPostTagModel = (askId, tagId) => {
+  return {
+    askId,
     tagId,
   };
 };
