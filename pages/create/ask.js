@@ -11,29 +11,29 @@ import usePrivateRoutes from "hooks/usePrivateRoutes";
 
 const Navbar = dynamic(() => import("components/layouts/Navbar"));
 
-const CreateLinkPost = () => {
+const CreateLinkAsk = () => {
   usePrivateRoutes();
 
-  const [postTitle, setPostTitle] = useState("");
-  const [postURL, setPostURL] = useState("");
-  const [postTags, setPostTags] = useState("");
+  const [askTitle, setAskTitle] = useState("");
+  const [askText, setAskURL] = useState("");
+  const [askTags, setAskTags] = useState("");
   const [formError, setFormError] = useState("");
   const [isSubmitClicked, setIsSubmitClicked] = useState(false);
-  const [isPostPublished, setIsPostPublished] = useState(false);
+  const [isAskPostPublished, setIsAskPostPublished] = useState(false);
 
-  const onHandlingLinkPosting = async (event) => {
+  const onHandlingAskPosting = async (event) => {
     event.preventDefault();
 
     setIsSubmitClicked(true);
     setFormError("");
 
     // Form validation
-    if (postTitle == "") {
-      setFormError("Please input post title");
+    if (askTitle == "") {
+      setFormError("Please input ask title");
       setIsSubmitClicked(false);
       return;
-    } else if (postURL == "") {
-      setFormError("Please input post URL");
+    } else if (askText == "") {
+      setFormError("Please input ask URL");
       setIsSubmitClicked(false);
       return;
     }
@@ -42,18 +42,18 @@ const CreateLinkPost = () => {
 
     const { id } = userData;
 
-    const linkPostingResponse = await handleAskPosting(
+    const askPostingResponse = await handleAskPosting(
       id,
-      postTitle,
-      postTags,
-      postURL
+      askTitle,
+      askTags,
+      askText
     );
 
-    if (linkPostingResponse.status === "Failed") {
-      setFormError(linkPostingResponse.error);
+    if (askPostingResponse.status === "Failed") {
+      setFormError(askPostingResponse.error);
       setIsSubmitClicked(false);
     } else {
-      setIsPostPublished(true);
+      setIsAskPostPublished(true);
     }
   };
 
@@ -62,30 +62,30 @@ const CreateLinkPost = () => {
       <Navbar />
 
       <section className="posting__container">
-        {!isPostPublished ? (
+        {!isAskPostPublished ? (
           <div className="posting__container__content">
             <h3 className="heading-sub">Ask A Question</h3>
             <form className="form posting__container__content__form">
               <FormLabelInputGroup
-                label="Post Title *"
+                label="Ask Title *"
                 inputType="text"
-                handleInput={(event) => setPostTitle(event.target.value)}
+                handleInput={(event) => setAskTitle(event.target.value)}
               />
               <FormLabelInputGroup
-                label="Post URL *"
+                label="Ask URL *"
                 inputType="text"
-                handleInput={(event) => setPostURL(event.target.value)}
+                handleInput={(event) => setAskURL(event.target.value)}
               />
               <FormLabelTextAreaGroup
-                label="Post Tags *"
+                label="Ask Tags *"
                 inputType="text"
-                handleInput={(event) => setPostTags(event.target.value)}
+                handleInput={(event) => setAskTags(event.target.value)}
               />
               <button
                 className="btn btn-md form__submit"
-                onClick={onHandlingLinkPosting}
+                onClick={onHandlingAskPosting}
               >
-                {!isSubmitClicked ? "Publish post" : "Publishing..."}
+                {!isSubmitClicked ? "Publish ask" : "Publishing..."}
               </button>
             </form>
             {formError && <p className="form__error">{formError}</p>}
@@ -101,4 +101,4 @@ const CreateLinkPost = () => {
   );
 };
 
-export default CreateLinkPost;
+export default CreateLinkAsk;

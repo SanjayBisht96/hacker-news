@@ -87,6 +87,8 @@ export const addAskPostTags = async (res, askData, listOfTags) => {
           // 2A. Else Create a new tag in tag
           const tagModelData = userTagModel(tagName);
 
+          console.log(tagModelData)
+
           tagData = await publishATag(tagModelData);
 
           // 2B. Create Ask ask tag with ask ID

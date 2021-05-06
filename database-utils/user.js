@@ -109,6 +109,14 @@ export const getAllUserLinkPosts = async (userId) => {
   });
 };
 
+// Get all user ask posts with pagination
+export const getAllUserAskPostsData = async (userId) => {
+  return await prisma.ask.findMany({
+    where: { userId },
+    take: 20,
+  });
+};
+
 // Get user data
 export const getUserData = async (userId) => {
   return await prisma.user.findUnique({

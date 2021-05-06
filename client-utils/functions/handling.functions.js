@@ -156,8 +156,8 @@ export const handleLinkPosting = async (
 export const handleAskPosting = async (
   userId,
   askTitle,
+  askTags,
   askText,
-  askTags
 ) => {
   return axios({
     method: "post",
