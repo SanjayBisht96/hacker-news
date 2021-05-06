@@ -1,9 +1,9 @@
 import React from "react";
 import usePrivateRoutes from "hooks/usePrivateRoutes";
 import Navbar from "components/layouts/Navbar";
-import { AdminDashboardActionCard } from 'components/sections/Cards';
+import { UserDashboardActionCard } from "components/sections/Cards";
 
-const AdminDashoard = () => {
+const UserDashoard = () => {
   usePrivateRoutes();
 
   return (
@@ -14,7 +14,7 @@ const AdminDashoard = () => {
         <div className="admindashboard__container__content">
           <div className="admindashboard__container__content__header">
             <h1 className="heading-main admindashboard__container__content__header__heading">
-              Admin Dashboard
+              User Dashboard
             </h1>
             <p className="paragraph-sub admindashboard__container__content__header__paragraph">
               You can control content, manage users here.
@@ -23,17 +23,23 @@ const AdminDashoard = () => {
 
           <div className="admindashboard__container__content__actions">
             <div className="admindashboard__container__content__actions__cards">
-              <AdminDashboardActionCard
-                heading="Approve Job Postings"
-                paragraph=" Control the jobs that will be posted on the platform"
-                ctaText="View job posting"
-                link="/admin/approve-jobs"
+              <UserDashboardActionCard
+                heading="Manage link posts"
+                paragraph="View, edit & delete all link posts you've published"
+                ctaText="Manage link posts"
+                link="/user/linkposts"
               />
-              <AdminDashboardActionCard
-                heading="Manage all posts"
-                paragraph="View, edit or delete any post"
-                ctaText="Manage posts"
-                link="/admin/manage-posts"
+              <UserDashboardActionCard
+                heading="Manage ask posts"
+                paragraph="View, edit & delete all ask posts"
+                ctaText="Manage ask posts"
+                link="#"
+              />
+              <UserDashboardActionCard
+                heading="Manage job posts"
+                paragraph="View, edit & delete all job postings"
+                ctaText="Manage job posts"
+                link="#"
               />
             </div>
           </div>
@@ -43,4 +49,4 @@ const AdminDashoard = () => {
   );
 };
 
-export default AdminDashoard;
+export default UserDashoard;

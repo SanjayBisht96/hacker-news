@@ -44,7 +44,7 @@ export default HomePage;
 
 export const getServerSideProps = async () => {
   const allPostsDataResponse = await handleGetAllPostsForHomepage();
-
+  
   return {
     props: { allPostsData: allPostsDataResponse },
   };

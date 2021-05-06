@@ -69,3 +69,112 @@ PostCard.propTypes = {
   postComments: PropTypes.string,
   postUpvotes: PropTypes.string,
 };
+
+const AdminDashboardActionCard = ({ heading, paragraph, ctaText, link }) => {
+  return (
+    <div className="admindashboard__container__content__actions__cards__item">
+      <h3 className="heading-sub admindashboard__container__content__actions__cards__item__heading">
+        {heading}
+      </h3>
+      <p className="paragraph-sub admindashboard__container__content__actions__cards__item__paragraph">
+        {paragraph}
+      </p>
+      <a href={link}>
+        <button className="btn btn-md admindashboard__container__content__actions__cards__item__button">
+          {ctaText}
+        </button>
+      </a>
+    </div>
+  );
+};
+
+AdminDashboardActionCard.propTypes = {
+  heading: PropTypes.string,
+  paragraph: PropTypes.string,
+  ctaText: PropTypes.string,
+  link: PropTypes.string,
+};
+
+export const UserDashboardActionCard = ({
+  heading,
+  paragraph,
+  ctaText,
+  link,
+}) => {
+  return (
+    <div className="admindashboard__container__content__actions__cards__item">
+      <h3 className="heading-sub admindashboard__container__content__actions__cards__item__heading">
+        {heading}
+      </h3>
+      <p className="paragraph-sub admindashboard__container__content__actions__cards__item__paragraph">
+        {paragraph}
+      </p>
+      <a href={link}>
+        <button className="btn btn-md admindashboard__container__content__actions__cards__item__button">
+          {ctaText}
+        </button>
+      </a>
+    </div>
+  );
+};
+
+UserDashboardActionCard.propTypes = {
+  heading: PropTypes.string,
+  paragraph: PropTypes.string,
+  ctaText: PropTypes.string,
+  link: PropTypes.string,
+};
+
+export const UserManageLinkPostCard = ({
+  postId,
+  postTitle,
+  postUrl,
+  postTags,
+  postedBy,
+  postedAt,
+}) => {
+  return (
+    <div className="adminmanageposts__container__content__actions__cards__item">
+      <a
+        href={`/post/${postId}`}
+        className="adminmanageposts__container__content__actions__cards__item__link"
+      >
+        <h3 className="heading-sub adminmanageposts__container__content__actions__cards__item__heading">
+          {postTitle}
+        </h3>
+      </a>
+      <p className="paragraph-sub adminmanageposts__container__content__actions__cards__item__paragraph">
+        Posted by {postedBy} on {postedAt}
+      </p>
+      <div className="adminmanageposts__container__content__actions__cards__item__main">
+        <p className="paragraph-sub adminmanageposts__container__content__actions__cards__item__paragraph">
+          {postTags}
+        </p>
+        <a href={postUrl} target="_black">
+          <button className="btn btn-sm adminmanageposts__container__content__actions__cards__item__button">
+            Link
+          </button>
+        </a>
+      </div>
+      <div className="adminmanageposts__container__content__actions__cards__item__action">
+        <a href={`/post/edit/${postId}`}>
+          <button className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button__primary">
+            Edit
+          </button>
+        </a>
+        <button className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button">
+          Delete
+        </button>
+      </div>
+    </div>
+  );
+};
+
+UserManageLinkPostCard.propTypes = {
+  postId: PropTypes.string,
+  postTitle: PropTypes.string,
+  postUrl: PropTypes.string,
+  postTags: PropTypes.string,
+  postedBy: PropTypes.string,
+  postedAt: PropTypes.string,
+};

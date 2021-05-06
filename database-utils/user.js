@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { NO_OF_POSTS_PER_PAGE } from "const";
 
 const prisma = new PrismaClient();
 
@@ -102,10 +103,22 @@ export const getAJobByID = async (jobId) => {
 };
 
 // Get all user posts with pagination
-export const getAllUserLinkPosts = async (userId) => {
+export const getAllUserLinkPosts = async (userId, sortBy, page) => {
+  // Sorting by date
+  if (sortBy == "date") {
+    return await prisma.linkPost.findMany({
+      where: { userId },
+      skip: NO_OF_POSTS_PER_PAGE * (page - 1),
+      take: NO_OF_POSTS_PER_PAGE,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
+
   return await prisma.linkPost.findMany({
     where: { userId },
-    take: 20,
+    take: NO_OF_POSTS_PER_PAGE * page,
   });
 };
 

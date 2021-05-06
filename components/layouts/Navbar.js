@@ -74,6 +74,9 @@ const NavbarLinksForUser = () => {
       <a href="/create/ask" className="navbar__links__item">
         Ask HN
       </a>
+      <a href="/dashboard" className="navbar__links__item">
+        Dashboard
+      </a>
       <button
         className="btn btn-sm navbar__links__button"
         onClick={handleSignoutUser}

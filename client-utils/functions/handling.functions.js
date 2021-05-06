@@ -1,9 +1,12 @@
 import axios from "axios";
+import { ADMIN_TOKEN_NAME, USER_TOKEN_NAME } from "const";
+import useAuth from "hooks/useAuth";
+import { setTokenCookie } from "./auth.functions";
 
 export const handleSignUpUser = async (payload) => {
   return axios({
     method: "post",
-    url: '/api/user/auth/signup',
+    url: "/api/user/auth/signup",
     data: {
       ...payload,
     },
@@ -18,20 +21,21 @@ export const handleSignUpUser = async (payload) => {
 
       localStorage.setItem("data", JSON.stringify(localUserData));
 
+      setTokenCookie(res, localUserData);
+
       return res.data;
     })
     .catch((error) => {
-      if(error.response){
+      if (error.response) {
         return error.response.data;
-      }
-      else if (error.request) {
+      } else if (error.request) {
         // The request was made but no response was received
         console.log(error.request);
-        return {}
+        return {};
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-        return {}
+        console.log("Error", error.message);
+        return {};
       }
     });
 };
@@ -39,7 +43,7 @@ export const handleSignUpUser = async (payload) => {
 export const handleLogInUser = async (payload) => {
   return axios({
     method: "post",
-    url: '/api/user/auth/login',
+    url: "/api/user/auth/login",
     data: {
       ...payload,
     },
@@ -48,26 +52,27 @@ export const handleLogInUser = async (payload) => {
       const { payload } = res.data;
 
       const localUserData = {
-        userType: "USER",
+        userType: USER_TOKEN_NAME,
         id: payload.id,
       };
 
       localStorage.setItem("data", JSON.stringify(localUserData));
 
+      setTokenCookie(res, localUserData);
+
       return res.data;
     })
     .catch((error) => {
-      if(error.response){
+      if (error.response) {
         return error.response.data;
-      }
-      else if (error.request) {
+      } else if (error.request) {
         // The request was made but no response was received
         console.log(error.request);
-        return {}
+        return {};
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-        return {}
+        console.log("Error", error.message);
+        return {};
       }
     });
 };
@@ -82,7 +87,7 @@ export const handleSignoutUser = () => {
 export const handleLogInAdmin = async (email, password) => {
   return axios({
     method: "post",
-    url: '/api/admin/auth/login',
+    url: "/api/admin/auth/login",
     data: {
       email,
       password,
@@ -92,26 +97,27 @@ export const handleLogInAdmin = async (email, password) => {
       const { payload } = res.data;
 
       const localAdminData = {
-        userType: "ADMIN",
+        userType: ADMIN_TOKEN_NAME,
         id: payload.adminId,
       };
 
       localStorage.setItem("data", JSON.stringify(localAdminData));
 
+      setTokenCookie(res, localAdminData);
+
       return res.data;
     })
     .catch((error) => {
-      if(error.response){
+      if (error.response) {
         return error.response.data;
-      }
-      else if (error.request) {
+      } else if (error.request) {
         // The request was made but no response was received
         console.log(error.request);
-        return {}
+        return {};
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-        return {}
+        console.log("Error", error.message);
+        return {};
       }
     });
 };
@@ -125,7 +131,7 @@ export const handleLinkPosting = async (
 ) => {
   return axios({
     method: "post",
-    url: '/api/user/post/create',
+    url: "/api/user/post/create",
     data: {
       userId,
       postTitle,
@@ -137,31 +143,25 @@ export const handleLinkPosting = async (
       return res.data;
     })
     .catch((error) => {
-      if(error.response){
+      if (error.response) {
         return error.response.data;
-      }
-      else if (error.request) {
+      } else if (error.request) {
         // The request was made but no response was received
         console.log(error.request);
-        return {}
+        return {};
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-        return {}
+        console.log("Error", error.message);
+        return {};
       }
     });
 };
 
 // Handle ask posting
-export const handleAskPosting = async (
-  userId,
-  askTitle,
-  askTags,
-  askText,
-) => {
+export const handleAskPosting = async (userId, askTitle, askTags, askText) => {
   return axios({
     method: "post",
-    url: '/api/user/ask/create',
+    url: "/api/user/ask/create",
     data: {
       userId,
       askTitle,
@@ -173,17 +173,16 @@ export const handleAskPosting = async (
       return res.data;
     })
     .catch((error) => {
-      if(error.response){
+      if (error.response) {
         return error.response.data;
-      }
-      else if (error.request) {
+      } else if (error.request) {
         // The request was made but no response was received
         console.log(error.request);
-        return {}
+        return {};
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-        return {}
+        console.log("Error", error.message);
+        return {};
       }
     });
 };
@@ -196,7 +195,7 @@ export const handleJobPosting = async (
 ) => {
   return axios({
     method: "post",
-    url: '/api/user/job/post',
+    url: "/api/user/job/post",
     data: {
       userId,
       jobTitle,
@@ -208,17 +207,16 @@ export const handleJobPosting = async (
       return res.data;
     })
     .catch((error) => {
-      if(error.response){
+      if (error.response) {
         return error.response.data;
-      }
-      else if (error.request) {
+      } else if (error.request) {
         // The request was made but no response was received
         console.log(error.request);
-        return {}
+        return {};
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-        return {}
+        console.log("Error", error.message);
+        return {};
       }
     });
 };
@@ -226,23 +224,22 @@ export const handleJobPosting = async (
 export const handleGetAllJobs = async () => {
   return axios({
     method: "get",
-    url: '/api/admin/job',
+    url: "/api/admin/job",
   })
     .then((res) => {
       return res.data.payload;
     })
     .catch((error) => {
-      if(error.response){
+      if (error.response) {
         return error.response.data;
-      }
-      else if (error.request) {
+      } else if (error.request) {
         // The request was made but no response was received
         console.log(error.request);
-        return {}
+        return {};
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-        return {}
+        console.log("Error", error.message);
+        return {};
       }
     });
 };
@@ -250,7 +247,7 @@ export const handleGetAllJobs = async () => {
 export const handleJobApproval = async (jobId, userId) => {
   return axios({
     method: "post",
-    url: '/api/admin/job/approve',
+    url: "/api/admin/job/approve",
     data: {
       userId,
       jobId,
@@ -260,17 +257,16 @@ export const handleJobApproval = async (jobId, userId) => {
       return res.data;
     })
     .catch((error) => {
-      if(error.response){
+      if (error.response) {
         return error.response.data;
-      }
-      else if (error.request) {
+      } else if (error.request) {
         // The request was made but no response was received
         console.log(error.request);
-        return {}
+        return {};
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-        return {}
+        console.log("Error", error.message);
+        return {};
       }
     });
 };
@@ -278,7 +274,7 @@ export const handleJobApproval = async (jobId, userId) => {
 export const handleJobReject = async (jobId, userId) => {
   return axios({
     method: "post",
-    url: '/api/admin/job/reject',
+    url: "/api/admin/job/reject",
     data: {
       userId,
       jobId,
@@ -288,17 +284,16 @@ export const handleJobReject = async (jobId, userId) => {
       return res.data;
     })
     .catch((error) => {
-      if(error.response){
+      if (error.response) {
         return error.response.data;
-      }
-      else if (error.request) {
+      } else if (error.request) {
         // The request was made but no response was received
         console.log(error.request);
-        return {}
+        return {};
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-        return {}
+        console.log("Error", error.message);
+        return {};
       }
     });
 };
@@ -312,17 +307,44 @@ export const handleGetAllPostsForHomepage = async () => {
       return res.data.payload;
     })
     .catch((error) => {
-      if(error.response){
+      if (error.response) {
         return error.response.data;
-      }
-      else if (error.request) {
+      } else if (error.request) {
         // The request was made but no response was received
         console.log(error.request);
-        return {}
+        return {};
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
-        return {}
+        console.log("Error", error.message);
+        return {};
+      }
+    });
+};
+
+export const handleGetAllLinkPostsForUser = async () => {
+  const { id } = useAuth();
+
+  return axios({
+    method: "post",
+    url: `${process.env.API_ROOT}/user/post/get`,
+    data: {
+      userId: id,
+    },
+  })
+    .then((res) => {
+      return res.data.payload;
+    })
+    .catch((error) => {
+      if (error.response) {
+        return error.response.data;
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {};
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error", error.message);
+        return {};
       }
     });
 };
