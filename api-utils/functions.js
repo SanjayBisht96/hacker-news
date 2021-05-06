@@ -39,7 +39,7 @@ export const addLinkPostTags = async (res, postData, listOfTags) => {
           // 1B. Create Link post tag with post ID
           const linkPostTagModel = userLinkPostTagModel(postData.id, id);
 
-          publishALinkPostTag(linkPostTagModel);
+          await publishALinkPostTag(linkPostTagModel);
         } else {
           // 2A. Else Create a new tag in tag
           const tagModelData = userTagModel(tagName);
@@ -55,10 +55,12 @@ export const addLinkPostTags = async (res, postData, listOfTags) => {
           await publishALinkPostTag(linkPostTagModel);
         }
       } catch (error) {
+        console.log(error)
         sendErrorResponse({
           res,
           error,
         });
+        return;
       }
     })
   );

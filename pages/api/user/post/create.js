@@ -23,12 +23,16 @@ const publishLinkPost = async (req, res) => {
 
       await addLinkPostTags(res, postData, listOfTags);
 
+      console.log(postData)
+
       sendSuccessResponse({
         res,
         message: "Your post has been published",
       });
+      return;
     })
     .catch((error) => {
+      console.log(error)
       sendErrorResponse({
         res,
         error,

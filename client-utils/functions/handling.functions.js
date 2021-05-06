@@ -155,18 +155,18 @@ export const handleLinkPosting = async (
 // Handle ask posting
 export const handleAskPosting = async (
   userId,
-  postTitle,
-  postTags,
-  postURL
+  askTitle,
+  askText,
+  askTags
 ) => {
   return axios({
     method: "post",
-    url: '/api/user/post/create',
+    url: '/api/user/ask/create',
     data: {
       userId,
-      postTitle,
-      postTags,
-      postURL,
+      askTitle,
+      askText,
+      askTags,
     },
   })
     .then((res) => {

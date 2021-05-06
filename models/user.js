@@ -28,9 +28,9 @@ export const userAskPostModel = (userId, title, text, tags) => {
   };
 };
 
-export const userLinkPostTagModel = (askId, tagId) => {
+export const userLinkPostTagModel = (postID, tagId) => {
   return {
-    askId,
+    postID,
     tagId,
   };
 };

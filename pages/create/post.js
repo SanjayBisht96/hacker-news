@@ -49,6 +49,8 @@ const CreateLinkPost = () => {
       postURL
     );
 
+    console.log(linkPostingResponse)
+
     if (linkPostingResponse.status === "Failed") {
       setFormError(linkPostingResponse.error);
       setIsSubmitClicked(false);
