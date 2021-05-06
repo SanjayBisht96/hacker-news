@@ -1,7 +1,6 @@
-import { PrismaClient } from '@prisma/client'
+import prisma from "../../../database-utils/prismaObj";
 
 async function handleTags(formData,askID){
-  const prisma = new PrismaClient();
     const tagList = formData["tags"].match(/[a-zA-Z]+/g);
 
     tagList.forEach(async (tagName) => {
@@ -28,7 +27,6 @@ async function handleTags(formData,askID){
 
 
 export default async function submit(req,res){
-    const prisma = new PrismaClient();
     const {formData} = req.body;
     const user = await prisma.user.findUnique({
         where: {

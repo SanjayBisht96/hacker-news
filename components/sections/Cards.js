@@ -54,6 +54,9 @@ export const PostCard = ({
           <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
             {postComments}
           </p>
+          <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
+            <a href={'discussion/'+postId}>discuss</a>
+          </p>          
         </div>
       </div>
     </div>

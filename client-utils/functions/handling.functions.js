@@ -348,3 +348,126 @@ export const handleGetAllLinkPostsForUser = async () => {
       }
     });
 };
+
+
+// add Comments
+export const addComment = async (postID,userID,commentInput) => {
+  const payload = {postID,userID,commentInput};
+  return axios({
+    method: "post",
+    url: '/api/comment/addcomment',
+    data: {
+      ...payload,
+    },
+  })
+    .then((res) => {
+      const { payload } = res.data;
+      return payload;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};
+
+
+// Fetch Comments
+export const fetchComments = async (url,postID) => {
+  const payload = {postID};
+  return axios({
+    method: "post",
+    url: url,
+    data: {
+      ...payload,
+    },
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};
+
+
+
+// add Replies
+export const addReply = async (userID,parentID,commentInput) => {
+  const payload = {userID,parentID,commentInput};
+  return axios({
+    method: "post",
+    url: '/api/comment/addreply',
+    data: {
+      ...payload,
+    },
+  })
+    .then((res) => {
+      const { payload } = res.data;
+      return payload;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};
+
+
+//fetchReplies
+export const fetchReplies = async (url,parentID) => {
+  const payload = {parentID};
+  return axios({
+    method: "post",
+    url: url,
+    data: {
+      ...payload,
+    },
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};

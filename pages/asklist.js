@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic';
+ import dynamic from 'next/dynamic';
 import superJson from 'superjson';
 import PropTypes from 'prop-types';
 import fetchAsk from '../utils/fetchAsk';

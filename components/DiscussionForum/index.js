@@ -1,7 +1,15 @@
 import PropTypes from 'prop-types';
+import dynamic from 'next/dynamic';
 import {EDIT_LINK_POST_URL, DISCUSS_LINK_POST_URL} from '../../const';
+import {FormLabelTextAreaGroup} from  '../sections/FormElements';
+import useComments from '../../hooks/useComments';
+import {  fetchComments } from '../../client-utils/functions/handling.functions';
+//import addComment from '../../utils/addComments';
+import useSWR,{ mutate,trigger }  from 'swr';
 
-export default function Post({
+const Comment = dynamic(() => import('../Comment/Reply'));
+
+export default function DiscussionForum({
     postTitle,
     postedBy,
     postedBefore,
@@ -10,6 +18,20 @@ export default function Post({
     postUrl,
     postID
   }){
+
+    const {  newComment, setNewComment } = useComments(postID);
+    const {data ,error} = useSWR( ['/api/comment/fetchcomments',postID],fetchComments);
+    //setCommentList(commentList => list);
+    const handleSubmit = async (e) => {
+      let text = document.getElementById("commentInput").value;
+      if(text){
+        setNewComment( newComment => text);
+        setTimeout(()=>{
+            trigger(['/api/comment/fetchcomments',postID]);
+        },1500);
+      }
+    }
+    
     return (
       <div className="homepage__container__content__main__posts__item">
         <div className="homepage__container__content__main__posts__item__action">
@@ -58,23 +80,29 @@ export default function Post({
             </p>
             <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
               <a href={EDIT_LINK_POST_URL + postID} >edit</a>
-            </p>
-            <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
-              <a href={DISCUSS_LINK_POST_URL + postID} >discuss</a>
             </p>                        
           </div>
         </div>
+            <FormLabelTextAreaGroup
+                label={"Add Comment"}
+                inputType={"text"}
+                id={"commentInput"}
+            />
+            <button className="btn btn-md form__submit posting__container__content__form__submit" onClick={handleSubmit}>
+              Add Comment
+            </button>
+        {
+          data?.map((comment,index) =>{
+            return (
+              <Comment
+                key={index}
+                comment={comment.comment}
+                parentID={comment.id}
+              />
+          )
+          })
+        }
+
       </div>
     );
   };
-
-  Post.propTypes = {
-    postTitle: PropTypes.string.isRequired,
-    postedBy: PropTypes.string.isRequired,
-    postedBefore: PropTypes.string,
-    postComments: PropTypes.string,
-    postUpvotes:PropTypes.number,
-    postUrl: PropTypes.string,
-    postID: PropTypes.string
-  };
-  
