@@ -22,7 +22,6 @@ export const FormLabelInputGroup = (props) => {
 
 export const FormLabelTextAreaGroup = (props) => {
   const { id, label, inputType, handleInput } = props;
-  console.log(id);
   return (
     <div className="form__group posting__container__content__form__group">
       <label className="form__label">{label}</label>

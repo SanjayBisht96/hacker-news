@@ -1,6 +1,5 @@
 import prisma from "../../../database-utils/prismaObj";
 
-
 async function asyncForEach(array, commentList, callback) {
     for (let index = 0; index < array.length; index++) {
       commentList.push(await callback(array[index], index, array));
@@ -18,7 +17,6 @@ export default async function fetchComments(req,res) {
             }
         })
         if(linkPostCommentList){
-            //console.log(linkPostCommentList);
             let commentList = [];
             const start = async (commentList) => {
                 commentList = await asyncForEach(linkPostCommentList, [],async (linkPostComment) => {

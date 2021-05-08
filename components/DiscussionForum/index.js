@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
-import {EDIT_LINK_POST_URL, DISCUSS_LINK_POST_URL} from '../../const';
+import {EDIT_LINK_POST_URL, DISCUSS_LINK_POST_URL, FETCH_COMMENTS_URL} from '../../const';
 import {FormLabelTextAreaGroup} from  '../sections/FormElements';
 import useComments from '../../hooks/useComments';
 import {  fetchComments } from '../../client-utils/functions/handling.functions';
 //import addComment from '../../utils/addComments';
 import useSWR,{ mutate,trigger }  from 'swr';
 
-const Comment = dynamic(() => import('../Comment/Reply'));
+const Comment = dynamic(() => import('../Comment/'));
 
 export default function DiscussionForum({
     postTitle,
@@ -20,24 +20,24 @@ export default function DiscussionForum({
   }){
 
     const {  newComment, setNewComment } = useComments(postID);
-    const {data ,error} = useSWR( ['/api/comment/fetchcomments',postID],fetchComments);
-    //setCommentList(commentList => list);
+    const {data ,error} = useSWR( [FETCH_COMMENTS_URL,postID],fetchComments);
+
     const handleSubmit = async (e) => {
       let text = document.getElementById("commentInput").value;
       if(text){
         setNewComment( newComment => text);
         setTimeout(()=>{
-            trigger(['/api/comment/fetchcomments',postID]);
+            trigger([FETCH_COMMENTS_URL,postID]);
         },1500);
       }
     }
     
     return (
-      <div className="homepage__container__content__main__posts__item">
-        <div className="homepage__container__content__main__posts__item__action">
+      <div className="discussion__container__content__main__posts__item">
+        <div className="discussion__container__content__main__posts__item__action">
           <h3 className="heading-main">{postUpvotes}</h3>
-          <div className="homepage__container__content__main__posts__item__action__container">
-            <button className="btn btn-sm homepage__container__content__main__posts__item__action__container__button">
+          <div className="discussion__container__content__main__posts__item__action__container">
+            <button className="btn btn-sm discussion__container__content__main__posts__item__action__container__button">
               <svg
                 width="44"
                 height="23"
@@ -48,7 +48,7 @@ export default function DiscussionForum({
                 <path d="M41 22H3L22 2L41 22Z" stroke="black" strokeWidth="2" />
               </svg>
             </button>
-            <button className="btn btn-sm homepage__container__content__main__posts__item__action__container__button">
+            <button className="btn btn-sm discussion__container__content__main__posts__item__action__container__button">
               <svg
                 width="44"
                 height="23"
@@ -62,27 +62,28 @@ export default function DiscussionForum({
           </div>
         </div>
   
-        <div className="homepage__container__content__main__posts__item__content">
-          <h2 className="heading-sub homepage__container__content__main__posts__item__content__heading">
+        <div className="discussion__container__content__main__posts__item__content">
+          <h2 className="heading-sub discussion__container__content__main__posts__item__content__heading">
             <a href={postUrl} target='_blank' rel="noreferrer">
             {postTitle}
             </a>
           </h2>
-          <div className="homepage__container__content__main__posts__item__content__footer">
-            <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
+          <div className="discussion__container__content__main__posts__item__content__footer">
+            <p className="paragraph--sub discussion__container__content__main__posts__item__content__footer__paragraph">
               Posted by {postedBy}
             </p>
-            <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
+            <p className="paragraph--sub discussion__container__content__main__posts__item__content__footer__paragraph">
               {postedBefore}
             </p>
-            <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
+            <p className="paragraph--sub discussion__container__content__main__posts__item__content__footer__paragraph">
               {postComments}
             </p>
-            <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
+            <p className="paragraph--sub discussion__container__content__main__posts__item__content__footer__paragraph">
               <a href={EDIT_LINK_POST_URL + postID} >edit</a>
             </p>                        
           </div>
         </div>
+        <div className="discussion__container__content__main__posts__item_comment">
             <FormLabelTextAreaGroup
                 label={"Add Comment"}
                 inputType={"text"}
@@ -97,12 +98,13 @@ export default function DiscussionForum({
               <Comment
                 key={index}
                 comment={comment.comment}
-                parentID={comment.id}
+                ID={comment.id}
               />
           )
           })
         }
 
+        </div>
       </div>
     );
   };
