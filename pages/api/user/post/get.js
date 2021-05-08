@@ -1,14 +1,14 @@
 import nc from "next-connect";
 import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 import { decryptData } from "api-utils/auth";
-import { getAllPostsDataWithPagination } from "database-utils/global";
+import { getAllUserLinkPosts } from "database-utils/global";
 
 const getAllUsersPosts = async (req, res) => {
   const { userId } = req.body;
 
   const decryptedUserId = decryptData(userId);
 
-  getAllPostsDataWithPagination(decryptedUserId)
+  getAllUserLinkPosts(decryptedUserId)
     .then((allPostsData) => {
       sendSuccessResponse({
         res,

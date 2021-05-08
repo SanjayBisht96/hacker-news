@@ -11,7 +11,7 @@ import {
   publishATag,
   publishALinkPostTag,
 } from "database-utils/user";
-import { getTagDataIfTagExists } from "database-utils/global";
+import { getTagDataIfTagExists } from "database-utils/user";
 
 const publishLinkPost = async (req, res) => {
   const { userId, postTitle, postTags, postURL } = req.body;

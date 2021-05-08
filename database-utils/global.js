@@ -9,11 +9,9 @@ export const getAllPostsDataWithPagination = async () => {
   });
 };
 
-// Get tag data if tag name exists
-export const getTagDataIfTagExists = async (tagName) => {
-  return await prisma.tag.findFirst({
-    where: {
-      name: tagName,
-    },
+export const getAllUserLinkPosts = async (userId) => {
+  return await prisma.linkPost.findMany({
+    where: { userId },
+    take: 20,
   });
 };
