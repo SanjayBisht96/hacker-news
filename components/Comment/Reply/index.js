@@ -1,63 +1,29 @@
 import {FormLabelTextAreaGroup} from  '../../sections/FormElements';
-import {useState} from 'react';
-import useAuth from "../../../hooks/useAuth";
-import { addReply, fetchReplies } from '../../../client-utils/functions/handling.functions';
-import useSWR,{ mutate,trigger }  from 'swr';
+import useReply from "../../../hooks/useReply";
 
-export default function Reply({comment,parentID}){
-    const [reply, setReply] = useState(false);
-    const [replyList, setReplyList] = useState([]);
-    const {data ,error} = useSWR( ['/api/comment/fetchreplies',parentID],fetchReplies);
-
-    const handleReply = () => {
-        let text = document.getElementById(parentID).value;
-        const {id} = useAuth();
-        if(text){
-            addReply(id,parentID,text)
-        }
-    }
-
+export default function Reply({parentID,text}){
+    const {reply, showReply, cancelReply, handleReply} = useReply();
     return (
         <>
-        <div>{comment}</div>
-        {
-            reply ?
-                <div>
+        <div className="reply">
+            <div className="reply_text">{text}</div>
+            <div className="reply_show" data-id={parentID} onClick={showReply} >Reply</div>
+            {
+                reply ?
+                <div className="reply_box">
                     <FormLabelTextAreaGroup
                         label={"Add Reply"}
                         inputType={"text"}
                         id={parentID}
                     />
-                    <div className="btn btn-md form__submit posting__container__content__form__submit" onClick={handleReply}>Comment</div>
-                </div> 
-                : <div>
-                    <span onClick={()=>  setReply(true)}>Reply</span>  
-                  </div>
-        }        
-        {
-            data?.map((commentReply)=>{
-                console.log(commentReply)
-                return (
-                <div>
-                    <div>{commentReply.comment}</div>
-
-                    reply ?
-                    <div>
-                        <FormLabelTextAreaGroup
-                            label={"Add Reply"}
-                            inputType={"text"}
-                            id={parentID}
-                        />
-                        <div className="btn btn-md form__submit posting__container__content__form__submit" onClick={handleReply}>Comment</div>
-                    </div> 
-                    : <div>
-                        <span onClick={()=>  setReply(true)}>Reply</span>  
+                    <div className="reply_box_btn">
+                        <div className="reply_box_btn_cancel btn btn-sm" data-id={parentID} onClick={cancelReply} >Cancel</div> 
+                        <div className="reply_box_btn_add btn btn-sm" data-id={parentID} onClick={handleReply} >Reply</div> 
                     </div>
-                </div>);
-            })
+                </div>:''
 
-
-        }
+            }
+        </div>
         </>
     );
 }

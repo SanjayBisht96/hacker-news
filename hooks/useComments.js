@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import dynamic from 'next/dynamic';
 import { addComment, fetchComments } from '../client-utils/functions/handling.functions';
 import useAuth from "../hooks/useAuth";
+//import Pusher from 'pusher-js';
 //import fetchComments from "../utils/fetchComments";
 
 export default function useComments(postID){
@@ -16,12 +17,21 @@ export default function useComments(postID){
     //     }
     //     updateCommentList();
     // },[]);
+    // const pusher = new Pusher(process.env.PUSHER_APP_ID, {
+    //     cluster: process.env.PUSHER_CLUSTER
+    //    });
+
+    // const channel = pusher.subscribe('newComment');
 
     useEffect(() => {
         async function updateComment(){
             const {id} = useAuth();
             if(newComment){
                addComment(postID,id,newComment);
+            //    channel.bind('comment-event', function() {
+            //         console.log("received")
+            //         return {message : "added"}
+            //     });        
             }
         }
         updateComment();

@@ -1,0 +1,37 @@
+.reply{
+    margin-top: 10px;
+    margin-left: 20px;
+    &_text{
+        margin-top: 10px;
+        font-size: 20px;
+    }
+
+    &_show{
+       font-size: 10px; 
+       &:hover{
+            text-decoration: underline;
+        }
+    }
+
+    &_box{
+
+     &_btn{
+        display: flex;
+        &_cancel{
+            color: $color-primary;
+            &:hover{
+                text-decoration: underline;
+            }    
+        }    
+
+        &_add{
+            flex-wrap: wrap;
+            color: $color-white;
+            background-color: $color-primary;
+            padding: 1.5rem 3rem;
+            font-size: 1.5rem;
+            font-weight: 300;
+        }
+     }
+    }    
+}

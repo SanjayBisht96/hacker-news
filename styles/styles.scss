@@ -9,12 +9,15 @@
 
 @import 'components/buttons';
 @import 'components/form';
+@import 'components/comment';
+@import 'components/reply';
 
 @import 'sections/task-success.scss';
 
 @import 'pages/homepage';
 @import 'pages/posting';
 @import 'pages/auth';
+@import 'pages/discussion';
 @import 'pages/admin/dashboard.scss';
 @import 'pages/admin/approve-jobs';
 @import 'pages/admin/manage-posts';

@@ -24,7 +24,7 @@ export default function Discussion({post}){
         <div className="homepage__container__content__main">
           <div className="homepage__container__content__main__posts">
                 <DiscussionForum
-                  postTitle={post.name}
+                  postTitle={post.title}
                   postedBy={'sanjay'}
                   postedBefore={post.createdAt}
                   postComments={"comments"}

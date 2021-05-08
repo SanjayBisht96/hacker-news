@@ -109,6 +109,7 @@ model Comment {
   id              String            @id @default(uuid())
   comment         String
   parentCommentID String?
+  createdAt DateTime  @default(now())
   userID          String
   user            User              @relation(fields: [userID], references: [id])
   LinkPostComment LinkPostComment[]
@@ -116,9 +117,11 @@ model Comment {
 
 model nextComment {
   id              String            @id @default(uuid())
+  level           String?
   comment         String
   parentCommentID String
   childCommentID  String?
+  createdAt DateTime  @default(now())
   userID          String
   user            User              @relation(fields: [userID], references: [id])
   LinkPostComment LinkPostComment[]

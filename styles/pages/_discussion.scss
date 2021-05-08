@@ -1,0 +1,73 @@
+.discussion {
+    &__container {
+      padding: 5rem 0;
+  
+      &__content {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        margin: auto;
+        width: 90%;
+  
+        &__header {
+          &__heading {
+          }
+        }
+  
+        &__main {
+          padding: 3rem 0 0 0;
+          &__posts {
+            display: grid;
+            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+  
+            &__item {
+              max-width: 100%;
+              min-height: 15rem;
+              
+              align-items: flex-start;
+              justify-content: center;
+              padding: 3rem 5rem;
+              box-shadow: 3px 3px 10px #e0e0e0;
+              border: 1px solid $color-grey;
+  
+              &__action {
+                display: flex;
+                align-items: center;
+                padding: 0px 1rem 0 0;
+  
+                &__container {
+                  display: flex;
+                  flex-direction: column;
+                  padding: 0 0 0 1rem;
+  
+                  &__button {
+                      background-color: transparent;
+                      padding: 1rem;
+                  }
+                }
+              }
+  
+              &__content {
+                &__heading {
+                }
+  
+                &__footer {
+                  display: flex;
+                  justify-content: space-between;
+                  padding: 0.5rem 0;
+                  width: 45%;
+  
+                  &__paragraph {
+                      font-size: 1.3rem;
+                      font-weight: 500;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
