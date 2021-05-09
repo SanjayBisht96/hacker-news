@@ -298,10 +298,10 @@ export const handleJobReject = async (jobId, userId) => {
     });
 };
 
-export const handleGetAllPostsForHomepage = async () => {
+export const handleGetAllPostsForHomepage = async (page = 1, sortBy = 'date') => {  
   return axios({
     method: "get",
-    url: `${process.env.API_ROOT}/global/post/get`,
+    url: `${process.env.API_ROOT}/global/post/get?page=${page}&sortBy=${sortBy}`,
   })
     .then((res) => {
       return res.data.payload;

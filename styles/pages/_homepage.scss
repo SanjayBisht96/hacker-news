@@ -16,6 +16,7 @@
 
       &__main {
         padding: 3rem 0 0 0;
+
         &__posts {
           display: grid;
           gap: 2rem;
@@ -65,6 +66,20 @@
                   font-weight: 500;
                 }
               }
+            }
+          }
+        }
+
+        &__actions {
+          padding: 2rem 0;
+          display: flex;
+          justify-content: center;
+
+          &__button {
+            background-color: $color-black;
+
+            &:not(:first-child) {
+              margin: 0 0 0 1rem;
             }
           }
         }

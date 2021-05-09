@@ -1,9 +1,29 @@
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import Navbar from "components/layouts/Navbar";
 import { handleGetAllPostsForHomepage } from "client-utils/functions/handling.functions";
-import { PostCard } from "components/sections/Cards";
+import { LinkPostCardsContainer } from "components/sections/Cards";
 
 const HomePage = ({ allPostsData }) => {
+  const [pageNo, setPageNo] = useState(1);
+  const [allPostsList, setAllPostsList] = useState([]);
+
+  useEffect(() => {
+    setAllPostsList(allPostsData);
+  }, []);
+
+  const handleGetAllPostsWithPageNo = async ({ isNextClicked }) => {
+    let upcomingPageNo;
+
+    if (isNextClicked) upcomingPageNo = pageNo + 1;
+    else upcomingPageNo = pageNo - 1;
+
+    const nextPageResponse = await handleGetAllPostsForHomepage(upcomingPageNo);
+    setAllPostsList(nextPageResponse);
+
+    setPageNo(upcomingPageNo);
+  };
+
   return (
     <main className="homepage">
       <Navbar />
@@ -16,22 +36,30 @@ const HomePage = ({ allPostsData }) => {
             </h1>
           </div>
           <div className="homepage__container__content__main">
-            <div className="homepage__container__content__main__posts">
-              { Array.isArray(allPostsData) && allPostsData.length > 0 ? allPostsData.map((postData) => {
-                const { id, name, title, createdAtDate } = postData;
+            <LinkPostCardsContainer allPostsList={allPostsList} />
 
-                return (
-                  <PostCard
-                    key={id}
-                    postId={id}
-                    postTitle={title}
-                    postedBy={name}
-                    postedDate={createdAtDate}
-                    postComments="10 comments"
-                    postUpvotes="5"
-                  />
-                );
-              }) : <h1>No posts available</h1>}
+            <div className="homepage__container__content__main__actions">
+              {pageNo > 1 && (
+                <button
+                  className="btn btn-sm homepage__container__content__main__actions__button"
+                  onClick={() =>
+                    handleGetAllPostsWithPageNo({ isNextClicked: false })
+                  }
+                >
+                  Prev
+                </button>
+              )}
+
+              {allPostsList.length > 0 && (
+                <button
+                  className="btn btn-sm homepage__container__content__main__actions__button"
+                  onClick={() =>
+                    handleGetAllPostsWithPageNo({ isNextClicked: true })
+                  }
+                >
+                  Next
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -44,7 +72,7 @@ export default HomePage;
 
 export const getServerSideProps = async () => {
   const allPostsDataResponse = await handleGetAllPostsForHomepage();
-  
+
   return {
     props: { allPostsData: allPostsDataResponse },
   };

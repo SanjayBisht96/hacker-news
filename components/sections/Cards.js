@@ -55,8 +55,8 @@ export const PostCard = ({
             {postComments}
           </p>
           <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
-            <a href={'discussion/'+postId}>discuss</a>
-          </p>          
+            <a href={"discussion/" + postId}>discuss</a>
+          </p>
         </div>
       </div>
     </div>
@@ -180,4 +180,34 @@ UserManageLinkPostCard.propTypes = {
   postTags: PropTypes.string,
   postedBy: PropTypes.string,
   postedAt: PropTypes.string,
+};
+
+export const LinkPostCardsContainer = ({ allPostsList }) => {
+  return (
+    <div className="homepage__container__content__main__posts">
+      {Array.isArray(allPostsList) && allPostsList.length > 0 ? (
+        allPostsList.map((postData) => {
+          const { id, name, title, createdAtDate } = postData;
+
+          return (
+            <PostCard
+              key={id}
+              postId={id}
+              postTitle={title}
+              postedBy={name}
+              postedDate={createdAtDate}
+              postComments="10 comments"
+              postUpvotes="5"
+            />
+          );
+        })
+      ) : (
+        <h1>No posts available</h1>
+      )}
+    </div>
+  );
+};
+
+LinkPostCardsContainer.propTypes = {
+  allPostsList: PropTypes.array,
 };
