@@ -1,5 +1,5 @@
 import axios from "axios";
-import {trigger} from 'swr';
+
 
 export const handleSignUpUser = async (payload) => {
   return axios({
@@ -388,6 +388,64 @@ export const addReply = async (userID,parentID,commentInput) => {
 //fetchReplies
 export const fetchReplies = async (url,parentID) => {
   const payload = {parentID};
+  return axios({
+    method: "post",
+    url: url,
+    data: {
+      ...payload,
+    },
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};
+
+
+//addVote and downVote
+export const updateVote = async (url,payload) => {
+  return axios({
+    method: "post",
+    url: url,
+    data: {
+      ...payload,
+    },
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};
+
+
+//addVote and downVote
+export const getVote = async (url,payload) => {
   return axios({
     method: "post",
     url: url,

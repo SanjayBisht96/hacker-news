@@ -1,4 +1,20 @@
 .reply{
+    &_data{
+        display: flex;
+        & > * {
+            margin-right: 10px;
+        }
+        &_vote{
+            display: flex;
+            &_incvote{
+                flex-wrap: wrap;
+            }
+            &_decvote{
+                flex-wrap: wrap;
+            }            
+        }
+    }
+        
     margin-top: 10px;
     margin-left: 20px;
     &_text{

@@ -10,16 +10,18 @@ import {
   publishAPost,
   publishATag,
   publishALinkPostTag,
+  getUserName
 } from "database-utils/user";
 import { getTagDataIfTagExists } from "database-utils/user";
 
 const publishLinkPost = async (req, res) => {
   const { userId, postTitle, postTags, postURL } = req.body;
-
   const decryptedUserId = decryptData(userId);
+  const username  = await getUserName(decryptedUserId);
 
   const userLinkPostModelData = userLinkPostModel(
     decryptedUserId,
+    username,
     postTitle,
     postURL,
     postTags

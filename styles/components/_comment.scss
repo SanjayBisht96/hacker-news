@@ -1,4 +1,19 @@
 .comment{
+    &_data{
+        display: flex;
+        & > * {
+            margin-right: 10px;
+        }
+        &_vote{
+            display: flex;
+            &_incvote{
+                flex-wrap: wrap;
+            }
+            &_decvote{
+                flex-wrap: wrap;
+            }            
+        }
+    }
     &_text{
         margin-top: 10px;
         font-size: 20px;

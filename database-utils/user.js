@@ -98,3 +98,17 @@ export const getUserData = async (userId) => {
     },
   });
 };
+
+// Get user name
+export const getUserName = async (userId) => {
+  const {name} = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+    select: {
+        name: true,
+      },
+  });
+
+  return name;
+};

@@ -35,6 +35,13 @@
     font-size: 1.4rem;
   }
 
+  &-xs {
+    background-color: rgba($color: $color-white, $alpha: 0.8);
+    padding: 0rem 0rem;
+    font-size: 1.4rem;
+  }
+
+
   &:hover {
     transform: scale(0.95);
   }
