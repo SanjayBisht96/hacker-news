@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import dynamic from 'next/dynamic';
-import {EDIT_LINK_POST_URL, DISCUSS_LINK_POST_URL, FETCH_COMMENTS_URL} from '../../const';
+import {EDIT_LINK_POST_URL, DISCUSS_LINK_POST_URL, FETCH_COMMENTS_URL, ADD_VOTE_URL, DOWN_VOTE_URL,POST} from 'const';
 import {FormLabelTextAreaGroup} from  '../sections/FormElements';
 import useComments from '../../hooks/useComments';
-import {  fetchComments } from '../../client-utils/functions/handling.functions';
-//import addComment from '../../utils/addComments';
+import useVote from 'hooks/useVote';
+import {  fetchComments, updateVote } from '../../client-utils/functions/handling.functions';
+
 import useSWR,{ mutate,trigger }  from 'swr';
 
 const Comment = dynamic(() => import('../Comment/'));
@@ -18,7 +19,7 @@ export default function DiscussionForum({
     postUrl,
     postID
   }){
-
+    const {vote,downVote,upVote} = useVote(POST,postID);
     const {  newComment, setNewComment } = useComments(postID);
     const {data ,error} = useSWR( [FETCH_COMMENTS_URL,postID],fetchComments);
 
@@ -35,10 +36,12 @@ export default function DiscussionForum({
     return (
       <div className="discussion__container__content__main__posts__item">
         <div className="discussion__container__content__main__posts__item__action">
-          <h3 className="heading-main">{postUpvotes}</h3>
+          <h3 className="heading-main">{vote}</h3>
           <div className="discussion__container__content__main__posts__item__action__container">
             <button className="btn btn-sm discussion__container__content__main__posts__item__action__container__button">
               <svg
+                onClick={upVote} 
+                data-id={postID}
                 width="44"
                 height="23"
                 viewBox="0 0 44 23"
@@ -50,6 +53,8 @@ export default function DiscussionForum({
             </button>
             <button className="btn btn-sm discussion__container__content__main__posts__item__action__container__button">
               <svg
+                onClick={downVote} 
+                data-id={postID}
                 width="44"
                 height="23"
                 viewBox="0 0 44 23"
@@ -98,6 +103,7 @@ export default function DiscussionForum({
               <Comment
                 key={index}
                 comment={comment.comment}
+                username={comment.username}
                 ID={comment.id}
               />
           )

@@ -10,9 +10,10 @@ export const userProfileModel = (name, email, imageUrl, signUpWith) => {
   };
 };
 
-export const userLinkPostModel = (userId, title, url, tags) => {
+export const userLinkPostModel = (userId, username, title, url, tags) => {
   return {
     userId,
+    username,
     title,
     url,
     tags,
@@ -59,3 +60,19 @@ export const userJobModel = (userId, jobTitle, jobDescription, jobURL) => {
     postedOn: new Date(Date.now()),
   };
 };
+
+export const updateVoteModel = (userId,targetID,type) => {
+  return {
+    ID: targetID,
+    userID: userId,
+    type: type
+  }
+}
+
+
+export const getVoteModel = (targetID,type) => {
+  return {
+    ID: targetID,
+    type: type
+  }
+}

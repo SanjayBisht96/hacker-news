@@ -15,30 +15,34 @@ generator client {
 }
 
 model User {
-  id          String        @id @default(uuid())
-  name        String
-  email       String        @unique
-  imageUrl    String?
-  signUpWith  String?
-  joinedOn    DateTime?
-  LinkPost    LinkPost[]
-  Job         Job[]
-  Ask         Ask[]
-  Comment     Comment[]
-  nextComment nextComment[]
+  id           String         @id @default(uuid())
+  name         String
+  email        String         @unique
+  imageUrl     String?
+  signUpWith   String?
+  joinedOn     DateTime?
+  LinkPost     LinkPost[]
+  Job          Job[]
+  Ask          Ask[]
+  Comment      Comment[]
+  nextComment  nextComment[]
+  LinkPostVote LinkPostVote[]
 }
 
 model LinkPost {
   id              String            @id @default(uuid())
   userId          String
+  username        String
   user            User              @relation(fields: [userId], references: [id])
   title           String
+  upvotes         Int?              @default(0)
   url             String?           @db.VarChar(512)
   tags            String?           @db.VarChar(512)
   updatedAt       DateTime          @default(now())
   createdAt       DateTime          @default(now())
   LinkPostTags    LinkPostTags[]
   LinkPostComment LinkPostComment[]
+  LinkPostVote    LinkPostVote[]
 }
 
 model Admin {
@@ -60,10 +64,23 @@ model LinkPostTags {
   @@unique([postID, tagId])
 }
 
+model LinkPostVote {
+  postId    String
+  post      LinkPost @relation(fields: [postId], references: [id])
+  userId    String   @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  updatedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  @@unique([postId, userId])
+}
+
 model Ask {
   id        String    @id @default(uuid())
   userId    String
   user      User      @relation(fields: [userId], references: [id])
+  username  String
+  upvotes   Int?      @default(0)
   title     String
   text      String?   @db.VarChar(512)
   tags      String?   @db.VarChar(512)
@@ -109,9 +126,11 @@ model Comment {
   id              String            @id @default(uuid())
   comment         String
   parentCommentID String?
-  createdAt DateTime  @default(now())
+  createdAt       DateTime          @default(now())
   userID          String
   user            User              @relation(fields: [userID], references: [id])
+  username        String
+  upvotes         Int?              @default(0)
   LinkPostComment LinkPostComment[]
 }
 
@@ -121,9 +140,11 @@ model nextComment {
   comment         String
   parentCommentID String
   childCommentID  String?
-  createdAt DateTime  @default(now())
+  createdAt       DateTime          @default(now())
   userID          String
   user            User              @relation(fields: [userID], references: [id])
+  username        String
+  upvotes         Int?              @default(0)
   LinkPostComment LinkPostComment[]
 }
 
@@ -136,7 +157,7 @@ model LinkPostComment {
   updatedAt DateTime @default(now())
   createdAt DateTime @default(now())
 
-  @@unique([postID, commentID])
   nextComment   nextComment? @relation(fields: [nextCommentId], references: [id])
   nextCommentId String?
+  @@unique([postID, commentID])
 }

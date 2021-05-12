@@ -1,4 +1,5 @@
 import { decryptData } from "api-utils/auth";
+import fetchUsername from "api-utils/fetchUsername";
 import prisma from "../../../database-utils/prismaObj";
 //import Pusher from 'pusher';
 
@@ -17,10 +18,12 @@ export default async function addComment(req,res) {
     let commentObj;
     if(postID&&userID){
         const decryptedUserId = decryptData(userID);
+        const username = await fetchUsername(decryptedUserId);
         commentObj = await prisma.comment.create({
             data:{
                 comment : commentInput,
-                userID : decryptedUserId
+                userID : decryptedUserId,
+                username : username
             }
         })
         if(commentObj){
