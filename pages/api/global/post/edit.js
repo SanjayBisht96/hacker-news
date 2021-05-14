@@ -1,7 +1,7 @@
 import nc from "next-connect";
 import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 import { editALinkPostData } from "database-utils/global";
-import { addLinkPostTags } from "api-utils/functions";
+import { updateLinkPostTags } from "api-utils/functions";
 import { decryptData } from "api-utils/auth";
 
 const editALinkPost = async (req, res) => {
@@ -22,7 +22,7 @@ const editALinkPost = async (req, res) => {
           id: updatedLinkPostData.id,
         };
 
-        await addLinkPostTags(res, linkPostTagPayload, listOfTags);
+        await updateLinkPostTags(res, linkPostTagPayload, listOfTags);
       }
 
       sendSuccessResponse({
@@ -32,6 +32,7 @@ const editALinkPost = async (req, res) => {
       });
     })
     .catch((error) => {
+      console.log(error)
       sendErrorResponse({
         res,
         error,
@@ -39,6 +40,6 @@ const editALinkPost = async (req, res) => {
     });
 };
 
-const editALinkPostHandler = nc().put(editALinkPost);
+const editALinkPostHandler = nc().patch(editALinkPost);
 
 export default editALinkPostHandler;

@@ -24,6 +24,8 @@ const HomePage = ({ allPostsData }) => {
     setPageNo(upcomingPageNo);
   };
 
+  console.log(allPostsList)
+
   return (
     <main className="homepage">
       <Navbar />

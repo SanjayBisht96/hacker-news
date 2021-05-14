@@ -530,3 +530,60 @@ export const getVote = async (url,payload) => {
       }
     });
 };
+
+// Get link post by ID
+export const getLinkPostById = async (payload) => {
+  return axios({
+    method: "post",
+    url: '/api/global/post/get-post',
+    data: {
+      ...payload,
+    },
+  })
+    .then((res) => {
+      return res.data.payload;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};
+
+// Update link post by ID
+export const updateLinkPostById = async (payload) => {
+  console.log(payload)
+  return axios({
+    method: "patch",
+    url: '/api/global/post/edit',
+    data: {
+      ...payload,
+    },
+  })
+    .then((res) => {
+      return res.data.payload;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};

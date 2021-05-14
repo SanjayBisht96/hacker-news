@@ -122,11 +122,12 @@ export const getAllUserLinkPosts = async (userId, sortBy, page) => {
   });
 };
 
-// Get all user ask posts with pagination
-export const getAllUserAskPostsData = async (userId) => {
-  return await prisma.ask.findMany({
-    where: { userId },
-    take: 20,
+// Get link post by post ID
+export const getLinkPostById = async (postId) => {
+  return await prisma.linkPost.findUnique({
+    where: {
+      id: postId,
+    },
   });
 };
 
@@ -141,13 +142,13 @@ export const getUserData = async (userId) => {
 
 // Get user name
 export const getUserName = async (userId) => {
-  const {name} = await prisma.user.findUnique({
+  const { name } = await prisma.user.findUnique({
     where: {
       id: userId,
     },
     select: {
-        name: true,
-      },
+      name: true,
+    },
   });
 
   return name;

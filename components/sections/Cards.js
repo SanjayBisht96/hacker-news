@@ -39,7 +39,7 @@ export const PostCard = ({
       </div>
 
       <div className="homepage__container__content__main__posts__item__content">
-        <a href={`/post/${postId}`}>
+        <a href={`/discussion/${postId}`}>
           <h2 className="heading-sub homepage__container__content__main__posts__item__content__heading">
             {postTitle}
           </h2>
@@ -49,13 +49,13 @@ export const PostCard = ({
             Posted by {postedBy}
           </p>
           <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
-            {postedDate}
+            Posted on {postedDate}
           </p>
           <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
-            {postComments}
+            Have {postComments}
           </p>
           <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
-            <a href={"discussion/" + postId}>discuss</a>
+            <a href={"discussion/" + postId}>Discuss</a>
           </p>
         </div>
       </div>

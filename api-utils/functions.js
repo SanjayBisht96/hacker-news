@@ -1,8 +1,16 @@
 import nodemailer from "nodemailer";
 import { sendErrorResponse } from "api-utils/SendResponse";
-import { publishATag, publishAskPostTag, publishALinkPostTag } from "database-utils/user";
+import {
+  publishATag,
+  publishAskPostTag,
+  publishALinkPostTag,
+} from "database-utils/user";
 import { getTagDataIfTagExists } from "database-utils/user";
-import { userLinkPostTagModel, userAskPostTagModel, userTagModel } from "models/user";
+import {
+  userLinkPostTagModel,
+  userAskPostTagModel,
+  userTagModel,
+} from "models/user";
 
 // Send email to the email address
 export const sendEmailToUsers = async (emailMessageBody) => {
@@ -27,7 +35,6 @@ export const sendEmailToUsers = async (emailMessageBody) => {
 export const addLinkPostTags = async (res, postData, listOfTags) => {
   await Promise.all(
     listOfTags.map(async (tagName) => {
-     
       try {
         // 0. Get Tag ID if tag exists
         let tagData = await getTagDataIfTagExists(tagName);
@@ -55,7 +62,40 @@ export const addLinkPostTags = async (res, postData, listOfTags) => {
           await publishALinkPostTag(linkPostTagModel);
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
+        sendErrorResponse({
+          res,
+          error,
+        });
+        return;
+      }
+    })
+  );
+};
+
+// Update link post tags
+export const updateLinkPostTags = async (res, postData, listOfTags) => {
+  await Promise.all(
+    listOfTags.map(async (tagName) => {
+      try {
+        // 0. Get Tag ID if tag exists
+        let tagData = await getTagDataIfTagExists(tagName);
+
+        // If tag doesn't exist then only create it
+        if (!tagData) {
+          const tagModelData = userTagModel(tagName);
+
+          tagData = await publishATag(tagModelData);
+
+          const linkPostTagModel = userLinkPostTagModel(
+            postData.id,
+            tagData.id
+          );
+
+          await publishALinkPostTag(linkPostTagModel);
+        }
+      } catch (error) {
+        console.log(error);
         sendErrorResponse({
           res,
           error,
@@ -70,7 +110,6 @@ export const addLinkPostTags = async (res, postData, listOfTags) => {
 export const addAskPostTags = async (res, askData, listOfTags) => {
   await Promise.all(
     listOfTags.map(async (tagName) => {
-     
       try {
         // 0. Get Tag ID if tag exists
         let tagData = await getTagDataIfTagExists(tagName);
@@ -87,15 +126,12 @@ export const addAskPostTags = async (res, askData, listOfTags) => {
           // 2A. Else Create a new tag in tag
           const tagModelData = userTagModel(tagName);
 
-          console.log(tagModelData)
+          console.log(tagModelData);
 
           tagData = await publishATag(tagModelData);
 
           // 2B. Create Ask ask tag with ask ID
-          const askPostTagModel = userAskPostTagModel(
-            askData.id,
-            tagData.id
-          );
+          const askPostTagModel = userAskPostTagModel(askData.id, tagData.id);
 
           await publishAskPostTag(askPostTagModel);
         }

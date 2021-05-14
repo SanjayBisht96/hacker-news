@@ -1,13 +1,12 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const SuccessContainer = (props) => {
-  const { heading, paragraph } = props;
-  
+const SuccessContainer = ({ heading, paragraph }) => {
   return (
     <div className="tasksuccess">
       <div className="tasksuccess__container">
         <img
-          src="../assets/images/success-icon.png"
+          src="../../assets/images/success-icon.png"
           className="tasksuccess__container__image"
         />
         <h3 className="heading-sub tasksuccess__container__heading">
@@ -27,3 +26,8 @@ const SuccessContainer = (props) => {
 };
 
 export default SuccessContainer;
+
+SuccessContainer.propTypes = {
+  heading: PropTypes.string,
+  paragraph: PropTypes.string,
+};

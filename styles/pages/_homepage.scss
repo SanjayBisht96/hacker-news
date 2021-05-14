@@ -57,11 +57,13 @@
 
               &__footer {
                 display: flex;
+                flex-direction: column;
                 justify-content: space-between;
                 padding: 1rem 0;
                 width: 60%;
 
                 &__paragraph {
+                  padding: 0.2rem;
                   font-size: 1.3rem;
                   font-weight: 500;
                 }

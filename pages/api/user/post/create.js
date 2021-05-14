@@ -2,20 +2,15 @@ import nc from "next-connect";
 import { userLinkPostModel } from "models/user";
 import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 import { decryptData } from "api-utils/auth";
-import { publishAPost } from "database-utils/user";
 import { addLinkPostTags } from "api-utils/functions";
-import {
-  publishAPost,
-  publishATag,
-  publishALinkPostTag,
-  getUserName
-} from "database-utils/user";
-import { getTagDataIfTagExists } from "database-utils/user";
+import { publishAPost, getUserName } from "database-utils/user";
 
 const publishLinkPost = async (req, res) => {
   const { userId, postTitle, postTags, postURL } = req.body;
   const decryptedUserId = decryptData(userId);
-  const username  = await getUserName(decryptedUserId);
+  const username = await getUserName(decryptedUserId);
+
+  console.log(username);
 
   const userLinkPostModelData = userLinkPostModel(
     decryptedUserId,
@@ -31,8 +26,6 @@ const publishLinkPost = async (req, res) => {
 
       await addLinkPostTags(res, postData, listOfTags);
 
-      console.log(postData)
-
       sendSuccessResponse({
         res,
         message: "Your post has been published",
@@ -40,7 +33,7 @@ const publishLinkPost = async (req, res) => {
       return;
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
       sendErrorResponse({
         res,
         error,

@@ -5,9 +5,7 @@ export const FormLabelInputGroup = (props) => {
 
   return (
     <div className="form__group posting__container__content__form__group">
-      { label && 
-        <label className="form__label">{label}</label>
-      }
+      {label && <label className="form__label">{label}</label>}
       <input
         type={inputType}
         name={name}
@@ -21,7 +19,7 @@ export const FormLabelInputGroup = (props) => {
 };
 
 export const FormLabelTextAreaGroup = (props) => {
-  const { id, label, inputType, handleInput } = props;
+  const { id, label, inputType, handleInput, value } = props;
   return (
     <div className="form__group posting__container__content__form__group">
       <label className="form__label">{label}</label>
@@ -29,9 +27,10 @@ export const FormLabelTextAreaGroup = (props) => {
         id={id}
         type={inputType}
         className="form__input posting__container__content__form__input"
-        onChange={handleInput} rows="5"
+        onChange={handleInput}
+        rows="5"
+        value={value}
       />
     </div>
   );
 };
-
