@@ -183,3 +183,36 @@ export const getAllLinkPosts = async (res, allPostsData) => {
 
   return allPostsList;
 };
+
+// Update ask post tags
+export const updateAskPostTags = async (res, postData, listOfTags) => {
+  await Promise.all(
+    listOfTags.map(async (tagName) => {
+      try {
+        // 0. Get Tag ID if tag exists
+        let tagData = await getTagDataIfTagExists(tagName);
+
+        // If tag doesn't exist then only create it
+        if (!tagData) {
+          const tagModelData = userTagModel(tagName);
+
+          tagData = await publishATag(tagModelData);
+
+          const linkPostTagModel = userAskPostTagModel(
+            postData.id,
+            tagData.id
+          );
+
+          await publishAskPostTag(linkPostTagModel);
+        }
+      } catch (error) {
+        console.log(error);
+        sendErrorResponse({
+          res,
+          error: 'something went wrong',
+        });
+        return;
+      }
+    })
+  );
+};

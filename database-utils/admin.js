@@ -1,6 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "./prismaObj";
 
 // Check if adminname already exists
 export const adminDataIfExists = async (email) => {

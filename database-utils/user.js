@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "./prismaObj";
 import { NO_OF_POSTS_PER_PAGE } from "const";
-
-const prisma = new PrismaClient();
 
 // Check if username already exists
 export const userDataIfExists = async (email) => {
@@ -122,7 +120,7 @@ export const getAllUserLinkPosts = async (userId, sortBy, page) => {
   });
 };
 
-// Get all user posts with pagination
+// Get all user ask posts with pagination
 export const getAllUserAskposts = async (userId, sortBy, page) => {
   // Sorting by date
   if (sortBy == "date") {
@@ -136,7 +134,7 @@ export const getAllUserAskposts = async (userId, sortBy, page) => {
     });
   }
 
-  return await prisma.linkPost.findMany({
+  return await prisma.ask.findMany({
     where: { userId },
     take: NO_OF_POSTS_PER_PAGE * page,
   });
@@ -147,6 +145,15 @@ export const getLinkPostById = async (postId) => {
   return await prisma.linkPost.findUnique({
     where: {
       id: postId,
+    },
+  });
+};
+
+// Get ask post by post ID
+export const getAskPostById = async (askId) => {
+  return await prisma.ask.findUnique({
+    where: {
+      id: askId,
     },
   });
 };

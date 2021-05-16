@@ -1,7 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "./prismaObj";
 import { NO_OF_POSTS_PER_PAGE } from "const";
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 // Get all posts with pagination
 export const getAllPostsDataWithPagination = async (sortBy, page) => {
@@ -21,6 +21,24 @@ export const getAllPostsDataWithPagination = async (sortBy, page) => {
   });
 };
 
+// Get ask posts with pagination
+export const getAllAskPostDataWithPagination = async (sortBy, page) => {
+  // Sorting by date
+  if (sortBy == "date") {
+    return await prisma.ask.findMany({
+      skip: NO_OF_POSTS_PER_PAGE * (page - 1),
+      take: NO_OF_POSTS_PER_PAGE,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
+
+  return await prisma.ask.findMany({
+    take: NO_OF_POSTS_PER_PAGE * page,
+  });
+};
+
 // Edit a link post
 export const editALinkPostData = async (linkPostId, linkPostData) => {
   return await prisma.linkPost.update({
@@ -29,6 +47,18 @@ export const editALinkPostData = async (linkPostId, linkPostData) => {
     },
     data: {
       ...linkPostData,
+    },
+  });
+};
+
+// Edit a link post
+export const updateAskPostData = async (askPostId, askPostData) => {
+  return await prisma.ask.update({
+    where: {
+      id: askPostId,
+    },
+    data: {
+      ...askPostData,
     },
   });
 };

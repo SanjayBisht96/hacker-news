@@ -615,3 +615,31 @@ export const updateLinkPostById = async (payload) => {
       }
     });
 };
+
+// Get ask post by ID
+export const getAskPostById = async (payload) => {
+  return axios({
+    method: "post",
+    url: '/api/global/ask/get-post',
+    data: {
+      ...payload,
+    },
+  })
+    .then((res) => {
+      return res.data.payload;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};
