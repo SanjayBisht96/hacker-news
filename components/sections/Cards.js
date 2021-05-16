@@ -195,15 +195,16 @@ export const LinkPostCardsContainer = ({ allLinkPosts }) => {
     <div className="homepage__container__content__main__posts">
       {Array.isArray(allLinkPosts) && allLinkPosts.length > 0 ? (
         allLinkPosts.map((postData) => {
-          const { id, name, title, createdAtDate } = postData;
+          const { postId, postedBy, postTitle, postedAt } = postData;
+          console.log(postData)
 
           return (
             <PostCard
-              key={id}
-              postId={id}
-              postTitle={title}
-              postedBy={name}
-              postedDate={createdAtDate}
+              key={postId}
+              postId={postId}
+              postTitle={postTitle}
+              postedBy={postedBy}
+              postedDate={postedAt}
               postComments="10 comments"
               postUpvotes="5"
             />

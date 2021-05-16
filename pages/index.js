@@ -25,8 +25,6 @@ const HomePage = ({ allPostsData }) => {
     setPageNo(upcomingPageNo);
   };
 
-  console.log(allLinkPosts);
-
   return (
     <main className="homepage">
       <Navbar />
@@ -41,7 +39,7 @@ const HomePage = ({ allPostsData }) => {
           <div className="homepage__container__content__main">
             <LinkPostCardsContainer allLinkPosts={allLinkPosts} />
 
-            <location
+            <PaginationButtons
               pageNo={pageNo}
               handleGetAllPostsWithPageNo={handleGetAllPostsWithPageNo}
               listOfPosts={allLinkPosts}
