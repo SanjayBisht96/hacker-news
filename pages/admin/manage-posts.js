@@ -1,7 +1,30 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { handleGetAllPostsForHomepage } from "client-utils/functions/handling.functions";
+import { ManageLinkPostCardsContainer } from "components/sections/Cards";
 import Navbar from "../../components/layouts/Navbar";
+import { PaginationButtons } from "components/sections/Buttons";
 
-const AdminManagePosts = () => {
+const AdminManagePosts = ({ allPostsData }) => {
+  const [pageNo, setPageNo] = useState(1);
+  const [allLinkPosts, setAllLinkPosts] = useState([]);
+
+  useEffect(() => {
+    setAllLinkPosts(allPostsData);
+  }, []);
+
+  const handleGetAllPostsWithPageNo = async ({ isNextClicked }) => {
+    let upcomingPageNo;
+
+    if (isNextClicked) upcomingPageNo = pageNo + 1;
+    else upcomingPageNo = pageNo - 1;
+
+    const nextPageResponse = await handleGetAllPostsForHomepage(upcomingPageNo);
+    setAllLinkPosts(nextPageResponse);
+
+    setPageNo(upcomingPageNo);
+  };
+
   return (
     <main className="adminmanageposts">
       <Navbar />
@@ -18,40 +41,13 @@ const AdminManagePosts = () => {
           </div>
 
           <div className="adminmanageposts__container__content__actions">
-            <div className="adminmanageposts__container__content__actions__cards">
-              <AdminManagePostCard
-                postId="1"
-                postTitle="BuildZoom (YC W13) is hiring a growth associate"
-                postUrl="Control the jobs that will be posted on the platform"
-                postTags="#html, #css, #js"
-                postedBy="imsks"
-                postedAt="21 Apr, 2021"
-              />
-              <AdminManagePostCard
-                postId="1"
-                postTitle="BuildZoom (YC W13) is hiring a growth associate"
-                postUrl="Edit or delete any post"
-                postTags="#html, #css, #js"
-                postedBy="imsks"
-                postedAt="21 Apr, 2021"
-              />
-              <AdminManagePostCard
-                postId="1"
-                postTitle="BuildZoom (YC W13) is hiring a growth associate"
-                postUrl="List of all users on the platform"
-                postTags="#html, #css, #js"
-                postedBy="imsks"
-                postedAt="21 Apr, 2021"
-              />
-              <AdminManagePostCard
-                postId="1"
-                postTitle="BuildZoom (YC W13) is hiring a growth associate"
-                postUrl="List of all users on the platform"
-                postTags="#html, #css, #js"
-                postedBy="imsks"
-                postedAt="21 Apr, 2021"
-              />
-            </div>
+            <ManageLinkPostCardsContainer allLinkPosts={allLinkPosts} />
+
+            <PaginationButtons
+              pageNo={pageNo}
+              handleGetAllPostsWithPageNo={handleGetAllPostsWithPageNo}
+              allLinkPosts={allLinkPosts}
+            />
           </div>
         </div>
       </section>
@@ -61,47 +57,14 @@ const AdminManagePosts = () => {
 
 export default AdminManagePosts;
 
-const AdminManagePostCard = ({
-  postId,
-  postTitle,
-  postUrl,
-  postTags,
-  postedBy,
-  postedAt,
-}) => {
-  return (
-    <div className="adminmanageposts__container__content__actions__cards__item">
-      <a
-        href={`/post/${postId}`}
-        className="adminmanageposts__container__content__actions__cards__item__link"
-      >
-        <h3 className="heading-sub adminmanageposts__container__content__actions__cards__item__heading">
-          {postTitle}
-        </h3>
-      </a>
-      <p className="paragraph-sub adminmanageposts__container__content__actions__cards__item__paragraph">
-        Posted by {postedBy} on {postedAt}
-      </p>
-      <div className="adminmanageposts__container__content__actions__cards__item__main">
-        <p className="paragraph-sub adminmanageposts__container__content__actions__cards__item__paragraph">
-          {postTags}
-        </p>
-        <a href={postUrl} target="_black">
-          <button className="btn btn-sm adminmanageposts__container__content__actions__cards__item__button">
-            Link
-          </button>
-        </a>
-      </div>
-      <div className="adminmanageposts__container__content__actions__cards__item__action">
-        <a href={`/post/edit/${postId}`}>
-          <button className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button__primary">
-            Edit
-          </button>
-        </a>
-        <button className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button">
-          Delete
-        </button>
-      </div>
-    </div>
-  );
+export const getServerSideProps = async () => {
+  const allPostsDataResponse = await handleGetAllPostsForHomepage();
+
+  return {
+    props: { allPostsData: allPostsDataResponse },
+  };
+};
+
+AdminManagePosts.propTypes = {
+  allPostsData: PropTypes.array,
 };

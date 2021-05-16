@@ -73,7 +73,12 @@ PostCard.propTypes = {
   postUpvotes: PropTypes.string,
 };
 
-const AdminDashboardActionCard = ({ heading, paragraph, ctaText, link }) => {
+export const AdminDashboardActionCard = ({
+  heading,
+  paragraph,
+  ctaText,
+  link,
+}) => {
   return (
     <div className="admindashboard__container__content__actions__cards__item">
       <h3 className="heading-sub admindashboard__container__content__actions__cards__item__heading">
@@ -128,7 +133,7 @@ UserDashboardActionCard.propTypes = {
   link: PropTypes.string,
 };
 
-export const UserManageLinkPostCard = ({
+export const ManageLinkPostCard = ({
   postId,
   postTitle,
   postUrl,
@@ -173,7 +178,7 @@ export const UserManageLinkPostCard = ({
   );
 };
 
-UserManageLinkPostCard.propTypes = {
+ManageLinkPostCard.propTypes = {
   postId: PropTypes.string,
   postTitle: PropTypes.string,
   postUrl: PropTypes.string,
@@ -182,11 +187,11 @@ UserManageLinkPostCard.propTypes = {
   postedAt: PropTypes.string,
 };
 
-export const LinkPostCardsContainer = ({ allPostsList }) => {
+export const LinkPostCardsContainer = ({ allLinkPosts }) => {
   return (
     <div className="homepage__container__content__main__posts">
-      {Array.isArray(allPostsList) && allPostsList.length > 0 ? (
-        allPostsList.map((postData) => {
+      {Array.isArray(allLinkPosts) && allLinkPosts.length > 0 ? (
+        allLinkPosts.map((postData) => {
           const { id, name, title, createdAtDate } = postData;
 
           return (
@@ -209,5 +214,36 @@ export const LinkPostCardsContainer = ({ allPostsList }) => {
 };
 
 LinkPostCardsContainer.propTypes = {
-  allPostsList: PropTypes.array,
+  allLinkPosts: PropTypes.array,
+};
+
+export const ManageLinkPostCardsContainer = ({ allLinkPosts }) => {
+  return (
+    <div className="adminmanageposts__container__content__actions__cards">
+      {allLinkPosts.length > 0 ? (
+        allLinkPosts.map((linkPost, key) => {
+          const { postId, postTitle, postUrl, postTags, postedBy, postedAt } =
+            linkPost;
+
+          return (
+            <ManageLinkPostCard
+              key={key}
+              postId={postId}
+              postTitle={postTitle}
+              postUrl={postUrl}
+              postTags={postTags}
+              postedBy={postedBy}
+              postedAt={postedAt}
+            />
+          );
+        })
+      ) : (
+        <h1>No posts found</h1>
+      )}
+    </div>
+  );
+};
+
+ManageLinkPostCardsContainer.propTypes = {
+  allLinkPosts: PropTypes.array,
 };

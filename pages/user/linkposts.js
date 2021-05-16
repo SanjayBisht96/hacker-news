@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { UserManageLinkPostCard } from "components/sections/Cards";
+import { ManageLinkPostCardsContainer } from "components/sections/Cards";
 import Navbar from "components/layouts/Navbar";
 import { handleGetAllLinkPostsForUser } from "client-utils/functions/handling.functions";
 
@@ -31,34 +31,7 @@ const UserManageLinkPosts = () => {
           </div>
 
           <div className="adminmanageposts__container__content__actions">
-            <div className="adminmanageposts__container__content__actions__cards">
-              {allLinkPosts.length > 0 ? (
-                allLinkPosts.map((linkPost, key) => {
-                  const {
-                    postId,
-                    postTitle,
-                    postUrl,
-                    postTags,
-                    postedBy,
-                    postedAt,
-                  } = linkPost;
-
-                  return (
-                    <UserManageLinkPostCard
-                      key={key}
-                      postId={postId}
-                      postTitle={postTitle}
-                      postUrl={postUrl}
-                      postTags={postTags}
-                      postedBy={postedBy}
-                      postedAt={postedAt}
-                    />
-                  );
-                })
-              ) : (
-                <h1>No posts found</h1>
-              )}
-            </div>
+            <ManageLinkPostCardsContainer allLinkPosts={allLinkPosts} />
           </div>
         </div>
       </section>
@@ -67,15 +40,3 @@ const UserManageLinkPosts = () => {
 };
 
 export default UserManageLinkPosts;
-
-// export const getServerSideProps = async (req) => {
-//   // const allPostsDataResponse = await handleGetAllLinkPostsForUser();
-//   console.log(getTokenCookie(req, 'USER'))
-//   return {
-//     props: { allPostsData: 'allPostsDataResponse' },
-//   };
-// };
-
-// UserManageLinkPosts.propTypes = {
-//   allPostsData: PropTypes.array,
-// };

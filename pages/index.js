@@ -3,13 +3,14 @@ import PropTypes from "prop-types";
 import Navbar from "components/layouts/Navbar";
 import { handleGetAllPostsForHomepage } from "client-utils/functions/handling.functions";
 import { LinkPostCardsContainer } from "components/sections/Cards";
+import { PaginationButtons } from "components/sections/Buttons";
 
 const HomePage = ({ allPostsData }) => {
   const [pageNo, setPageNo] = useState(1);
-  const [allPostsList, setAllPostsList] = useState([]);
+  const [allLinkPosts, setAllLinkPosts] = useState([]);
 
   useEffect(() => {
-    setAllPostsList(allPostsData);
+    setAllLinkPosts(allPostsData);
   }, []);
 
   const handleGetAllPostsWithPageNo = async ({ isNextClicked }) => {
@@ -19,12 +20,12 @@ const HomePage = ({ allPostsData }) => {
     else upcomingPageNo = pageNo - 1;
 
     const nextPageResponse = await handleGetAllPostsForHomepage(upcomingPageNo);
-    setAllPostsList(nextPageResponse);
+    setAllLinkPosts(nextPageResponse);
 
     setPageNo(upcomingPageNo);
   };
 
-  console.log(allPostsList)
+  console.log(allLinkPosts);
 
   return (
     <main className="homepage">
@@ -38,31 +39,13 @@ const HomePage = ({ allPostsData }) => {
             </h1>
           </div>
           <div className="homepage__container__content__main">
-            <LinkPostCardsContainer allPostsList={allPostsList} />
+            <LinkPostCardsContainer allLinkPosts={allLinkPosts} />
 
-            <div className="homepage__container__content__main__actions">
-              {pageNo > 1 && (
-                <button
-                  className="btn btn-sm homepage__container__content__main__actions__button"
-                  onClick={() =>
-                    handleGetAllPostsWithPageNo({ isNextClicked: false })
-                  }
-                >
-                  Prev
-                </button>
-              )}
-
-              {allPostsList.length > 0 && (
-                <button
-                  className="btn btn-sm homepage__container__content__main__actions__button"
-                  onClick={() =>
-                    handleGetAllPostsWithPageNo({ isNextClicked: true })
-                  }
-                >
-                  Next
-                </button>
-              )}
-            </div>
+            <PaginationButtons
+              pageNo={pageNo}
+              handleGetAllPostsWithPageNo={handleGetAllPostsWithPageNo}
+              allLinkPosts={allLinkPosts}
+            />
           </div>
         </div>
       </section>
