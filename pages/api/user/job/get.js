@@ -1,36 +1,58 @@
 import nc from "next-connect";
-import { getAJobByID } from "database-utils/user";
 import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
+import { decryptData } from "api-utils/auth";
+import { getAllUserJobPosts } from "database-utils/user";
+import moment from "moment";
 
-const getJobDetails = async (req, res) => {
-  const { jobId } = req.body;
+const getUserJobPosts = async (req, res) => {
+  const { userId, sortBy = "date", page = 1 } = req.body;
 
-  getAJobByID(jobId)
-    .then((jobData) => {
+  const decryptedUserId = decryptData(userId, sortBy, page);
+
+  getAllUserJobPosts(decryptedUserId, sortBy, page)
+    .then(async (allJobPostsData) => {
+      let allJobPosts = [];
+
+      allJobPostsData.forEach((jobPost) => {
+        const {
+          id,
+          userId,
+          jobTitle,
+          upvotes,
+          jobDescription,
+          jobURL,
+          isActive,
+          postedOn,
+        } = jobPost;
+
+        const postedOnDate = moment(postedOn).toDate().toDateString();
+
+        allJobPosts.push({
+          jobId: id,
+          userId,
+          jobTitle,
+          jobDescription,
+          upvotes,
+          jobURL,
+          isActive,
+          postedAt: postedOnDate,
+        });
+      });
+
       sendSuccessResponse({
         res,
-        message: jobData.isActive
-          ? "Your job post has been approved."
-          : "Your job post has been pending for review.",
-        payload: {
-          jobId: jobData.id,
-          jobTitle: jobData.jobTitle,
-          jobDescription: jobData.jobDescription,
-          jobURL: jobData.jobURL,
-          isActive: jobData.isActive,
-          postedOn: jobData.postedOn,
-        },
+        payload: allJobPosts,
       });
     })
     .catch((error) => {
-      console.log(error)
+      console.log(error);
       sendErrorResponse({
         res,
-        error: 'Something went wrong',
+        error: "Something went wrong",
       });
     });
 };
 
-const getJobDetailsUserHandler = nc().post(getJobDetails);
+const publishgetAllUsersJobPostsHandler = nc().post(getUserJobPosts);
 
-export default getJobDetailsUserHandler;
+export default publishgetAllUsersJobPostsHandler;
