@@ -2,7 +2,7 @@ import nc from "next-connect";
 import { userAskPostModel } from "models/user";
 import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 import { decryptData } from "api-utils/auth";
-import { publishAskPostData } from "database-utils/user";
+import { getUserData, publishAskPostData } from "database-utils/user";
 import { addAskPostTags } from "api-utils/functions";
 
 const publishAskPost = async (req, res) => {
@@ -10,8 +10,12 @@ const publishAskPost = async (req, res) => {
 
   const decryptedUserId = decryptData(userId);
 
+  // Get user name from user ID
+  const { name } = await getUserData(decryptedUserId);
+
   const userAskPostModelData = userAskPostModel(
     decryptedUserId,
+    name,
     askTitle,
     askText,
     askTags
@@ -29,6 +33,7 @@ const publishAskPost = async (req, res) => {
       });
     })
     .catch((error) => {
+      console.log(error)
       sendErrorResponse({
         res,
         error,

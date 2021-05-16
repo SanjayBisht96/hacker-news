@@ -20,9 +20,10 @@ export const userLinkPostModel = (userId, username, title, url, tags) => {
   };
 };
 
-export const userAskPostModel = (userId, title, text, tags) => {
+export const userAskPostModel = (userId, name, title, text, tags) => {
   return {
     userId,
+    username: name,
     title,
     text,
     tags,
