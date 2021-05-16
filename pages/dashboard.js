@@ -33,13 +33,13 @@ const UserDashoard = () => {
                 heading="Manage ask posts"
                 paragraph="View, edit & delete all ask posts"
                 ctaText="Manage ask posts"
-                link="#"
+                link="/user/askposts"
               />
               <UserDashboardActionCard
                 heading="Manage job posts"
                 paragraph="View, edit & delete all job postings"
                 ctaText="Manage job posts"
-                link="#"
+                link="/user/jobposts"
               />
             </div>
           </div>

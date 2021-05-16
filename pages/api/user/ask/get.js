@@ -1,24 +1,25 @@
 import nc from "next-connect";
 import { sendSuccessResponse, sendErrorResponse } from "api-utils/SendResponse";
 import { decryptData } from "api-utils/auth";
-import { getAllUserAskPostsData } from "database-utils/user";
+import { getAllUserAskposts } from "database-utils/user";
 
 const getAllUserAskPosts = async (req, res) => {
-  const { userId } = req.body;
+  const { userId, sortBy = 'date', page = 1 } = req.body;
 
-  const decryptedUserId = decryptData(userId);
+  const decryptedUserId = decryptData(userId, sortBy, page);
 
-  getAllUserAskPostsData(decryptedUserId)
-    .then((allAskPostsData) => {
+  getAllUserAskposts(decryptedUserId, sortBy, page)
+    .then(async (allAskPostsData) => {
       sendSuccessResponse({
         res,
         payload: allAskPostsData,
       });
     })
     .catch((error) => {
+      console.log(error);
       sendErrorResponse({
         res,
-        error,
+        error: "Something went wrong",
       });
     });
 };

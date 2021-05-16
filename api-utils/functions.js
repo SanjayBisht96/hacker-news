@@ -4,6 +4,7 @@ import {
   publishATag,
   publishAskPostTag,
   publishALinkPostTag,
+  getUserData,
 } from "database-utils/user";
 import { getTagDataIfTagExists } from "database-utils/user";
 import {
@@ -11,6 +12,7 @@ import {
   userAskPostTagModel,
   userTagModel,
 } from "models/user";
+import moment from "moment";
 
 // Send email to the email address
 export const sendEmailToUsers = async (emailMessageBody) => {
@@ -143,4 +145,41 @@ export const addAskPostTags = async (res, askData, listOfTags) => {
       }
     })
   );
+};
+
+// Get user link posts
+export const getAllLinkPosts = async (res, allPostsData) => {
+  const allPostsList = [];
+
+  await Promise.all(
+    allPostsData.map(async (postData) => {
+      try {
+        const { id, userId, title, url, tags, createdAt } = postData;
+
+        // Get user name from user ID
+        const { name } = await getUserData(userId);
+
+        // Get created at time from now
+        const createdAtDate = moment(createdAt).toDate().toDateString();
+
+        allPostsList.push({
+          postId: id,
+          postedBy: name,
+          postTitle: title,
+          postUrl: url,
+          postTags: tags,
+          postedAt: createdAtDate,
+        });
+      } catch (error) {
+        console.log(error);
+        sendErrorResponse({
+          res,
+          error,
+        });
+        return;
+      }
+    })
+  );
+
+  return allPostsList;
 };

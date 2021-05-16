@@ -20,7 +20,7 @@ const deleteALinkPost = async (req, res) => {
       console.log(error)
       sendErrorResponse({
         res,
-        error,
+        error: 'Something went wrong',
       });
     });
 };

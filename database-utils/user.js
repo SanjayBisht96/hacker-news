@@ -122,6 +122,26 @@ export const getAllUserLinkPosts = async (userId, sortBy, page) => {
   });
 };
 
+// Get all user posts with pagination
+export const getAllUserAskposts = async (userId, sortBy, page) => {
+  // Sorting by date
+  if (sortBy == "date") {
+    return await prisma.ask.findMany({
+      where: { userId },
+      skip: NO_OF_POSTS_PER_PAGE * (page - 1),
+      take: NO_OF_POSTS_PER_PAGE,
+      orderBy: {
+        createdAt: "desc",
+      },
+    });
+  }
+
+  return await prisma.linkPost.findMany({
+    where: { userId },
+    take: NO_OF_POSTS_PER_PAGE * page,
+  });
+};
+
 // Get link post by post ID
 export const getLinkPostById = async (postId) => {
   return await prisma.linkPost.findUnique({

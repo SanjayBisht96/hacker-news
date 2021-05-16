@@ -45,9 +45,10 @@ const approveJobByAdmin = async (req, res) => {
       });
     })
     .catch((error) => {
+      console.log(error);
       sendErrorResponse({
         res,
-        error,
+        error: "Something went wrong",
       });
     });
 };

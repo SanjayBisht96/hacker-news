@@ -33,10 +33,10 @@ const publishLinkPost = async (req, res) => {
       return;
     })
     .catch((error) => {
-      console.log(error);
+      console.log(error)
       sendErrorResponse({
         res,
-        error,
+        error: 'Something went wrong',
       });
     });
 };
