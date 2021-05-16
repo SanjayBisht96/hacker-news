@@ -42,7 +42,6 @@
               display: flex;
               align-items: baseline;
               justify-content: space-between;
-          
             }
 
             &__link {
@@ -72,6 +71,12 @@
               align-items: baseline;
               margin: 5rem 0 0 0;
 
+              &__link {
+                &:not(:first-child) {
+                  margin: 0 0 0 2rem;
+                }
+              }
+
               &__button {
                 background-color: transparent;
                 color: $color-danger;
@@ -81,10 +86,6 @@
                   background-color: $color-black;
                   color: $color-white;
                   border: 2px solid $color-black;
-                }
-
-                &:not(:first-child) {
-                  margin: 0 0 0 2rem;
                 }
               }
             }

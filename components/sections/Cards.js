@@ -247,3 +247,103 @@ export const ManageLinkPostCardsContainer = ({ allLinkPosts }) => {
 ManageLinkPostCardsContainer.propTypes = {
   allLinkPosts: PropTypes.array,
 };
+
+export const ManageAskPostCardsContainer = ({ allAskPosts }) => {
+  return (
+    <div className="adminmanageposts__container__content__actions__cards">
+      {allAskPosts.length > 0 ? (
+        allAskPosts.map((linkPost, key) => {
+          const {
+            askId,
+            userId,
+            askTitle,
+            askText,
+            askTags,
+            askedBy,
+            upvotes,
+            postedAt,
+          } = linkPost;
+
+          return (
+            <ManageAskPostCard
+              key={key}
+              askId={askId}
+              userId={userId}
+              askTitle={askTitle}
+              askText={askText}
+              askTags={askTags}
+              askedBy={askedBy}
+              upvotes={upvotes}
+              postedAt={postedAt}
+            />
+          );
+        })
+      ) : (
+        <h1>No posts found</h1>
+      )}
+    </div>
+  );
+};
+
+ManageAskPostCardsContainer.propTypes = {
+  allAskPosts: PropTypes.array,
+};
+
+export const ManageAskPostCard = ({
+  askId,
+  userId,
+  askTitle,
+  askText,
+  askTags,
+  askedBy,
+  upvotes,
+  postedAt,
+}) => {
+  return (
+    <div className="adminmanageposts__container__content__actions__cards__item">
+      <a
+        href={`/ask/${askId}`}
+        className="adminmanageposts__container__content__actions__cards__item__link"
+      >
+        <h3 className="heading-sub adminmanageposts__container__content__actions__cards__item__heading">
+          {askTitle}
+        </h3>
+      </a>
+      <p className="paragraph-sub adminmanageposts__container__content__actions__cards__item__paragraph">
+        {askText}
+      </p>
+      <p className="paragraph-sub adminmanageposts__container__content__actions__cards__item__paragraph">
+        Asked by <a href={`/user/${userId}`}>{askedBy}</a> on {postedAt} with{" "}
+        {upvotes} upvotes
+      </p>
+      <div className="adminmanageposts__container__content__actions__cards__item__main">
+        <p className="paragraph-sub adminmanageposts__container__content__actions__cards__item__paragraph">
+          {askTags}
+        </p>
+      </div>
+      <div className="adminmanageposts__container__content__actions__cards__item__action">
+        <a href={`/ask/edit/${askId}`} className="adminmanageposts__container__content__actions__cards__item__action__link">
+          <button className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button__primary">
+            Edit
+          </button>
+        </a>
+        <a href={`/ask/delete/${askId}`} className="adminmanageposts__container__content__actions__cards__item__action__link">
+          <button className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button">
+            Delete
+          </button>
+        </a>
+      </div>
+    </div>
+  );
+};
+
+ManageAskPostCard.propTypes = {
+  askId: PropTypes.string,
+  userId: PropTypes.string,
+  askTitle: PropTypes.string,
+  askText: PropTypes.string,
+  askTags: PropTypes.string,
+  askedBy: PropTypes.string,
+  upvotes: PropTypes.number,
+  postedAt: PropTypes.string,
+};
