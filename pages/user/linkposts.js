@@ -2,18 +2,33 @@ import React, { useEffect, useState } from "react";
 import { ManageLinkPostCardsContainer } from "components/sections/Cards";
 import Navbar from "components/layouts/Navbar";
 import { handleGetAllLinkPostsForUser } from "client-utils/functions/handling.functions";
+import { PaginationButtons } from "components/sections/Buttons";
 
 const UserManageLinkPosts = () => {
+  const [pageNo, setPageNo] = useState(1);
   const [allLinkPosts, setAllLinkPosts] = useState([]);
 
-  const handleAllLinkPostsForUser = async () => {
-    const allLinkPostsResponse = await handleGetAllLinkPostsForUser();
+  const fetchAllLinkPostsForUser = async () => {
+    const allLinkPostsResponse = await handleGetAllLinkPostsForUser(pageNo);
+    console.log(allLinkPostsResponse)
     setAllLinkPosts(allLinkPostsResponse);
   };
 
   useEffect(() => {
-    handleAllLinkPostsForUser();
+    fetchAllLinkPostsForUser();
   }, []);
+
+  const handleGetAllPostsWithPageNo = async ({ isNextClicked }) => {
+    let upComingPageNo;
+
+    if (isNextClicked) upComingPageNo = pageNo + 1;
+    else upComingPageNo = pageNo - 1;
+
+    const nextPageResponse = await handleGetAllLinkPostsForUser(upComingPageNo);
+    setAllLinkPosts(nextPageResponse);
+
+    setPageNo(upComingPageNo);
+  };
 
   return (
     <main className="adminmanageposts">
@@ -32,6 +47,12 @@ const UserManageLinkPosts = () => {
 
           <div className="adminmanageposts__container__content__actions">
             <ManageLinkPostCardsContainer allLinkPosts={allLinkPosts} />
+
+            <PaginationButtons
+              pageNo={pageNo}
+              handleGetAllPostsWithPageNo={handleGetAllPostsWithPageNo}
+              listOfPosts={allLinkPosts}
+            />
           </div>
         </div>
       </section>

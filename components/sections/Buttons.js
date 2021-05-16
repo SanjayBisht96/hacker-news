@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 export const PaginationButtons = ({
   pageNo,
   handleGetAllPostsWithPageNo,
-  allLinkPosts,
+  listOfPosts,
 }) => {
   return (
     <div className="homepage__container__content__main__actions">
@@ -16,7 +16,7 @@ export const PaginationButtons = ({
         </button>
       )}
 
-      {allLinkPosts.length > 0 && (
+      {listOfPosts.length > 0 && (
         <button
           className="btn btn-sm homepage__container__content__main__actions__button"
           onClick={() => handleGetAllPostsWithPageNo({ isNextClicked: true })}
@@ -31,5 +31,5 @@ export const PaginationButtons = ({
 PaginationButtons.propTypes = {
   pageNo: PropTypes.number,
   handleGetAllPostsWithPageNo: PropTypes.func,
-  allLinkPosts: PropTypes.array,
+  listOfPosts: PropTypes.array,
 };

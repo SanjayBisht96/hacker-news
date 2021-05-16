@@ -41,10 +41,10 @@ const HomePage = ({ allPostsData }) => {
           <div className="homepage__container__content__main">
             <LinkPostCardsContainer allLinkPosts={allLinkPosts} />
 
-            <PaginationButtons
+            <location
               pageNo={pageNo}
               handleGetAllPostsWithPageNo={handleGetAllPostsWithPageNo}
-              allLinkPosts={allLinkPosts}
+              listOfPosts={allLinkPosts}
             />
           </div>
         </div>

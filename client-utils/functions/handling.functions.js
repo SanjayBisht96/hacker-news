@@ -322,12 +322,12 @@ export const handleGetAllPostsForHomepage = async (page = 1, sortBy = 'date') =>
     });
 };
 
-export const handleGetAllLinkPostsForUser = async () => {
+export const handleGetAllLinkPostsForUser = async (pageNo = 1) => {
   const { id } = useAuth();
 
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/user/post/get`,
+    url: `${process.env.API_ROOT}/user/post/get?sortBy=date&page=${pageNo}`,
     data: {
       userId: id,
     },
@@ -350,12 +350,12 @@ export const handleGetAllLinkPostsForUser = async () => {
     });
 };
 
-export const handleGetAllAskPostsForUser = async () => {
+export const handleGetAllAskPostsForUser = async (pageNo = 1) => {
   const { id } = useAuth();
 
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/user/ask/get`,
+    url: `${process.env.API_ROOT}/user/ask/get?sortBy=date&page=${pageNo}`,
     data: {
       userId: id,
     },
@@ -378,12 +378,12 @@ export const handleGetAllAskPostsForUser = async () => {
     });
 };
 
-export const handleGetAllJobPostsForUser = async () => {
+export const handleGetAllJobPostsForUser = async (pageNo = 1) => {
   const { id } = useAuth();
 
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/user/job/get`,
+    url: `${process.env.API_ROOT}/user/job/get?sortBy=date&page=${pageNo}`,
     data: {
       userId: id,
     },

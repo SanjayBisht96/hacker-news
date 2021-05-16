@@ -333,17 +333,12 @@ export const ManageAskPostCard = ({
             Edit
           </button>
         </a>
-        <a
-          href={`/ask/delete/${askId}`}
-          className="adminmanageposts__container__content__actions__cards__item__action__link"
+        <button
+          className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button"
+          onClick={() => console.log(askId)}
         >
-          <button
-            className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button"
-            onClick={() => console.log(askId)}
-          >
-            Delete
-          </button>
-        </a>
+          Delete
+        </button>
       </div>
     </div>
   );

@@ -2,18 +2,32 @@ import React, { useEffect, useState } from "react";
 import { ManageAskPostCardsContainer } from "components/sections/Cards";
 import Navbar from "components/layouts/Navbar";
 import { handleGetAllAskPostsForUser } from "client-utils/functions/handling.functions";
+import { PaginationButtons } from "components/sections/Buttons";
 
 const UserManageAskPosts = () => {
+  const [pageNo, setPageNo] = useState(1);
   const [allAskPosts, setAllAskPosts] = useState([]);
 
-  const handleAllAskPostsForUser = async () => {
+  const fetchAllAskPostsForUser = async () => {
     const allAskPostsResponse = await handleGetAllAskPostsForUser();
     setAllAskPosts(allAskPostsResponse);
   };
 
   useEffect(() => {
-    handleAllAskPostsForUser();
+    fetchAllAskPostsForUser();
   }, []);
+
+  const handleGetAllPostsWithPageNo = async ({ isNextClicked }) => {
+    let upComingPageNo;
+
+    if (isNextClicked) upComingPageNo = pageNo + 1;
+    else upComingPageNo = pageNo - 1;
+
+    const nextPageResponse = await handleGetAllAskPostsForUser(upComingPageNo);
+    setAllAskPosts(nextPageResponse);
+
+    setPageNo(upComingPageNo);
+  };
 
   return (
     <main className="adminmanageposts">
@@ -32,6 +46,12 @@ const UserManageAskPosts = () => {
 
           <div className="adminmanageposts__container__content__actions">
             <ManageAskPostCardsContainer allAskPosts={allAskPosts} />
+
+            <PaginationButtons
+              pageNo={pageNo}
+              handleGetAllPostsWithPageNo={handleGetAllPostsWithPageNo}
+              listOfPosts={allAskPosts}
+            />
           </div>
         </div>
       </section>

@@ -5,7 +5,8 @@ import { getAllUserAskposts } from "database-utils/user";
 import moment from "moment";
 
 const getAllUserAskPosts = async (req, res) => {
-  const { userId, sortBy = "date", page = 1 } = req.body;
+  const { userId } = req.body;
+  const { sortBy = "date", page = 1 } = req.query;
 
   const decryptedUserId = decryptData(userId, sortBy, page);
 

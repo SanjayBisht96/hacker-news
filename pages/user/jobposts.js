@@ -2,18 +2,32 @@ import React, { useEffect, useState } from "react";
 import { ManageJobPostCardsContainer } from "components/sections/Cards";
 import Navbar from "components/layouts/Navbar";
 import { handleGetAllJobPostsForUser } from "client-utils/functions/handling.functions";
+import { PaginationButtons } from "components/sections/Buttons";
 
 const UserManageJobPosts = () => {
+  const [pageNo, setPageNo] = useState(1);
   const [allJobPosts, setAllJobPosts] = useState([]);
 
-  const handleAllJobPostsForUser = async () => {
+  const fetchAllJobPostsForUser = async () => {
     const allJobPostsResponse = await handleGetAllJobPostsForUser();
     setAllJobPosts(allJobPostsResponse);
   };
 
   useEffect(() => {
-    handleAllJobPostsForUser();
+    fetchAllJobPostsForUser();
   }, []);
+
+  const handleGetAllPostsWithPageNo = async ({ isNextClicked }) => {
+    let upComingPageNo;
+
+    if (isNextClicked) upComingPageNo = pageNo + 1;
+    else upComingPageNo = pageNo - 1;
+
+    const nextPageResponse = await handleGetAllJobPostsForUser(upComingPageNo);
+    setAllJobPosts(nextPageResponse);
+
+    setPageNo(upComingPageNo);
+  };
 
   return (
     <main className="adminmanageposts">
@@ -32,6 +46,12 @@ const UserManageJobPosts = () => {
 
           <div className="adminmanageposts__container__content__actions">
             <ManageJobPostCardsContainer allJobPosts={allJobPosts} />
+
+            <PaginationButtons
+              pageNo={pageNo}
+              handleGetAllPostsWithPageNo={handleGetAllPostsWithPageNo}
+              listOfPosts={allJobPosts}
+            />
           </div>
         </div>
       </section>

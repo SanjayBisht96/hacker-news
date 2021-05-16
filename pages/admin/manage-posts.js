@@ -46,7 +46,7 @@ const AdminManagePosts = ({ allPostsData }) => {
             <PaginationButtons
               pageNo={pageNo}
               handleGetAllPostsWithPageNo={handleGetAllPostsWithPageNo}
-              allLinkPosts={allLinkPosts}
+              listOfPosts={allLinkPosts}
             />
           </div>
         </div>
