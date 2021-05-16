@@ -8,7 +8,7 @@ import {
 import SuccessContainer from "components/sections/SuccessContainer";
 import {
   getAskPostById,
-  // updateAskPostById,
+  updateAskPostById,
 } from "client-utils/functions/handling.functions";
 import useAuth from "hooks/useAuth";
 import usePrivateRoutes from "hooks/usePrivateRoutes";
@@ -28,62 +28,64 @@ const UpdateAskPost = ({ askPostId }) => {
   const fetchAskPostForUser = async () => {
     const { id } = useAuth();
 
-    const updateAskPostsResponse = await getAskPostById({
+    const fetchAskPostResponse = await getAskPostById({
       userId: id,
-      askPostId,
+      askId: askPostId,
     });
 
-    const { title, url, tags } = updateAskPostsResponse;
+    console.log(fetchAskPostResponse)
+
+    const { title, text, tags } = fetchAskPostResponse;
 
     setAskTitle(title);
-    setAskText(url);
+    setAskText(text);
     setAskTags(tags);
   };
 
-  // useEffect(() => {
-  //   fetchAskPostForUser();
-  // }, []);
+  useEffect(() => {
+    fetchAskPostForUser();
+  }, []);
 
-  // const onHandlingAskPosting = async (event) => {
-  //   event.preventDefault();
+  const onHandlingAskPosting = async (event) => {
+    event.preventDefault();
 
-  //   setIsSubmitClicked(true);
-  //   setFormError("");
+    setIsSubmitClicked(true);
+    setFormError("");
 
-  //   // Form validation
-  //   if (askTitle == "") {
-  //     setFormError("Please input post title");
-  //     setIsSubmitClicked(false);
-  //     return;
-  //   } else if (askText == "") {
-  //     setFormError("Please input post URL");
-  //     setIsSubmitClicked(false);
-  //     return;
-  //   }
+    // Form validation
+    if (askTitle == "") {
+      setFormError("Please input post title");
+      setIsSubmitClicked(false);
+      return;
+    } else if (askText == "") {
+      setFormError("Please input post URL");
+      setIsSubmitClicked(false);
+      return;
+    }
 
-  //   const userData = useAuth();
+    const userData = useAuth();
 
-  //   const { id } = userData;
+    const { id } = userData;
 
-  //   const payload = {
-  //     userId: id,
-  //     askPostId,
-  //     askPostData: {
-  //       title: askTitle,
-  //       url: askText,
-  //       tags: askTags,
-  //     },
-  //   };
+    const payload = {
+      userId: id,
+      askPostId,
+      askPostData: {
+        title: askTitle,
+        text: askText,
+        tags: askTags,
+      },
+    };
 
-  //   const updateAskPostingResponse = await updateAskPostById(payload);
+    const updateAskPostingResponse = await updateAskPostById(payload);
 
-  //   if (updateAskPostingResponse.status === "Failed") {
-  //     setFormError(updateAskPostingResponse.error);
-  //     setIsSubmitClicked(false);
-  //   } else {
-  //     setIsPostPublished(true);
-  //   }
-  // };
+    if (updateAskPostingResponse.status === "Failed") {
+      setFormError(updateAskPostingResponse.error);
+      setIsSubmitClicked(false);
+    } else {
+      setIsPostPublished(true);
+    }
+  };
 
   return (
     <main className="posting">
@@ -92,29 +94,29 @@ const UpdateAskPost = ({ askPostId }) => {
       <section className="posting__container">
         {!isPostPublished ? (
           <div className="posting__container__content">
-            <h3 className="heading-sub">Update A Post</h3>
+            <h3 className="heading-sub">Update Ask Post</h3>
             <form className="form posting__container__content__form">
               <FormLabelInputGroup
-                label="Post Title"
+                label="Ask Title"
                 inputType="text"
                 value={askTitle}
                 handleInput={(event) => setAskTitle(event.target.value)}
               />
               <FormLabelInputGroup
-                label="Post URL"
+                label="Ask URL"
                 inputType="text"
                 value={askText}
                 handleInput={(event) => setAskText(event.target.value)}
               />
               <FormLabelTextAreaGroup
-                label="Post Tags"
+                label="Ask Tags"
                 inputType="text"
                 value={askTags}
                 handleInput={(event) => setAskTags(event.target.value)}
               />
               <button
                 className="btn btn-md form__submit"
-                // onClick={onHandlingAskPosting}
+                onClick={onHandlingAskPosting}
               >
                 {!isSubmitClicked ? "Edit post" : "Editing..."}
               </button>
