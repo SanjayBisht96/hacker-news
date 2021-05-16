@@ -471,3 +471,32 @@ export const getVote = async (url,payload) => {
       }
     });
 };
+
+
+//search term
+export const searchPostComment = async (url,searchTerm) => {
+  return axios({
+    method: "post",
+    url: url,
+    data:{
+      searchTerm : searchTerm
+    }
+  })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((error) => {
+      if(error.response){
+        return error.response.data;
+      }
+      else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {}
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message);
+        return {}
+      }
+    });
+};

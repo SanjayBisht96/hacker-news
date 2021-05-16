@@ -1,0 +1,12 @@
+.search{
+    &_container {
+        padding: 5rem 0;
+        &_wrapper{
+            &_button{
+                color:$color-white;
+                background-color: $color-black;
+                width: 100px;
+            }
+        }
+    }
+}

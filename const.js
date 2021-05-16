@@ -8,9 +8,13 @@ const FETCH_REPLIES_URL = "/api/comment/fetchreplies";
 const ADD_VOTE_URL = "/api/vote/upvote";
 const DOWN_VOTE_URL = "/api/vote/downvote";
 const GET_VOTE_URL = "/api/vote/getvote";
+const FETCH_DOCUMENT_URL = "/api/document/searchspace";
+const SEARCH_POST_URL = "/api/search/linkpost";
+const SEARCH_COMMENT_URL = "/api/search/comment";
 
 // Variables
 const POST = "post";
+const ASKPOST = "askpost";
 const COMMENT = "comment";
 const NEXTCOMMENT = "nextComment";
 
@@ -24,7 +28,11 @@ export{
     ADD_VOTE_URL,
     DOWN_VOTE_URL,
     POST,
+    ASKPOST,
     COMMENT,
     NEXTCOMMENT,
-    GET_VOTE_URL
+    GET_VOTE_URL,
+    FETCH_DOCUMENT_URL,
+    SEARCH_POST_URL,
+    SEARCH_COMMENT_URL
 }
