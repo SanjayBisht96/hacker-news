@@ -3,7 +3,6 @@ import { ADMIN_TOKEN_NAME, USER_TOKEN_NAME } from "const";
 import useAuth from "hooks/useAuth";
 import { setTokenCookie } from "./auth.functions";
 
-
 export const handleSignUpUser = async (payload) => {
   return axios({
     method: "post",
@@ -302,7 +301,7 @@ export const handleJobReject = async (jobId, userId) => {
 export const handleGetAllPostsForHomepage = async (page = 1, sortBy = 'date') => {  
   return axios({
     method: "get",
-    url: `${process.env.API_ROOT}/global/post/get?page=${page}&sortBy=${sortBy}`,
+    url: `/api/global/post/get?page=${page}&sortBy=${sortBy}`,
   })
     .then((res) => {
       return res.data.payload;
@@ -327,7 +326,7 @@ export const handleGetAllLinkPostsForUser = async (pageNo = 1) => {
 
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/user/post/get?sortBy=date&page=${pageNo}`,
+    url: `/api/user/post/get?sortBy=date&page=${pageNo}`,
     data: {
       userId: id,
     },
@@ -355,7 +354,7 @@ export const handleGetAllAskPostsForUser = async (pageNo = 1) => {
 
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/user/ask/get?sortBy=date&page=${pageNo}`,
+    url: `/api/user/ask/get?sortBy=date&page=${pageNo}`,
     data: {
       userId: id,
     },
@@ -383,7 +382,7 @@ export const handleGetAllJobPostsForUser = async (pageNo = 1) => {
 
   return axios({
     method: "post",
-    url: `${process.env.API_ROOT}/user/job/get?sortBy=date&page=${pageNo}`,
+    url: `/api/user/job/get?sortBy=date&page=${pageNo}`,
     data: {
       userId: id,
     },

@@ -1,16 +1,20 @@
 import { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import Navbar from "components/layouts/Navbar";
 import { handleGetAllPostsForHomepage } from "client-utils/functions/handling.functions";
 import { LinkPostCardsContainer } from "components/sections/Cards";
 import { PaginationButtons } from "components/sections/Buttons";
 
-const HomePage = ({ allPostsData }) => {
+const HomePage = () => {
   const [pageNo, setPageNo] = useState(1);
   const [allLinkPosts, setAllLinkPosts] = useState([]);
 
+  const fetchAllHomepageLinkPosts = async () => {
+    const allPostsDataResponse = await handleGetAllPostsForHomepage();
+    setAllLinkPosts(allPostsDataResponse);
+  };
+
   useEffect(() => {
-    setAllLinkPosts(allPostsData);
+    fetchAllHomepageLinkPosts();
   }, []);
 
   const handleGetAllPostsWithPageNo = async ({ isNextClicked }) => {
@@ -52,15 +56,3 @@ const HomePage = ({ allPostsData }) => {
 };
 
 export default HomePage;
-
-export const getServerSideProps = async () => {
-  const allPostsDataResponse = await handleGetAllPostsForHomepage();
-
-  return {
-    props: { allPostsData: allPostsDataResponse },
-  };
-};
-
-HomePage.propTypes = {
-  allPostsData: PropTypes.array,
-};

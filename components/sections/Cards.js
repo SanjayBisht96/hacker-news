@@ -1,4 +1,6 @@
+import useVote from "hooks/useVote";
 import PropTypes from "prop-types";
+import { POST } from "const";
 
 export const PostCard = ({
   postId,
@@ -6,14 +8,18 @@ export const PostCard = ({
   postedBy,
   postedDate,
   postComments,
-  postUpvotes,
 }) => {
+  const { vote, downVote, upVote } = useVote(POST, postId);
+
   return (
     <div className="homepage__container__content__main__posts__item">
       <div className="homepage__container__content__main__posts__item__action">
-        <h3 className="heading-main">{postUpvotes}</h3>
+        <h3 className="heading-main">{vote}</h3>
         <div className="homepage__container__content__main__posts__item__action__container">
-          <button className="btn btn-sm homepage__container__content__main__posts__item__action__container__button">
+          <button
+            className="btn btn-sm homepage__container__content__main__posts__item__action__container__button"
+            onClick={upVote}
+          >
             <svg
               width="44"
               height="23"
@@ -24,7 +30,10 @@ export const PostCard = ({
               <path d="M41 22H3L22 2L41 22Z" stroke="black" strokeWidth="2" />
             </svg>
           </button>
-          <button className="btn btn-sm homepage__container__content__main__posts__item__action__container__button">
+          <button
+            className="btn btn-sm homepage__container__content__main__posts__item__action__container__button"
+            onClick={downVote}
+          >
             <svg
               width="44"
               height="23"
@@ -196,7 +205,6 @@ export const LinkPostCardsContainer = ({ allLinkPosts }) => {
       {Array.isArray(allLinkPosts) && allLinkPosts.length > 0 ? (
         allLinkPosts.map((postData) => {
           const { postId, postedBy, postTitle, postedAt } = postData;
-          console.log(postData)
 
           return (
             <PostCard
@@ -206,7 +214,6 @@ export const LinkPostCardsContainer = ({ allLinkPosts }) => {
               postedBy={postedBy}
               postedDate={postedAt}
               postComments="10 comments"
-              postUpvotes="5"
             />
           );
         })

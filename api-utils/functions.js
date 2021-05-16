@@ -13,6 +13,7 @@ import {
   userTagModel,
 } from "models/user";
 import moment from "moment";
+import { getAllPostsDataWithPagination } from "database-utils/global";
 
 // Send email to the email address
 export const sendEmailToUsers = async (emailMessageBody) => {
@@ -198,10 +199,7 @@ export const updateAskPostTags = async (res, postData, listOfTags) => {
 
           tagData = await publishATag(tagModelData);
 
-          const linkPostTagModel = userAskPostTagModel(
-            postData.id,
-            tagData.id
-          );
+          const linkPostTagModel = userAskPostTagModel(postData.id, tagData.id);
 
           await publishAskPostTag(linkPostTagModel);
         }
@@ -209,10 +207,39 @@ export const updateAskPostTags = async (res, postData, listOfTags) => {
         console.log(error);
         sendErrorResponse({
           res,
-          error: 'something went wrong',
+          error: "something went wrong",
         });
         return;
       }
     })
   );
+};
+
+export const getHomepageLinkPosts = async ({ query }) => {
+  const { sortBy = "date", page = 1 } = query;
+
+  getAllPostsDataWithPagination(sortBy, page).then(async (allPostsData) => {
+    const allPostsList = await Promise.all(
+      allPostsData.map(async (postData) => {
+        const { id, userId, title, url, tags, createdAt } = postData;
+
+        // Get user name from user ID
+        const { name } = await getUserData(userId);
+
+        // Get created at time from now
+        const createdAtDate = moment(createdAt).toDate().toDateString();
+
+        allPostsList.push({
+          postId: id,
+          postedBy: name,
+          postTitle: title,
+          postUrl: url,
+          postTags: tags,
+          postedAt: createdAtDate,
+        });
+      })
+    );
+
+    return allPostsList;
+  });
 };
