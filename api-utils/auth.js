@@ -2,7 +2,7 @@
 //const bcrypt = require("bcrypt");
 //const Cryptr = require("cryptr");
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import Cryptr from 'cryptr';
 
 // Get auth token => accessToken & refreshToken
