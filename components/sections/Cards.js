@@ -170,7 +170,10 @@ export const ManageLinkPostCard = ({
             Edit
           </button>
         </a>
-        <button className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button">
+        <button
+          className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button"
+          onClick={() => console.log(postId)}
+        >
           Delete
         </button>
       </div>
@@ -322,13 +325,22 @@ export const ManageAskPostCard = ({
         </p>
       </div>
       <div className="adminmanageposts__container__content__actions__cards__item__action">
-        <a href={`/ask/edit/${askId}`} className="adminmanageposts__container__content__actions__cards__item__action__link">
+        <a
+          href={`/ask/edit/${askId}`}
+          className="adminmanageposts__container__content__actions__cards__item__action__link"
+        >
           <button className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button__primary">
             Edit
           </button>
         </a>
-        <a href={`/ask/delete/${askId}`} className="adminmanageposts__container__content__actions__cards__item__action__link">
-          <button className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button">
+        <a
+          href={`/ask/delete/${askId}`}
+          className="adminmanageposts__container__content__actions__cards__item__action__link"
+        >
+          <button
+            className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button"
+            onClick={() => console.log(askId)}
+          >
             Delete
           </button>
         </a>
@@ -345,5 +357,100 @@ ManageAskPostCard.propTypes = {
   askTags: PropTypes.string,
   askedBy: PropTypes.string,
   upvotes: PropTypes.number,
+  postedAt: PropTypes.string,
+};
+
+export const ManageJobPostCardsContainer = ({ allJobPosts }) => {
+  return (
+    <div className="adminmanageposts__container__content__actions__cards">
+      {allJobPosts.length > 0 ? (
+        allJobPosts.map((jobPost, key) => {
+          const {
+            jobId,
+            userId,
+            jobTitle,
+            jobDescription,
+            jobURL,
+            isActive,
+            postedAt,
+          } = jobPost;
+
+          return (
+            <ManageJobPostCard
+              key={key}
+              jobId={jobId}
+              userId={userId}
+              jobTitle={jobTitle}
+              jobDescription={jobDescription}
+              jobURL={jobURL}
+              isActive={isActive}
+              postedAt={postedAt}
+            />
+          );
+        })
+      ) : (
+        <h1>No posts found</h1>
+      )}
+    </div>
+  );
+};
+
+ManageJobPostCardsContainer.propTypes = {
+  allJobPosts: PropTypes.array,
+};
+
+export const ManageJobPostCard = ({
+  jobId,
+  jobTitle,
+  jobDescription,
+  jobURL,
+  isActive,
+  postedAt,
+}) => {
+  return (
+    <div className="adminmanageposts__container__content__actions__cards__item">
+      <a
+        href={`/ask/${jobId}`}
+        className="adminmanageposts__container__content__actions__cards__item__link"
+      >
+        <h3 className="heading-sub adminmanageposts__container__content__actions__cards__item__heading">
+          {jobTitle}
+        </h3>
+      </a>
+      <p className="paragraph-sub adminmanageposts__container__content__actions__cards__item__paragraph">
+        Posed on {postedAt}
+      </p>
+      <p className="paragraph-sub adminmanageposts__container__content__actions__cards__item__paragraph">
+        Active status {isActive ? "ACTIVE" : "FALSE"}
+      </p>
+      <p className="paragraph-main adminmanageposts__container__content__actions__cards__item__paragraph">
+        {jobDescription}
+      </p>
+      <div className="adminmanageposts__container__content__actions__cards__item__action">
+        <a
+          href={`${jobURL}`}
+          className="adminmanageposts__container__content__actions__cards__item__action__link"
+        >
+          <button className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button__primary">
+            Link
+          </button>
+        </a>
+        <button
+          className="btn btn-md adminmanageposts__container__content__actions__cards__item__action__button"
+          onClick={() => console.log(jobId)}
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  );
+};
+
+ManageJobPostCard.propTypes = {
+  jobId: PropTypes.string,
+  jobTitle: PropTypes.string,
+  jobDescription: PropTypes.string,
+  jobURL: PropTypes.string,
+  isActive: PropTypes.bool,
   postedAt: PropTypes.string,
 };

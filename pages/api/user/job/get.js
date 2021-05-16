@@ -16,7 +16,6 @@ const getUserJobPosts = async (req, res) => {
       allJobPostsData.forEach((jobPost) => {
         const {
           id,
-          userId,
           jobTitle,
           upvotes,
           jobDescription,
@@ -29,7 +28,6 @@ const getUserJobPosts = async (req, res) => {
 
         allJobPosts.push({
           jobId: id,
-          userId,
           jobTitle,
           jobDescription,
           upvotes,

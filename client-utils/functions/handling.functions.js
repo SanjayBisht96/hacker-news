@@ -378,6 +378,34 @@ export const handleGetAllAskPostsForUser = async () => {
     });
 };
 
+export const handleGetAllJobPostsForUser = async () => {
+  const { id } = useAuth();
+
+  return axios({
+    method: "post",
+    url: `${process.env.API_ROOT}/user/job/get`,
+    data: {
+      userId: id,
+    },
+  })
+    .then((res) => {
+      return res.data.payload;
+    })
+    .catch((error) => {
+      if (error.response) {
+        return error.response.data;
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.log(error.request);
+        return {};
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log("Error", error.message);
+        return {};
+      }
+    });
+};
+
 
 // add Comments
 export const addComment = async (postID,userID,commentInput) => {
