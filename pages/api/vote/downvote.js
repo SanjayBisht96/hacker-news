@@ -9,42 +9,105 @@ export default async function downVote(req,res) {
     if(ID&&userID&&type){
         const decryptedUserId = decryptData(userID);
         switch(type){
-            case POST:
-                Obj = await prisma.linkPost.update({
-                    where: {
-                      id: ID
-                    },
-                    data: {
-                      upvotes:{
-                          decrement: 1
-                      } 
-                    },
-                  })
+            case POST:{
+              const postVote = await prisma.linkPostVote.findUnique({
+                where: {
+                  postId_userId: {
+                    postId: ID,
+                    userId : decryptedUserId
+                  }
+                },
+              });
+              if(postVote){
+                let postDownVote = await prisma.linkPostVote.delete({
+                  where: {
+                    postId_userId: {
+                      postId: ID,
+                      userId : decryptedUserId
+                    }
+                  }
+                });
+                if(postDownVote){
+                  Obj = await prisma.linkPost.update({
+                      where: {
+                        id: ID
+                      },
+                      data: {
+                        upvotes:{
+                            decrement: 1
+                        } 
+                      },
+                    });
+                }    
+              }
                 break;
-            case COMMENT:
-                Obj = await prisma.comment.update({
-                    where: {
-                      id: ID
-                    },
-                    data: {
-                      upvotes:{
-                          decrement: 1
-                      } 
-                    },
-                  })
+            }
+            case COMMENT:{
+              const commentVote = await prisma.commentVote.findUnique({
+                where: {
+                  commentId_userId: {
+                    commentId: ID,
+                    userId : decryptedUserId
+                  }
+                },
+              });
+              if(commentVote){
+                let commentDownVote = await prisma.commentVote.delete({
+                  where: {
+                    commentId_userId: {
+                      commentId: ID,
+                      userId : decryptedUserId
+                    }
+                  }
+                });
+                if(commentDownVote){     
+                  Obj = await prisma.comment.update({
+                      where: {
+                        id: ID
+                      },
+                      data: {
+                        upvotes:{
+                            decrement: 1
+                        } 
+                      },
+                    });
+                }
+              }
+            }
                   break;
-            case NEXTCOMMENT:
-                Obj = await prisma.nextComment.update({
-                    where: {
-                      id: ID
-                    },
-                    data: {
-                      upvotes:{
-                          decrement: 1
-                      } 
-                    },
-                  })                
-                break;
+            case NEXTCOMMENT:{
+                    const nextCommentVote = await prisma.nextCommentVote.findUnique({
+                      where: {
+                        nextCommentId_userId: {
+                          nextCommentId: ID,
+                          userId : decryptedUserId
+                        }
+                      },
+                    });
+                    if(nextCommentVote){
+                      let nextCommentDownVote = await prisma.nextCommentVote.delete({
+                        where: {
+                          nextCommentId_userId: {
+                            nextCommentId: ID,
+                            userId : decryptedUserId
+                          }
+                        }
+                      });
+                      if(nextCommentDownVote){
+                          Obj = await prisma.nextComment.update({
+                              where: {
+                                id: ID
+                              },
+                              data: {
+                                upvotes:{
+                                    decrement: 1
+                                } 
+                              },
+                            });
+                      }
+                    }
+                  }      
+              break;
             default:
                 break;
         }

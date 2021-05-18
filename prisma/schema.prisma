@@ -15,18 +15,20 @@ generator client {
 }
 
 model User {
-  id           String         @id @default(uuid())
-  name         String
-  email        String         @unique
-  imageUrl     String?
-  signUpWith   String?
-  joinedOn     DateTime?
-  LinkPost     LinkPost[]
-  Job          Job[]
-  Ask          Ask[]
-  Comment      Comment[]
-  nextComment  nextComment[]
-  LinkPostVote LinkPostVote[]
+  id              String            @id @default(uuid())
+  name            String
+  email           String            @unique
+  imageUrl        String?
+  signUpWith      String?
+  joinedOn        DateTime?
+  LinkPost        LinkPost[]
+  Job             Job[]
+  Ask             Ask[]
+  Comment         Comment[]
+  nextComment     nextComment[]
+  LinkPostVote    LinkPostVote[]
+  CommentVote     CommentVote[]
+  NextCommentVote NextCommentVote[]
 }
 
 model LinkPost {
@@ -67,7 +69,7 @@ model LinkPostTags {
 model LinkPostVote {
   postId    String
   post      LinkPost @relation(fields: [postId], references: [id])
-  userId    String   @default(uuid())
+  userId    String
   user      User     @relation(fields: [userId], references: [id])
   updatedAt DateTime @default(now())
   createdAt DateTime @default(now())
@@ -132,6 +134,7 @@ model Comment {
   username        String
   upvotes         Int?              @default(0)
   LinkPostComment LinkPostComment[]
+  CommentVote     CommentVote[]
 }
 
 model nextComment {
@@ -146,6 +149,7 @@ model nextComment {
   username        String
   upvotes         Int?              @default(0)
   LinkPostComment LinkPostComment[]
+  NextCommentVote NextCommentVote[]
 }
 
 model LinkPostComment {
@@ -160,4 +164,26 @@ model LinkPostComment {
   nextComment   nextComment? @relation(fields: [nextCommentId], references: [id])
   nextCommentId String?
   @@unique([postID, commentID])
+}
+
+model CommentVote {
+  commentId String
+  comment   Comment  @relation(fields: [commentId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  updatedAt DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  @@unique([commentId, userId])
+}
+
+model NextCommentVote {
+  nextCommentId String
+  comment       nextComment @relation(fields: [nextCommentId], references: [id])
+  userId        String
+  user          User        @relation(fields: [userId], references: [id])
+  updatedAt     DateTime    @default(now())
+  createdAt     DateTime    @default(now())
+
+  @@unique([nextCommentId, userId])
 }

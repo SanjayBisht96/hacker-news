@@ -9,42 +9,100 @@ export default async function upVote(req,res) {
     if(ID&&userID&&type){
         const decryptedUserId = decryptData(userID);
         switch(type){
-            case POST:
-                Obj = await prisma.linkPost.update({
-                    where: {
-                      id: ID
-                    },
+            case POST:{
+                const postVote = await prisma.linkPostVote.findUnique({
+                  where: {
+                    postId_userId: {
+                      postId: ID,
+                      userId : decryptedUserId
+                    }
+                  },
+                });
+                
+                if(!postVote){
+                  let addPostVote = await prisma.linkPostVote.create({
                     data: {
-                      upvotes:{
-                          increment: 1
-                      } 
+                        postId: ID,
+                        userId : decryptedUserId
                     },
-                  })
+                  });        
+                  if(addPostVote){
+                    Obj = await prisma.linkPost.update({
+                        where: {
+                          id: ID
+                        },
+                        data: {
+                          upvotes:{
+                              increment: 1
+                          } 
+                        },
+                      });
+                  }
+                }
                 break;
-            case COMMENT:
-                Obj = await prisma.comment.update({
-                    where: {
-                      id: ID
-                    },
+            }
+            case COMMENT:{
+                const commentVote = await prisma.commentVote.findUnique({
+                  where: {
+                    commentId_userId: {
+                      commentId: ID,
+                      userId : decryptedUserId
+                    }
+                  },
+                });              
+                if(!commentVote){
+                  let addCommentVote = await prisma.commentVote.create({
                     data: {
-                      upvotes:{
-                          increment: 1
-                      } 
+                        commentId: ID,
+                        userId : decryptedUserId
                     },
-                  })
+                  });
+                  if(addCommentVote){
+                    Obj = await prisma.comment.update({
+                        where: {
+                          id: ID
+                        },
+                        data: {
+                          upvotes:{
+                              increment: 1
+                          } 
+                        },
+                      });
+                  }
+                }                  
                   break;
-            case NEXTCOMMENT:
-                Obj = await prisma.nextComment.update({
-                    where: {
-                      id: ID
-                    },
+            }
+            case NEXTCOMMENT:{
+                const nextCommentVote = await prisma.nextCommentVote.findUnique({
+                  where: {
+                    nextCommentId_userId: {
+                      nextCommentId: ID,
+                      userId : decryptedUserId
+                    }
+                  },
+                });              
+                if(!nextCommentVote){
+                  let addNextCommentVote = await prisma.nextCommentVote.create({
                     data: {
-                      upvotes:{
-                          increment: 1
-                      } 
+                        nextCommentId: ID,
+                        userId : decryptedUserId
                     },
-                  })                
+                  });
+                  if(addNextCommentVote){
+                      Obj = await prisma.nextComment.update({
+                          where: {
+                            id: ID
+                      },
+                      data: {
+                        upvotes:{
+                            increment: 1
+                        } 
+                      },
+                    });
+                  }
+                }
                 break;
+              }
             default:
                 break;
         }
