@@ -1,4 +1,5 @@
 import prisma from "../../../database-utils/prismaObj";
+import fetchNoOfComments from "api-utils/fetchNoOfComments";
 
 async function asyncForEach(array, commentList, callback) {
     for (let index = 0; index < array.length; index++) {
@@ -30,7 +31,8 @@ export default async function fetchComments(req,res) {
               return commentList;
             }
             commentList = await start(commentList);
-            return res.status(200).json(commentList);            
+            let noOfComments = await fetchNoOfComments(postID);
+            return res.status(200).json({commentList,noOfComments});            
         }
     }
     return res.status(500).json({message: "failed to get comments"});                  

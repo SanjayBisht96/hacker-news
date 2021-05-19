@@ -6,7 +6,7 @@ import useComments from '../../hooks/useComments';
 import useVote from 'hooks/useVote';
 import {  fetchComments, updateVote } from '../../client-utils/functions/handling.functions';
 
-import useSWR,{ mutate,trigger }  from 'swr';
+import useSWR,{ trigger }  from 'swr';
 
 const Comment = dynamic(() => import('../Comment/'));
 
@@ -81,7 +81,7 @@ export default function DiscussionForum({
               {postedBefore}
             </p>
             <p className="paragraph--sub discussion__container__content__main__posts__item__content__footer__paragraph">
-              {postComments}
+              {data?.noOfComments} Comments
             </p>
             <p className="paragraph--sub discussion__container__content__main__posts__item__content__footer__paragraph">
               <a href={EDIT_LINK_POST_URL + postID} >edit</a>
@@ -98,7 +98,7 @@ export default function DiscussionForum({
               Add Comment
             </button>
         {
-          data?.map((comment,index) =>{
+          data?.commentList?.map((comment,index) =>{
             return (
               <Comment
                 key={index}

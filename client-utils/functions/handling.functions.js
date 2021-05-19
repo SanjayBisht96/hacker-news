@@ -456,11 +456,11 @@ export const fetchComments = async (url,postID) => {
       }
       else if (error.request) {
         // The request was made but no response was received
-        console.log(error.request);
+        //console.log(error.request);
         return {}
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.log('Error', error.message);
+        //console.log('Error', error.message);
         return {}
       }
     });

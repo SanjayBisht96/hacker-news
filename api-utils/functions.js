@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import { sendErrorResponse } from "api-utils/SendResponse";
+import fetchNoOfComments from "api-utils/fetchNoOfComments";
 import {
   publishATag,
   publishAskPostTag,
@@ -156,7 +157,7 @@ export const getAllLinkPosts = async (res, allPostsData) => {
     allPostsData.map(async (postData) => {
       try {
         const { id, userId, title, url, tags, createdAt } = postData;
-
+        const noOfComments = await fetchNoOfComments(id);
         // Get user name from user ID
         const { name } = await getUserData(userId);
 
@@ -170,6 +171,7 @@ export const getAllLinkPosts = async (res, allPostsData) => {
           postUrl: url,
           postTags: tags,
           postedAt: createdAtDate,
+          noOfComments: noOfComments
         });
       } catch (error) {
         console.log(error);
@@ -222,7 +224,8 @@ export const getHomepageLinkPosts = async ({ query }) => {
     const allPostsList = await Promise.all(
       allPostsData.map(async (postData) => {
         const { id, userId, title, url, tags, createdAt } = postData;
-
+        console.log(id)
+        const noOfComments = await fetchNoOfComments(id);
         // Get user name from user ID
         const { name } = await getUserData(userId);
 
@@ -236,6 +239,7 @@ export const getHomepageLinkPosts = async ({ query }) => {
           postUrl: url,
           postTags: tags,
           postedAt: createdAtDate,
+          noOfComments: noOfComments 
         });
       })
     );

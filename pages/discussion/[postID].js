@@ -27,7 +27,6 @@ export default function Discussion({post}){
                   postTitle={post.title}
                   postedBy={post.username}
                   postedBefore={post.createdAt}
-                  postComments={"comments"}
                   postUpvotes={"1xx"}
                   postUrl={post.url}
                   postID={post.id}

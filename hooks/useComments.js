@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import dynamic from 'next/dynamic';
-import { addComment, fetchComments } from '../client-utils/functions/handling.functions';
+import { addComment } from '../client-utils/functions/handling.functions';
 import useAuth from "../hooks/useAuth";
 //import Pusher from 'pusher-js';
 //import fetchComments from "../utils/fetchComments";

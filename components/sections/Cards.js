@@ -61,7 +61,7 @@ export const PostCard = ({
             Posted on {postedDate}
           </p>
           <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
-            Have {postComments}
+            {postComments} Comments
           </p>
           <p className="paragraph--sub homepage__container__content__main__posts__item__content__footer__paragraph">
             <a href={"discussion/" + postId}>Discuss</a>
@@ -204,7 +204,7 @@ export const LinkPostCardsContainer = ({ allLinkPosts }) => {
     <div className="homepage__container__content__main__posts">
       {Array.isArray(allLinkPosts) && allLinkPosts.length > 0 ? (
         allLinkPosts.map((postData) => {
-          const { postId, postedBy, postTitle, postedAt } = postData;
+          const { postId, postedBy, postTitle, postedAt, noOfComments } = postData;
 
           return (
             <PostCard
@@ -213,7 +213,7 @@ export const LinkPostCardsContainer = ({ allLinkPosts }) => {
               postTitle={postTitle}
               postedBy={postedBy}
               postedDate={postedAt}
-              postComments="10 comments"
+              postComments={noOfComments}
             />
           );
         })
