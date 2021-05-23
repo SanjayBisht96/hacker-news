@@ -4,6 +4,7 @@ import { updateVote, getVote  } from '../client-utils/functions/handling.functio
 import {updateVoteModel, getVoteModel} from 'models/user';
 import useAuth from "../hooks/useAuth";
 import { ADD_VOTE_URL, DOWN_VOTE_URL, GET_VOTE_URL } from 'const';
+import { getPusher } from 'client-utils/functions/util.function';
 
 
 export default function useVote(type,targetID){
@@ -16,12 +17,15 @@ export default function useVote(type,targetID){
         event.stopPropagation();
         const {id} = useAuth();
         const payload = updateVoteModel(id,targetID,type);
+        const pusher = getPusher();
+        const channel = pusher.subscribe('realtime');    
+    
         if(id&&targetID&&type){
             updateVote(DOWN_VOTE_URL,payload);
-            setTimeout(()=>{
-                trigger([DOWN_VOTE_URL,payload]);
+            channel.bind("vote-event", function () {
                 setToggle(toggle => !toggle);
-            },500);            
+                pusher.unsubscribe('realtime');
+            });
         }        
     }
     
@@ -30,13 +34,15 @@ export default function useVote(type,targetID){
         event.stopPropagation();
         const {id} = useAuth(); 
         const payload = updateVoteModel(id,targetID,type);
+        const pusher = getPusher();
+        const channel = pusher.subscribe('realtime');    
+
         if(id&&targetID&&type){
             updateVote(ADD_VOTE_URL,payload);
-
-            setTimeout(()=>{
-                trigger([ADD_VOTE_URL,payload]);
+            channel.bind("vote-event", function () {
                 setToggle(toggle => !toggle);
-            },500);            
+                pusher.unsubscribe('realtime');
+            });              
         }
     }
 

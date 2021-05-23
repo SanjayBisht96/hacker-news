@@ -1,19 +1,9 @@
 import { decryptData } from "api-utils/auth";
 import fetchUsername from "api-utils/fetchUsername";
 import prisma from "../../../database-utils/prismaObj";
-//import Pusher from 'pusher';
-
-
-// const pusher = new Pusher({
-//     appId: process.env.PUSHER_APP_ID,
-//     key: process.env.PUSHER_KEY,
-//     secret: PUSHER_SECRET,
-//     cluster: PUSHER_CLUSTER,
-//     useTLS: true,
-//   });
+import {pushComment} from 'api-utils/pusher';
 
 export default async function addComment(req,res) {
-    //console.log(postID);
     const {postID,userID,commentInput} = req.body;
     let commentObj;
     if(postID&&userID){
@@ -33,9 +23,7 @@ export default async function addComment(req,res) {
                     commentID: commentObj.id
                 }
             })
-            // pusher.trigger("newComment", "comment-event", {
-            //     message: "hello world",
-            //   });            
+        await pushComment("done pushing");
         return res.status(200).json({message: "successfully to added message"});            
         }
     }

@@ -27,10 +27,11 @@ export default function DiscussionForum({
       let text = document.getElementById("commentInput").value;
       if(text){
         setNewComment( newComment => text);
-        setTimeout(()=>{
-            trigger([FETCH_COMMENTS_URL,postID]);
-        },1500);
+        // setTimeout(()=>{
+        //     trigger([FETCH_COMMENTS_URL,postID]);
+        // },1500);
       }
+      document.getElementById("commentInput").value = '';
     }
     
     return (

@@ -3,11 +3,14 @@ import { trigger }  from 'swr';
 import { addReply } from '../client-utils/functions/handling.functions';
 import useAuth from "../hooks/useAuth";
 import { FETCH_REPLIES_URL } from '../const';
+import { getPusher } from 'client-utils/functions/util.function';
 
 
 export default function useReply(){
     
     const [reply, setReply] = useState(false);
+    const pusher = getPusher();
+    const channel = pusher.subscribe('realtime');
 
     const showReply = () => {
         setReply(reply => true);
@@ -25,9 +28,9 @@ export default function useReply(){
         const {id} = useAuth(); 
         if(text){
             addReply(id,targetID,text);
-            setTimeout(()=>{
+            channel.bind("reply-event", function () {
                 trigger([FETCH_REPLIES_URL,targetID]);
-            },1500);            
+            });            
         }
         setReply(reply => false);
     }

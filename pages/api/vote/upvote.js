@@ -1,6 +1,7 @@
 import { decryptData } from "api-utils/auth";
 import prisma from "database-utils/prismaObj";
 import {COMMENT,POST,NEXTCOMMENT} from "const";
+import {pushVote} from 'api-utils/pusher';
 
 export default async function upVote(req,res) {
     //console.log(postID);
@@ -37,6 +38,7 @@ export default async function upVote(req,res) {
                           } 
                         },
                       });
+                      await pushVote("Added vote");
                   }
                 }
                 break;
@@ -68,6 +70,7 @@ export default async function upVote(req,res) {
                           } 
                         },
                       });
+                    await pushVote("Added vote");
                   }
                 }                  
                   break;
@@ -99,6 +102,7 @@ export default async function upVote(req,res) {
                         } 
                       },
                     });
+                    await pushVote("Added vote");
                   }
                 }
                 break;

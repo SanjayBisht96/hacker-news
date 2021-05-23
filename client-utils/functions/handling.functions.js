@@ -417,8 +417,7 @@ export const addComment = async (postID,userID,commentInput) => {
     },
   })
     .then((res) => {
-      const { payload } = res.data;
-      return payload;
+      return res.status;
     })
     .catch((error) => {
       if(error.response){

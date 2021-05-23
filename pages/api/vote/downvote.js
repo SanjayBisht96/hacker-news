@@ -1,6 +1,7 @@
 import { decryptData } from "api-utils/auth";
 import prisma from "database-utils/prismaObj";
 import {COMMENT,POST,NEXTCOMMENT} from "const";
+import {pushVote} from 'api-utils/pusher';
 
 export default async function downVote(req,res) {
     //console.log(postID);
@@ -38,6 +39,7 @@ export default async function downVote(req,res) {
                         } 
                       },
                     });
+                    await pushVote("Down voted");
                 }    
               }
                 break;
@@ -71,6 +73,7 @@ export default async function downVote(req,res) {
                         } 
                       },
                     });
+                  await pushVote("Down voted");                    
                 }
               }
             }
@@ -104,6 +107,7 @@ export default async function downVote(req,res) {
                                 } 
                               },
                             });
+                          await pushVote("Down voted");                            
                       }
                     }
                   }      
